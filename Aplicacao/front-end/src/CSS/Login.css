@@ -1,0 +1,43 @@
+.login{
+    width: 50%;
+    height: 350px;
+    margin: 10px auto;
+    padding: 10px;
+    border: dotted black;
+    display: grid;
+    justify-content: center;
+}
+.login img {
+    width: 80px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.login input{
+    width: 90%;
+    padding: 0;
+    border: none;
+    font-size: 20px;
+    height: 30px;
+    margin-bottom: 20px;
+    background: none;
+    border-bottom: solid black;
+}
+
+a {
+    padding: 10px;
+    text-align: center;
+}
+
+button{
+    margin: 0 auto;
+    width: 100px;
+    padding: 10px;
+    border: none;
+    background-color: gray;
+}
+button:hover{
+    background-color: rgba(146, 145, 145, 0.8);
+}
+
+

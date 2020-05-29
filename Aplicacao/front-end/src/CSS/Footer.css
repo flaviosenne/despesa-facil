@@ -1,0 +1,41 @@
+.footer{
+    width: 100%;
+    border-top: solid 2.5px rgb(70, 195, 199);
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    padding: 10px;
+    background-color: rgb(101, 118, 121);
+}
+
+a{
+  text-decoration: none;  
+  color: black;
+}
+ul li{
+    padding: 5px;
+    margin: 20px;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.icon-footer{
+    margin: 0;
+    display: flex;
+    padding: 10px;
+}
+.icon-footer img{
+    margin: 40px 2px;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+}
+
+.icon-footer img:hover{
+    background-color:rgb(70, 195, 199);
+    height: 62px;
+    width: 62px;
+    cursor: pointer;
+}

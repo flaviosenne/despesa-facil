@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+.header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 2.5px rgb(70, 195, 199);
+}
+.icon-menu{
+    width: 30px;
+    height: 40px;
+}
+.logo{
+    font-size: 30px;
+    font-family: 'Indie Flower', cursive;
+}

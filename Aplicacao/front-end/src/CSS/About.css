@@ -1,0 +1,13 @@
+.titulo{
+    text-align: center;
+    font-weight: 500;
+    color:rgba(100, 96, 96, 0.7);
+    margin: 10px auto;
+}
+
+p{
+    text-align: justify;
+    width: 70%;
+    margin: 20px auto;
+
+}

@@ -1,0 +1,23 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "pm": "pm2 start server.js --name server-DESPESA_FACIL"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.6",
+    "pm2": "^4.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

@@ -1,0 +1,20 @@
+.usuario {
+    border-radius: 12px;
+    height: 600px;
+    color: white;
+    background-color: rgb(24, 163, 156);
+}
+.usuario img{
+    margin-right: 0;
+}
+
+.usuario button {
+    margin-bottom: 10px;
+    background: none;
+    border: solid;
+    border-radius: 12px;
+}
+.usuario button:hover{
+    border-color: white;
+    font-size: 14px;
+}
