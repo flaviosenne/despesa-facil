@@ -13,9 +13,26 @@ a{
   color: black;
 }
 ul li{
-    padding: 5px;
-    margin: 20px;
+    list-style: none;
+    text-align: start;
 }
+
+ul li.ing {
+    text-align: center;
+    padding: 5px;
+    display: none;
+}
+ul li.esp{
+    text-align: center;
+    padding: 5px;
+    display: none;
+}
+ul li.por{
+    text-align: center;
+    padding: 5px;
+    display: none;
+}
+
 
 a:hover{
     text-decoration: underline;

@@ -6,12 +6,13 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import Views from './routes'
+
 ReactDOM.render(
     <>
     <Header />
     <div className = "content"> 
       <Views />
-    </div>
+    </div> 
     <Footer />
     </>,
   document.getElementById('app')

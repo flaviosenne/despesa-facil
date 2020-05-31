@@ -11,3 +11,14 @@ p{
     margin: 20px auto;
 
 }
+
+@media(min-width: 650px){
+    .About{
+        height: 500px;
+        margin: 0 auto;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+}

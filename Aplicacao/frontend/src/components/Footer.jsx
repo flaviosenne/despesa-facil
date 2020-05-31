@@ -12,10 +12,13 @@ export default Footer => {
             <h1 className="logo">Despesa Facil</h1>
                 <ul>
                     <a href="/sobre">
-                        <li>Sobre</li>
-                    </a>
+                        <li>   Sobre</li>
+                    </a> 
                     <a href="#">
-                        <li>Portugues > </li>
+                    <li className = "ling">   Linguagem</li>
+                        <li className = "por"> Portugues </li>
+                        <li className = "ing"> English </li>
+                        <li className = "esp"> Español </li>
                     </a>
                 </ul>
             </div>

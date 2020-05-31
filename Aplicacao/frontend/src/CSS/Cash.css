@@ -1,0 +1,45 @@
+img.icon{
+    width: 50px;
+    margin: 30px;
+    padding: 5px;
+}
+
+.filtro{
+    display: flex;
+    justify-content: space-between;
+}
+
+input{
+    border: none;
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    font-size: 15px;
+    border-bottom: solid 1px black;
+}
+
+.filtro button{
+    margin: 40px;
+}
+
+
+.icon:active{
+    width:49px;
+    border: none;
+}
+
+
+@media(max-width: 650px){
+    input{
+        margin: 10px;
+        display: block;
+    }
+}
+
+label{
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    justify-content:  right;
+}
