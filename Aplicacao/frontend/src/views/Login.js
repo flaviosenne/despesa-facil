@@ -13,6 +13,7 @@ export default Login => {
          <input type = "password"/>
 
         <a> Criar Conta</a>
+        <a> Esqueci minha senha</a>
         <button type = 'submit' > Enviar </button>
      </div>
     )

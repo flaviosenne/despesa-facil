@@ -1,6 +1,6 @@
 .login{
     width: 50%;
-    height: 350px;
+    min-height: 350px;
     margin: 10px auto;
     padding: 10px;
     border: dotted black;
@@ -24,13 +24,31 @@
     border-bottom: solid black;
 }
 
-a {
+.login a{
+    text-decoration: none;
+}
+.login a {
     padding: 10px;
     text-align: center;
 }
+.login a:hover{
+    font-size: 16.5px;
+} 
+.login a + a{
+    font-size: 12px;
+    text-decoration: underline;
+}
 
+.login a + a:hover{
+    font-size: 12.5px;
+}
+
+
+.login label{
+    text-align: start;
+}
 button{
-    margin: 0 auto;
+    margin: 5px auto;
     width: 100px;
     padding: 10px;
     border: none;
@@ -38,6 +56,7 @@ button{
 }
 button:hover{
     background-color: rgba(146, 145, 145, 0.8);
+    font-size: 13px;
 }
 
 

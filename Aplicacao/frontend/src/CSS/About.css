@@ -22,3 +22,19 @@ p{
     }
 
 }
+
+.link{
+    margin: 10px auto;
+    display: flex;
+}
+
+.link button{
+    width:200px;
+    background-color: none;
+}
+.link img{
+    margin-left: 10px;
+    vertical-align: middle;
+    width: 20px;
+    
+}
