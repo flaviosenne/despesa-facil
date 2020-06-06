@@ -69,19 +69,17 @@ const ExpenseController = {
     },
 
     async remove(req, res) {
-        try {
-            const id = req.body._id
-            const obj = await Expense.findByIdAndDelete(id)
-            if (obj) {
-                res.json({ status: `${obj.id} removed` })
-            } else {
-                res.json({ status: `${obj.id} not found` })
-            }
-        }
-        catch (err) {
-            res.json({ status: `error` })
+            
+            const id = req.params.id
+            try{
+                await Expense.findByIdAndDelete(id)
 
-        }
+                res.json("Removido com sucesso")
+            }
+            catch(err){
+                res.json(err)
+            }
+
     }
 }
 

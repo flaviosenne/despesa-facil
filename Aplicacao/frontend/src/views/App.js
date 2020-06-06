@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import '../index.css';
 import cifrao from '../icons/cifrao.png'
 import relatorio from '../icons/relatorio.png'
@@ -13,12 +14,12 @@ export default App => {
           mais o que fazer? O Despesa Facil
           irá te dar uma mãozinha.
       </p>
-        <button type='submit'> COMECE AGORA</button>
+        <Link to = "/fluxo-caixa" ><button> COMECE AGORA</button></Link>
       </div>
 
 
       <div>
-        <img src={cifrao} />
+        <img src={cifrao} alt = "icone cifrão"/>
         <p>
           O sistema possui um fluxo de caixa
           totalmente dinamico e intuitivo onde é
@@ -28,7 +29,7 @@ export default App => {
       </div>
 
       <div>
-        <img src={relatorio} />
+        <img src={relatorio} alt = "icone relatorio"/>
 
         <p>
           Com o relatório em mãos, é possível
@@ -40,7 +41,7 @@ export default App => {
 
       <div>
 
-        <img src={grafico} />
+        <img src={grafico} alt = "icone grafico"/>
 
         <p>
           É possível fazer projeções e analizar

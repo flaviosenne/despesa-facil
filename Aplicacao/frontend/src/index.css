@@ -74,3 +74,52 @@ button{
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
+
+table{
+    width: 90%;
+    font-size: 12pt;
+    margin: 20px auto;
+    border: dotted 1px rgb(37, 206, 206);
+    border-radius: 12px;
+    box-shadow: 1px 1px 1px rgba(139, 143, 143, 0.5);
+    padding: 5px;
+}
+
+table thead{
+    text-align: center;
+}
+
+table thead tr td{
+    padding: 5px;
+    
+}
+table tbody tr td{
+    padding: 2px;
+}
+table tbody {
+    text-align: center;
+    vertical-align: middle;
+}
+table tbody tr td {
+    padding: 0px;
+    justify-items: center;
+}
+
+.finalized {
+    background-color: rgb(74, 173, 74);
+}
+
+.pendent {
+    background-color: rgb(127, 163, 29);
+
+}
+table img.icon{
+    display: inline-block;
+    justify-items: space-between;
+    max-width: 30px;
+    margin: 10px;
+    padding: 0;
+}
+table img.icon:hover{
+    padding: 1px;
+}

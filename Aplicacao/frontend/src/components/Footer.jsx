@@ -14,7 +14,7 @@ export default Footer => {
                     <a href="/sobre">
                         <li>   Sobre</li>
                     </a> 
-                    <a href="#">
+                    <a href="#/">
                     <li className = "ling">   Linguagem</li>
                         <li className = "por"> Portugues </li>
                         <li className = "ing"> English </li>
@@ -23,9 +23,9 @@ export default Footer => {
                 </ul>
             </div>
             <div className="icon-footer">
-               <a href = "https://pt-br.facebook.com/flavio.senne"> <img src={facebook} alt="" /></a>
-               <a href = "https://www.linkedin.com/in/joao-flavio-senne-65b28a161"> <img src={linkedin} alt="" /></a>
-               <a href = "https://github.com/flaviosenne"> <img src={github} alt="" /></a>
+               <a href = "https://pt-br.facebook.com/flavio.senne"> <img src={facebook} alt="Facebook" /></a>
+               <a href = "https://www.linkedin.com/in/joao-flavio-senne"> <img src={linkedin} alt="Linkedin" /></a>
+               <a href = "https://github.com/flaviosenne"> <img src={github} alt="Github" /></a>
             </div>
         </div>
     )

@@ -28,6 +28,6 @@ routes.post('/expense', ExpenseController.create)
 routes.get('/expense', ExpenseController.read)
 routes.get('/expense/:id', ExpenseController.getOne)
 routes.put('/expense', ExpenseController.update)
-routes.delete('/expense', ExpenseController.remove)
+routes.delete('/expense/:id', ExpenseController.remove)
 
 module.exports = routes;

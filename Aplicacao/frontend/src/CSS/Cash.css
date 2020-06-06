@@ -29,6 +29,7 @@ input{
 }
 
 
+
 @media(max-width: 650px){
     input{
         margin: 10px;
@@ -36,10 +37,14 @@ input{
     }
 }
 
-label{
-    display: block;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: right;
-    justify-content:  right;
+.receita{
+    position: relative;
+    width: 90%;
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 20px auto;
+    padding: 10px;
+    justify-content: flex-end;
+
 }

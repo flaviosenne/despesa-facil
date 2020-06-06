@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const ExpenseSchema = mongoose.Schema({
+    
     date:{
         type: Date,
         required: true,
@@ -11,10 +12,10 @@ const ExpenseSchema = mongoose.Schema({
         required: true,
         default: `make expense`
     },
-    Satus:{
+    status:{
         type: String,
         required: true,
-        default: "undefined",
+        default: "pendent",
     },
     value:{
         type: Number,

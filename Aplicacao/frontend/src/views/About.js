@@ -27,8 +27,8 @@ export default About => {
                     em algo que não se deteriora (sistema de computador). Sendo assim,
                     com os dados em mãos, é possível análisar melhor e ter um planejamento
                     mais sistemico, para que os recursos (dinheiro) sejam melhores gerenciados.
-                <a className = "link" href = "https://github.com/flaviosenne/DespesaFacil/blob/master/Documentacao">
-                    <button> Documentação <img src = {download}/></button>
+                <a className = "link" href = "https://www.github.com/flaviosenne/DespesaFacil/blob/master/Documentacao">
+                    <button> Documentação<img src = {download} alt = "icone download"/></button>
                 </a>
                 </p>
 

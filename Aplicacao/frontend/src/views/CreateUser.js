@@ -1,11 +1,12 @@
 import React from 'react';
 import '../CSS/CreateUser.css';
+import { Link } from 'react-router-dom'
 import icone from '../icons/user.png'
 
 export default User => {
 return (
     <div className = 'usuario login'>
-        <img  src = {icone}/>
+        <img  src = {icone} alt = "icone usuario"/>
         <label> Nome </label>
         <input />
 
@@ -21,8 +22,8 @@ return (
         <label> Confirmar Senha </label>
         <input type = "password"/>
 
-       <button type = 'submit' > Cadastrar </button>
-       <button type = 'submit' > Cancelar </button>
+       <Link to = "/fluxo-caixa"><button type = 'submit' > Cadastrar </button></Link>
+       <Link to = "/" ><button type = 'submit' > Cancelar </button></Link>
     </div>
    )
 }

@@ -6,7 +6,7 @@ import Home from './views/Home'
 import Login from './views/Login'
 import About from './views/About'
 import CreateUser from './views/CreateUser'
-import CashFlow from './views/CashFlow'
+import Table from './components/RenderTable'
 
 export default Views => {
     return (
@@ -18,7 +18,7 @@ export default Views => {
                 <Route path = "/login" exact component ={Login}/>
                 <Route path = "/sobre" exact component ={About}/>
                 <Route path = "/usuario" exact component ={CreateUser}/>
-                <Route path = "/fluxo-caixa" exact component ={CashFlow}/>
+                <Route path = "/fluxo-caixa" exact component ={Table}/>
             </Switch>
         </BrowserRouter>
         </>
