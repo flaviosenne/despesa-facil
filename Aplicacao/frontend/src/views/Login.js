@@ -15,7 +15,7 @@ export default Login => {
 
         <Link to="/usuario"> Criar Conta</Link>
         <a href = "#/"> Esqueci minha senha</a>
-        <button type = 'submit' > Enviar </button>
+        <Link to = "/fluxo-caixa"><button type = 'submit' > Enviar </button></Link>
      </div>
     )
 }

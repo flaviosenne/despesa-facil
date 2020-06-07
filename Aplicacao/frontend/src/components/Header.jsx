@@ -1,6 +1,6 @@
 import React from 'react';
 import '../CSS/Header.css';
-import menu from '../icons/menu.png';
+import menu from '../icons/home.png';
 
 export default Header => {
     return (

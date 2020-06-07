@@ -17,7 +17,7 @@ const initialState = {
     list: []
 }
 
-
+var total = 0
 export default class Table extends CashFlow {
 
     state = { ...initialState }
@@ -80,6 +80,8 @@ export default class Table extends CashFlow {
                     </thead>
                     <tbody>
                         {this.state.list.map(cash => {
+                            {total += cash.value}
+                            console.log(total)
                             return (
                                 
                                 <tr key = {cash._id}>

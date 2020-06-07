@@ -1,25 +1,42 @@
-img.icon{
-    width: 50px;
-    margin: 30px;
-    padding: 5px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&family=Montserrat:ital,wght@1,200&display=swap');
 
-.filtro{
+.Fluxo > span{
+    font-family: 'Montserrat Subrayada', 'sans-serif';
     display: flex;
-    justify-content: space-between;
+    padding: 15px;
+    font-size: 20pt;
+    justify-content: center;
+}
+.filtro{
+    width: 35%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
 }
 
-input{
-    border: none;
-    display: inline-block;
-    margin: 5px;
-    padding: 5px;
-    font-size: 15px;
-    border-bottom: solid 1px black;
+.filtro img.icon{
+    width: 50px;
+    height: 50px;
+    margin: 40px;
+    padding: 4px;
 }
+
+.filtro img.icon:hover{
+    padding: 4.5px;
+}
+
+
 
 .filtro button{
-    margin: 40px;
+    font-family: 'Montserrat', 'sans-serif';
+    width: 150px;
+    padding: 10px;
+    margin: 40px auto;
+    font-size: 16pt;
+}
+.filtro button:hover{
+    font-size: 19.5pt;
 }
 
 
@@ -30,12 +47,26 @@ input{
 
 
 
-@media(max-width: 650px){
-    input{
-        margin: 10px;
-        display: block;
+    .data{
+        vertical-align: middle;
+        width: 34%;
+        position: relative;
+        right: 0px;
+        display: flex;
+        margin: 10px auto;
+        justify-content: flex;
     }
-}
+    .data input{
+        width: 100%;
+        border: none;
+        padding: 5px;
+        font-size: 15px;
+        border-bottom: solid 1px black;
+    }
+    .data span{
+        padding: 10px;
+    }
+
 
 .receita{
     position: relative;

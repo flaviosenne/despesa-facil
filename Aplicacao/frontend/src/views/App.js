@@ -14,7 +14,7 @@ export default App => {
           mais o que fazer? O Despesa Facil
           irá te dar uma mãozinha.
       </p>
-        <Link to = "/fluxo-caixa" ><button> COMECE AGORA</button></Link>
+        <Link to = "/login" ><button> COMECE AGORA</button></Link>
       </div>
 
 

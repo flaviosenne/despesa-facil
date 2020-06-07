@@ -1,8 +1,9 @@
-import React, {  Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios'
 import '../CSS/Cash.css';
 import relatorio from '../icons/relatorio.png'
 import incluir from '../icons/incluir.png'
+import { Link } from 'react-router-dom';
 
 const baseUrl = 'http://localhost:80/expense'
 const initialState = {
@@ -15,40 +16,39 @@ const initialState = {
     },
     list: []
 }
-var total = 0
+
 
 export default class CashFlow extends Component {
-    
-    
+
     state = { ...initialState }
-    
+
     UNSAFE_componentWillMount() {
         axios(baseUrl).then(resp => {
-            this.setState({ list: resp.data})
+            this.setState({ list: resp.data })
         })
     }
     render() {
         return (
             <div className="Fluxo">
-               
-                <div>
-                    <img className="icon" src={incluir} alt="icone incluir" />
+            <span> Fluxo de Caixa</span>
 
-                    <img className="icon" src={relatorio} alt="icone incluir" />
+                <div className="data">
+
+                    <span>de:</span>  <input type='date' />
                 </div>
-
-                <div>
-
-                de:  <input type='date' />
-                até: <input type='date' />
+                <div className="data">
+                    <span> até: </span> <input type='date' />
 
                 </div>
 
                 <div className="filtro">
+                   <Link to ="/despesa"><img className="icon" src={incluir} alt="icone incluir" /></Link>
+
                     <button type="submit"> Filtrar </button>
+                    <img className="icon" src={relatorio} alt="icone incluir" />
                 </div>
 
-        <label className = "receita"> Receita: {total += parseInt(this.state.list.map(cash => cash.value))}</label>
+        <label className="receita"> Receita: {this.total}</label>
             </div>
         )
     }
