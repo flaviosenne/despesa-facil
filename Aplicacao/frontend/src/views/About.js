@@ -1,10 +1,14 @@
 import React from 'react';
 import '../CSS/About.css';
 import download from '../icons/download.png'
+import Header from '../components/Header'
+import icon from '../icons/about.png'
+const props = {icon, route: '/home'}
 
 export default About => {
     return (
         <>
+        <Header {...props}/>
         <div className = "About">    
             <div>
                 <h1 className="titulo">Sobre o Autor</h1>

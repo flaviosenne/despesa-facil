@@ -1,8 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react'
 import axios from 'axios'
 import alterar from '../icons/alterar.png'
 import remover from '../icons/remover.png'
 import CashFlow from '../views/CashFlow'
+import { Link } from 'react-router-dom'
 
 const baseUrl = 'http://localhost:80/expense'
 
@@ -68,7 +70,7 @@ export default class Table extends CashFlow {
             <>
             
                 <CashFlow />
-                <table >
+                <table className = "table table-hover">
                     <thead>
                         <tr>
                             <td>Data Operção</td>
@@ -91,12 +93,12 @@ export default class Table extends CashFlow {
                                     <td>R${cash.value.toFixed(2)}</td>
                                     <td>
 
+                                    <Link to = "despesa">
                                         <img 
                                         className="icon" 
-                                        // onClick={() => this.load(cash)}
                                         src={alterar}
                                         alt="aletar"></img>
-                                        
+                                    </Link>
                                         <img 
                                         className="icon" 
                                         src={remover}

@@ -1,12 +1,15 @@
 import React from 'react';
 import '../CSS/Header.css';
-import menu from '../icons/home.png';
-
+import { Link } from 'react-router-dom'
 export default Header => {
     return (
         <div className = "header">
             <h1 className = "logo">Despesa Facil</h1>
-            <img className = "icon-menu" src={menu} alt=""/>
+             
+            <Link to = {Header.route}>
+                <img className = "icon-menu" src={Header.icon} alt="icone home"/>
+            </Link>
+            
         </div>
     )
 }

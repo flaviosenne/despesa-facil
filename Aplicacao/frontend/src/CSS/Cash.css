@@ -35,9 +35,6 @@
     margin: 40px auto;
     font-size: 16pt;
 }
-.filtro button:hover{
-    font-size: 19.5pt;
-}
 
 
 .icon:active{
@@ -70,7 +67,7 @@
 
 .receita{
     position: relative;
-    width: 90%;
+    width: 50%;
     display: flex;
     font-size: 18px;
     font-weight: 600;

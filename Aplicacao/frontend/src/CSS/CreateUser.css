@@ -42,3 +42,9 @@
 .tipo input {
     margin: 0px;
 }
+
+@media(max-width: 600px){
+    .usuario{
+        width: 95%;
+    }
+}

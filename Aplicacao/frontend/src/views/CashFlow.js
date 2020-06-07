@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import '../CSS/Cash.css';
+import Header from '../components/Header'
 import relatorio from '../icons/relatorio.png'
 import incluir from '../icons/incluir.png'
 import { Link } from 'react-router-dom';
+import icon from '../icons/cash.png'
+const props = {icon, route: '/home'}
 
 const baseUrl = 'http://localhost:80/expense'
 const initialState = {
@@ -29,6 +32,8 @@ export default class CashFlow extends Component {
     }
     render() {
         return (
+            <>
+            <Header {...props}/>
             <div className="Fluxo">
             <span> Fluxo de Caixa</span>
 
@@ -50,6 +55,7 @@ export default class CashFlow extends Component {
 
         <label className="receita"> Receita: {this.total}</label>
             </div>
+            </>
         )
     }
 }
