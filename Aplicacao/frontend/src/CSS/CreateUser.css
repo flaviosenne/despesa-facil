@@ -14,6 +14,7 @@
     margin-right: 10px;
 }
 
+
 .usuario button {
     text-decoration: none;
     display: flex;
@@ -23,8 +24,10 @@
     border-radius: 12px;
 }
 .usuario button:hover{
+    clear: both;
     border-color: white;
-    font-size: 13px;
+    font-size: 19px;
+    text-decoration: none;
 }
 
 .usuario label{

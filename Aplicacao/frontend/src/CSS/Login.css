@@ -24,19 +24,20 @@
     border-bottom: solid black;
 }
 
-.login a{
-    text-decoration: none;
-}
 .login a {
     padding: 10px;
+    text-decoration: none;
     text-align: center;
+    color: black;
 }
 .login a:hover{
+    color: black;
     font-size: 16.5px;
 } 
 .login a + a{
     font-size: 12px;
-    text-decoration: underline;
+    color: black;
+    /* text-decoration: underline; */
 }
 
 .login a + a:hover{
@@ -47,16 +48,17 @@
 .login label{
     text-align: start;
 }
-button{
+.login button{
+    font-size: 20px;
     margin: 5px auto;
     width: 100px;
     padding: 10px;
     border: none;
     background-color: gray;
 }
-button:hover{
-    background-color: rgba(146, 145, 145, 0.8);
-    font-size: 13px;
+.login button:hover{
+    font-size: 19.5px;
+    text-decoration: none;
 }
 
 

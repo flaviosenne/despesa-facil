@@ -1,4 +1,5 @@
 .footer{
+    margin-top: 30px;
     width: 100%;
     border-top: solid 2.5px rgb(70, 195, 199);
     display: flex;
@@ -7,9 +8,15 @@
     padding: 10px;
 }
 
-a{
+.footer a{
   text-decoration: none;  
   color: black;
+}
+
+.footer a:hover{
+    color: black;
+    text-decoration: underline;  
+
 }
 ul li{
     list-style: none;
@@ -34,11 +41,11 @@ ul li.por{
 }
 
 
-a:hover{
-    /* text-decoration: underline; */
+/* a:hover{
+    text-decoration: underline;
     font-size: 16.3px;
     color: rgb(82, 78, 78);
-}
+} */
 
 .icon-footer{
     margin: 0;
