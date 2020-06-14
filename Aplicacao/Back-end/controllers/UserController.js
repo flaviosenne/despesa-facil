@@ -1,16 +1,18 @@
 const User = require('../model/User');
-const bcrypt = require('bcryptjs');
+
 const generateToken = require('../utils/generateToken');
 
 
 const UserController = {
     async create(req, res) {
         try {
-            const { user } = req.body;
+            const { user, name, email, password } = req.body;
             if (await User.findOne({ user })) {
                 return res.json({ Status: `${user} já cadastrado` })
             }
-            await User.create(req.body);
+            // const hash = await bcrypt.hash(password, 10)
+            
+            await User.create({user, name, email, password});
             return res.json({ 
                 Status: `created sucesseful`,
                 user,

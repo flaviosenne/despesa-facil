@@ -1,33 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../components/Header'
 import '../CSS/CreateUser.css';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import icon from '../icons/user+.png'
+
+
+import axios from 'axios'
 
 const props = { icon, route: '/login' }
 export default User => {
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [user, setUser] = useState('')
+    const [password, setPassword] = useState('')
+    const [pass, setPass] = useState('')
+
+    const history = useHistory()
+
+    async function post(e) {
+
+        e.preventDefault()
+        try{
+            
+            
+            if(pass == password  &&  user.length > 3){
+
+                axios.post('http://localhost:80/user', {
+                    name, email, user, password
+                })
+                alert(user + ' cadastrado com sucesso')
+                history.push('/login')
+            }
+            
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <Header {...props} />
             <div className='usuario login'>
                 <img src={icon} alt="icone usuario" />
-                <label> Nome </label>
-                <input />
+                <label > Nome </label>
+                <input value = {name} onChange = {e => setName(e.target.value)}/>
 
-                <label> Email </label>
-                <input />
+                <label > Email </label>
+                <input value = {email} onChange = {e => setEmail(e.target.value)}/>
 
-                <label> Usuario </label>
-                <input />
+                <label > Usuario </label>
+                <input value = {user} onChange = {e => setUser(e.target.value)}/>
 
-                <label> Senha </label>
-                <input type="password" />
+                <label > Senha </label>
+                <input value = {password} onChange = {e => setPassword(e.target.value)} type="password" />
 
                 <label> Confirmar Senha </label>
-                <input type="password" />
+                <input value = {pass} onChange = {e => setPass(e.target.value)}type="password" />
 
-                <Link to="/home"><button type='submit' > Cadastrar </button></Link>
-                <Link to="/" ><button type='submit' > Cancelar </button></Link>
+                <Link ><button onClick={e => post(e)} > Cadastrar </button></Link>
+                <Link to="/login" ><button type='submit' > Cancelar </button></Link>
             </div>
         </>
     )
