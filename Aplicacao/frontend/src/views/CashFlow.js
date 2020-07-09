@@ -17,7 +17,8 @@ const initialState = {
         status: '',
         value: null
     },
-    list: []
+    list: [],
+    total: [],
 }
 
 
@@ -25,10 +26,24 @@ export default class CashFlow extends Component {
 
     state = { ...initialState }
 
-    UNSAFE_componentWillMount() {
-        axios(baseUrl).then(resp => {
+    async UNSAFE_componentWillMount() {
+        await axios(baseUrl).then(resp => {
             this.setState({ list: resp.data })
         })
+        await axios('http://localhost:80/recep').then(recep => {
+            this.setState({total: recep.data})
+        }).catch(err => console.log(err))
+        this.listRecep()
+
+    }
+
+    listRecep(){
+        var acum = 0
+        this.state.total.forEach(valor => {
+            acum += valor.value
+        })
+        return acum
+
     }
     render() {
         return (
@@ -53,7 +68,7 @@ export default class CashFlow extends Component {
                     <img className="icon" src={relatorio} alt="icone incluir" />
                 </div>
 
-        <label className="receita"> Receita: {this.total}</label>
+        <label className="receita"> Receita: R$ {this.listRecep()}</label>
             </div>
             </>
         )

@@ -1,44 +1,113 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom'
+
 import Header from '../components/Header'
 import '../CSS/CreateUser.css';
-import { Link } from 'react-router-dom'
+
+
 import dinheiro from '../icons/dinheiro.png'
 import icon from '../icons/cash+.png'
+import axios from 'axios'
+
 const props = { icon, route: '/fluxo-caixa' }
 export default User => {
+    const [date, setDate] = useState('')
+    const [type, setType] = useState('')
+    const [status, setStatus] = useState('')
+    const [description, setDescription] = useState('')
+    const [value, setValue] = useState('')
+
+    const history = useHistory()
+
+    const post = async (e) => {
+
+        e.preventDefault()
+        try {
+            if(type == 'receita'){
+                await axios.post('http://localhost:80/recep', {
+                    date, value
+                })
+                alert('Receita cadastrada com sucesso')
+                history.push('/fluxo-caixa')
+
+            }else{
+                await axios.post('http://localhost:80/expense', {
+                    date, value, description, status
+                })
+                alert('Despesa cadastrada com sucesso')
+                history.push('/fluxo-caixa')
+
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <>
             <Header {...props} />
             <div className='usuario login'>
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
+               
                 <label> Data </label>
-                <input type="date" />
+                <input
+                    value={date}
+                    type="date" 
+                    onChange = {e => setDate(e.target.value)}/>
 
                 <label> Tipo </label>
                 <div className="tipo">
 
-                    <input type="radio" name="tipo" /> <label >Despesa</label>
+                    <input
+                        value='despesa' 
+                        type="radio" 
+                        name="tipo" 
+                        onChange = {e => setType(e.target.value)}/> 
+                        <label >Despesa</label>
                 </div>
+               
                 <div className="tipo">
-                    <input type="radio" name="tipo" /> <label >Receita </label>
+                    <input
+                        value='receita' 
+                        type="radio" 
+                        name="tipo" 
+                        onChange = {e => setType(e.target.value)}
+                        />
+                        <label >Receita </label>
                 </div>
 
                 <label> Descrição </label>
-                <input />
+                <input
+                    value={description} 
+                    onChange = {e => setDescription(e.target.value)}/>
 
+              
                 <label> Status </label>
                 <div className="tipo">
 
-                    <input type="radio" name="status" /> <label >Pendente</label>
+                    <input
+                        value='pendente' 
+                        type="radio" 
+                        name="status" 
+                        onChange = {e => setStatus(e.target.value)}/> 
+                        
+                        <label >Pendente</label>
                 </div>
                 <div className="tipo">
-                    <input type="radio" name="status" /> <label >Finalizado </label>
+                    <input
+                        value='finalizado' 
+                        type="radio" 
+                        name="status"
+                        onChange = {e => setStatus(e.target.value)} /> 
+                        <label >Finalizado </label>
                 </div>
 
                 <label> Valor </label>
-                <input type="number" />
+                <input
+                    value={value} 
+                    type="number"
+                    onChange = {e => setValue(e.target.value)} />
 
-                <Link to="/fluxo-caixa"><button type='submit' > Cadastrar </button></Link>
+                <button onClick={e => post(e)} > Cadastrar </button>
                 <Link to="/fluxo-caixa" ><button > Cancelar </button></Link>
             </div>
         </>

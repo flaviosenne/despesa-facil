@@ -23,7 +23,7 @@ export default User => {
         try{
             
             
-            if(pass == password  &&  user.length > 3){
+            if((pass == password)  &&  (user.length > 3)){
 
                 axios.post('http://localhost:80/user', {
                     name, email, user, password

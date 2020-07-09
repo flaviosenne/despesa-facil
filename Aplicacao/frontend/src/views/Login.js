@@ -39,7 +39,7 @@ export default class Login extends Component {
         // validar os campos digitados pelo usuario com os já cadastrados na api
         // usuario da API
         api.data.map(user => {
-            if((user.user == usuario) && (user.password == pass)){
+            if((user.user === usuario) && (user.password === pass)){
                 this.state.user.user= user.user
                 this.state.user.password = user.password 
     

@@ -16,23 +16,20 @@ const initialState = {
         status: '',
         value: null
     },
-    list: []
+    list: [],
 }
 
-var total = 0
 export default class Table extends CashFlow {
 
     state = { ...initialState }
 
     // metodo que irá ser executdo assim que o componente for renderizado
-    UNSAFE_componentWillMount() {
-        axios(baseUrl).then(resp => {
+    async UNSAFE_componentWillMount() {
+        await axios(baseUrl).then(resp => {
             this.setState({ list: resp.data})
         })
-    }
-
-    clear() {
-        this.setState({ cash: initialState.cash })
+        
+        
     }
     
     remove(id){
@@ -44,6 +41,7 @@ export default class Table extends CashFlow {
         axios.get(baseUrl).then(res => {
             this.setState({ list: res.data})
         })
+        
     }
 
 
@@ -64,6 +62,13 @@ export default class Table extends CashFlow {
     //     })
     // }
 
+    formatDate(date){
+        
+        var data = new Date(date)
+        
+        return data.getDate() +'/'+data.getMonth()+'/'+data.getFullYear()
+    }
+
 
     render() {
         return (
@@ -81,13 +86,11 @@ export default class Table extends CashFlow {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.list.map(cash => {
-                            {total += cash.value}
-                            console.log(total)
+                        {this.state.list.map(cash =>{
                             return (
                                 
                                 <tr key = {cash._id}>
-                                    <td>{cash.date}</td>
+                                    <td>{this.formatDate(cash.date)}</td>
                                     <td>{cash.description}</td>
                                     <td>{cash.status}</td>
                                     <td>R${cash.value.toFixed(2)}</td>
