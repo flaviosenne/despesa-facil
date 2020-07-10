@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import axios from 'axios'
 import '../CSS/Cash.css';
 import Header from '../components/Header'
@@ -25,6 +25,8 @@ const initialState = {
 export default class CashFlow extends Component {
 
     state = { ...initialState }
+    
+    label = {}
 
     async UNSAFE_componentWillMount() {
         await axios(baseUrl).then(resp => {
@@ -32,17 +34,38 @@ export default class CashFlow extends Component {
         })
         await axios('http://localhost:80/recep').then(recep => {
             this.setState({total: recep.data})
+            this.listRecep()
         }).catch(err => console.log(err))
-        this.listRecep()
 
     }
 
     listRecep(){
-        var acum = 0
-        this.state.total.forEach(valor => {
-            acum += valor.value
+        var despesa = 0
+        
+        this.state.list.forEach(valorDespesa => {
+            despesa += valorDespesa.value
         })
-        return acum
+        var receita = 0
+        this.state.total.forEach(valorReceita => {
+            receita += valorReceita.value
+        })
+
+        const resultado = receita - despesa
+        
+        return resultado
+
+    }
+    resultSituation(){
+        const result = this.listRecep()
+
+        
+        return result
+        
+        if(result < 0){
+
+        }else{
+
+        }
 
     }
     render() {
@@ -68,7 +91,7 @@ export default class CashFlow extends Component {
                     <img className="icon" src={relatorio} alt="icone incluir" />
                 </div>
 
-        <label className="receita"> Receita: R$ {this.listRecep()}</label>
+        <label  className="receita"> Receita: R$ {this.resultSituation()}</label>
             </div>
             </>
         )
