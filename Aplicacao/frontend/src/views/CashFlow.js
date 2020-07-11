@@ -25,8 +25,6 @@ const initialState = {
 export default class CashFlow extends Component {
 
     state = { ...initialState }
-    
-    label = {}
 
     async UNSAFE_componentWillMount() {
         await axios(baseUrl).then(resp => {
@@ -55,19 +53,6 @@ export default class CashFlow extends Component {
         return resultado
 
     }
-    resultSituation(){
-        const result = this.listRecep()
-
-        
-        return result
-        
-        if(result < 0){
-
-        }else{
-
-        }
-
-    }
     render() {
         return (
             <>
@@ -91,7 +76,7 @@ export default class CashFlow extends Component {
                     <img className="icon" src={relatorio} alt="icone incluir" />
                 </div>
 
-        <label  className="receita"> Receita: R$ {this.resultSituation()}</label>
+        <label  className="receita"> Receita: R$ {this.listRecep()}</label>
             </div>
             </>
         )

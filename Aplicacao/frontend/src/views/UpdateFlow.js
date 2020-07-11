@@ -9,73 +9,76 @@ import dinheiro from '../icons/dinheiro.png'
 import icon from '../icons/cash+.png'
 import axios from 'axios'
 
+
 const props = { icon, route: '/fluxo-caixa' }
 
+
 export default User => {
-    const [date, setDate] = useState('')
-    const [type, setType] = useState('')
-    const [status, setStatus] = useState('')
-    const [description, setDescription] = useState('')
-    const [value, setValue] = useState('')
+    const [date, setDate] = useState()
+    const [status, setStatus] = useState()
+    const [description, setDescription] = useState()
+    const [value, setValue] = useState()
 
     const history = useHistory()
 
+
+    const list = []
+    async function get(e) {
+        e.preventDefault()
+        
+        const id = User.match.params.id 
+        await axios.get('http://localhost:80/expense/'+id).then(resp => {
+           list.push(resp.data)
+    })
+    
+        setDate(list[0].date)
+        setStatus(list[0].status)
+        setDescription(list[0].description)
+        setValue(list[0].value)
+        return list
+                
+    }
+
     const post = async (e) => {
 
+        console.log(date, description, value, status)
+        const _id = User.match.params.id 
         e.preventDefault()
         try {
-            if(type == 'receita'){
-                await axios.post('http://localhost:80/recep', {
-                    date, value
+                await axios.put('http://localhost:80/expense', {
+                    _id, date, value, description, status
                 })
-                alert('Receita cadastrada com sucesso')
-                history.push('/fluxo-caixa')
-
-            }else{
-                await axios.post('http://localhost:80/expense', {
-                    date, value, description, status
-                })
-                alert('Despesa cadastrada com sucesso')
+                alert('Despesa atualizada com sucesso')
                 history.push('/fluxo-caixa')
 
             }
-        } catch (err) {
+        catch (err) {
             console.log(err)
         }
+    }
+    function formatDate(date) {
+
+        var data = new Date(date)
+
+        var year = data.getFullYear()
+        var month = ((data.getMonth() < 10)? '0'+ data.getMonth(): data.getMonth())
+        var day = data.getDate()
+
+        return  year +'-' + month + '-' + day
     }
     return (
         <>
             <Header {...props} />
-            <div className='usuario login'>
+            <div className='usuario login' onLoad = {e => get(e)}>
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
                
                 <label> Data </label>
                 <input
-                    value={date}
+                    value={formatDate(date)}
                     type="date" 
                     onChange = {e => setDate(e.target.value)}/>
 
-                <label> Tipo </label>
-                <div className="tipo">
-
-                    <input
-                        value='despesa' 
-                        type="radio" 
-                        name="tipo" 
-                        onChange = {e => setType(e.target.value)}/> 
-                        <label >Despesa</label>
-                </div>
                
-                <div className="tipo">
-                    <input
-                        value='receita' 
-                        type="radio" 
-                        name="tipo" 
-                        onChange = {e => setType(e.target.value)}
-                        />
-                        <label >Receita </label>
-                </div>
-
                 <label> Descrição </label>
                 <input
                     value={description} 
@@ -108,7 +111,7 @@ export default User => {
                     type="number"
                     onChange = {e => setValue(e.target.value)} />
 
-                <button onClick={e => post(e)} > Cadastrar </button>
+                <button onClick={e => post(e)} > Atualizar </button>
                 <Link to="/fluxo-caixa" ><button > Cancelar </button></Link>
             </div>
         </>

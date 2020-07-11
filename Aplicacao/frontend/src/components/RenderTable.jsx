@@ -17,65 +17,46 @@ const initialState = {
         value: null
     },
     list: [],
+    total: [],
 }
 
 export default class Table extends CashFlow {
 
     state = { ...initialState }
 
-    // metodo que irá ser executdo assim que o componente for renderizado
+    // metodo que irá ser executado assim que o componente for renderizado
     async UNSAFE_componentWillMount() {
         await axios(baseUrl).then(resp => {
-            this.setState({ list: resp.data})
+            this.setState({ list: resp.data })
         })
-        
-        
+
     }
-    
-    remove(id){
+
+    remove(id) {
         axios.delete(`${baseUrl}/${id}`).then(resp => {
-            this.get() // assim que deletar o item, o metodo get é chamado para atualizar a pagina
+            this.UNSAFE_componentWillMount() // assim que deletar o item, o metodo UNSAFE_componentWillMount é chamado para atualizar a pagina
         }).catch(e => console.log(e))
     }
-    get() {
-        axios.get(baseUrl).then(res => {
-            this.setState({ list: res.data})
-        })
-        
+
+    ViewUpdateExpense(id) {
+
+        return '/despesa-update/' + id
     }
 
 
+    formatDate(date) {
 
-    // updateField(event) {
-    //     const user = { ...this.state.user }
-    //     user[event.target.name] = event.target.value
-    //     this.setState({ user })
-    // }
-    // save() {
-    //     const user = this.state.user
-    //     const method = user.id ? 'put' : 'post'
-    //     const url = user.id ? `${baseUrl}/${user.id}` : baseUrl
-
-    //     axios[method](url, user).then(resp => {
-    //         const list = this.getUpdatedList(resp.data)
-    //         this.setState({ user: initialState.user, list })
-    //     })
-    // }
-
-    formatDate(date){
-        
         var data = new Date(date)
-        
-        return data.getDate() +'/'+data.getMonth()+'/'+data.getFullYear()
-    }
 
+        return data.getDate() + '/' + Number(data.getMonth()+1) + '/' + data.getFullYear()
+    }
 
     render() {
         return (
             <>
-            
+
                 <CashFlow />
-                <table className = "table table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <td>Data Operção</td>
@@ -86,27 +67,30 @@ export default class Table extends CashFlow {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.list.map(cash =>{
+                        {this.state.list.map(cash => {
                             return (
-                                
-                                <tr key = {cash._id}>
+
+                                <tr key={cash._id}>
                                     <td>{this.formatDate(cash.date)}</td>
                                     <td>{cash.description}</td>
                                     <td>{cash.status}</td>
                                     <td>R${cash.value.toFixed(2)}</td>
                                     <td>
 
-                                    <Link to = "despesa">
-                                        <img 
-                                        className="icon" 
-                                        src={alterar}
-                                        alt="aletar"></img>
-                                    </Link>
-                                        <img 
-                                        className="icon" 
-                                        src={remover}
-                                        onClick = {() => this.remove(cash._id)}
-                                        alt="remover" />
+                                        <Link to={this.ViewUpdateExpense(cash._id)}>
+                                            <img
+                                                className="icon"
+                                                src={alterar}
+                                                alt="aletar"
+                                            />
+                                        </Link>
+
+
+                                        <img
+                                            className="icon"
+                                            src={remover}
+                                            onClick={() => this.remove(cash._id)}
+                                            alt="remover" />
                                     </td>
                                 </tr>
                             )
