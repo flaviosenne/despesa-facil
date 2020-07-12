@@ -8,7 +8,7 @@ import icon from '../icons/user.png'
 
 import axios from 'axios'
 
-const baseUrl = "46.101.232.55/user"
+const baseUrl = "http://46.101.232.55:80/user"
 const props = {icon, route: '/'}
 
 const initialState = {
@@ -28,6 +28,7 @@ export default class Login extends Component {
     async get(e){
         const api = await axios.get(baseUrl)
         
+        console.log('%%%API',api)
         const user = this.state.user      
         
         

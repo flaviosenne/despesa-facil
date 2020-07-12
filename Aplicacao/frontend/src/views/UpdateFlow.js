@@ -27,7 +27,7 @@ export default User => {
         e.preventDefault()
         
         const id = User.match.params.id 
-        await axios.get('46.101.232.55/expense/'+id).then(resp => {
+        await axios.get('http://46.101.232.55:80/expense/'+id).then(resp => {
            list.push(resp.data)
     })
     
@@ -45,7 +45,7 @@ export default User => {
         const _id = User.match.params.id 
         e.preventDefault()
         try {
-                await axios.put('46.101.232.55/expense', {
+                await axios.put('http://46.101.232.55:80/expense', {
                     _id, date, value, description, status
                 })
                 alert('Despesa atualizada com sucesso')

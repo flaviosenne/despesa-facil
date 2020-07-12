@@ -25,14 +25,14 @@ export default User => {
         e.preventDefault()
         try {
             if(type == 'receita'){
-                await axios.post('46.101.232.55/recep', {
+                await axios.post('http://46.101.232.55:80/recep', {
                     date, value
                 })
                 alert('Receita cadastrada com sucesso')
                 history.push('/fluxo-caixa')
 
             }else{
-                await axios.post('46.101.232.55/expense', {
+                await axios.post('http://46.101.232.55:80/expense', {
                     date, value, description, status
                 })
                 alert('Despesa cadastrada com sucesso')

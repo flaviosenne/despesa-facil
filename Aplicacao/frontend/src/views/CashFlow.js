@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import icon from '../icons/cash.png'
 const props = {icon, route: '/home'}
 
-const baseUrl = '46.101.232.55/expense'
+const baseUrl = 'http://46.101.232.55:80/expense'
 const initialState = {
     cash: {
         id: null,
@@ -30,7 +30,7 @@ export default class CashFlow extends Component {
         await axios(baseUrl).then(resp => {
             this.setState({ list: resp.data })
         })
-        await axios('46.101.232.55/recep').then(recep => {
+        await axios('http://46.101.232.55:80/recep').then(recep => {
             this.setState({total: recep.data})
             this.listRecep()
         }).catch(err => console.log(err))
