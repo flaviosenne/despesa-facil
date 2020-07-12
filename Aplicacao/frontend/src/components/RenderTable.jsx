@@ -6,7 +6,7 @@ import remover from '../icons/remover.png'
 import CashFlow from '../views/CashFlow'
 import { Link } from 'react-router-dom'
 
-const baseUrl = 'http://localhost:80/expense'
+const baseUrl = '46.101.232.55/expense'
 
 const initialState = {
     cash: {

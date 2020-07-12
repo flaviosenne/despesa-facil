@@ -8,7 +8,7 @@ import icon from '../icons/user.png'
 
 import axios from 'axios'
 
-const baseUrl = "http://localhost:80/user"
+const baseUrl = "46.101.232.55/user"
 const props = {icon, route: '/'}
 
 const initialState = {
