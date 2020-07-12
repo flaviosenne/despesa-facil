@@ -25,7 +25,7 @@ export default User => {
             
             if((pass == password)  &&  (user.length > 3)){
 
-                axios.post('http://localhost:80/user', {
+                axios.post('46.101.232.55/user', {
                     name, email, user, password
                 })
                 alert(user + ' cadastrado com sucesso')
