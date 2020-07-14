@@ -1,2 +1,2 @@
 ### GET 
-GET http://46.101.232.55:80/expense
+GET http://46.101.232.55:80/user
