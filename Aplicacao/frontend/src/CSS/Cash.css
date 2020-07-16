@@ -1,15 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&family=Montserrat:ital,wght@1,200&display=swap');
 
+.Fluxo {
+    margin-top: 20px;
+    position: static;
+}
 .Fluxo > span{
+    position: static;
     font-family: 'Montserrat Subrayada', 'sans-serif';
     margin-top: 30px;
+    padding: 40px;
     display: flex;
-    padding: 15px;
     font-size: 20pt;
     justify-content: center;
 }
 .filtro{
+    position: static;
     width: 35%;
     margin: 0 auto;
     display: flex;
@@ -49,19 +55,19 @@
     border: none;
 }
 
-
-
     .data{
+        position: static;
         vertical-align: middle;
         width: 34%;
-        position: relative;
         right: 0px;
         display: flex;
         margin: 10px auto;
         justify-content: flex;
     }
     .data input{
+
         width: 100%;
+        position: static;
         border: none;
         padding: 5px;
         font-size: 15px;
@@ -69,12 +75,18 @@
         background: none;
     }
     .data span{
+        position: static;
         padding: 10px;
     }
 
+    @media(max-width: 600px){
+        .data{
+            width: 70%;
+        }
+    }
 
 .receita{
-    position: relative;
+    position: static;
     width: 50%;
     display: flex;
     font-size: 18px;
