@@ -3,7 +3,7 @@
     position: static;
     background-color: rgb(255, 255, 255);
     width: 100%;
-    margin-bottom: 30px;
+    margin: auto;
     padding: 10px;
     display: flex;
     justify-content: flex-start;
