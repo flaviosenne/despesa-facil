@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import axios from 'axios'
 import '../CSS/Cash.css';
 import Header from '../components/Header'
+import Table from '../components/RenderTable'
 import relatorio from '../icons/relatorio.png'
 import incluir from '../icons/incluir.png'
 import { Link } from 'react-router-dom';
@@ -19,6 +20,7 @@ const initialState = {
     },
     list: [],
     total: [],
+    dates: []
 }
 
 
@@ -53,6 +55,30 @@ export default class CashFlow extends Component {
         return resultado
 
     }
+
+    dataInicio = ''
+    dataFim = '' 
+    filtrar(){
+
+        const periodoFiltrado = []
+       this.state.list.forEach(dados => {
+            periodoFiltrado.push(dados.date.slice(0,10))
+        })
+
+        // // iniciando o contador com menos um para ele iniciar o incremento do 0
+        // // facilitando a busca do indice futuramente
+        var cont = -1
+        var indices = []
+        for(let periodo of periodoFiltrado){
+            cont ++
+            if(periodo >= this.dataInicio  && periodo <= this.dataFim){
+                indices.push(cont)
+            }
+        }
+
+        this.state.dates = indices
+
+    }
     render() {
         return (
             <>
@@ -62,22 +88,33 @@ export default class CashFlow extends Component {
 
                 <div className="data">
 
-                    <span>de:</span>  <input type='date' />
+                    <span>de:</span>  
+                    <input 
+                    type='date' 
+                    onChange = {e => this.dataInicio = e.target.value}
+                    />
+
+
                 </div>
                 <div className="data">
-                    <span> até: </span> <input type='date' />
+                    <span> até: </span>
+                     <input 
+                     type='date' 
+                     onChange = {e => this.dataFim = e.target.value} 
+                     />
 
                 </div>
 
                 <div className="filtro">
                    <Link to ="/despesa"><img className="icon" src={incluir} alt="icone incluir" /></Link>
 
-                    <button type="submit"> Filtrar </button>
+                    <button onClick = {()=> this.filtrar()}> Filtrar </button>
                     <img className="icon" src={relatorio} alt="icone incluir" />
                 </div>
 
         <label  className="receita"> Receita: R$ {this.listRecep()}</label>
             </div>
+            <Table {...initialState}/>
             </>
         )
     }

@@ -8,7 +8,7 @@ import About from './views/About'
 import CreateUser from './views/CreateUser'
 import CreateFlow from './views/CreateFlow'
 import UpdateFlow from './views/UpdateFlow'
-import Table from './components/RenderTable'
+import CashFlow from './views/CashFlow'
 
 export default Views => {
     return (
@@ -22,7 +22,7 @@ export default Views => {
                 <Route path = "/usuario" exact component ={CreateUser}/>
                 <Route path = "/despesa" exact component ={CreateFlow}/>
                 <Route path = "/despesa-update/:id" exact component ={UpdateFlow}/>
-                <Route path = "/fluxo-caixa" exact component ={Table}/>
+                <Route path = "/fluxo-caixa" exact component ={CashFlow}/>
             </Switch>
         </BrowserRouter>
         </>

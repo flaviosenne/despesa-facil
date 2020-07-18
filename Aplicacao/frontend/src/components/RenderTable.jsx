@@ -1,9 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
 import alterar from '../icons/alterar.png'
 import remover from '../icons/remover.png'
-import CashFlow from '../views/CashFlow'
 import { Link } from 'react-router-dom'
 
 const baseUrl = 'http://46.101.232.55/expense'
@@ -20,7 +19,7 @@ const initialState = {
     total: [],
 }
 
-export default class Table extends CashFlow {
+export default class Table extends Component {
 
     state = { ...initialState }
 
@@ -51,12 +50,15 @@ export default class Table extends CashFlow {
         return data.getDate() + '/' + Number(data.getMonth()+1) + '/' + data.getFullYear()
     }
 
+    teste(){
+        console.log(new Table())
+    }
+ 
     render() {
         return (
             <>
 
-                <CashFlow />
-                <table className="table table-hover">
+                <table onClick = {e => this.teste(e)} className="table table-hover">
                     <thead>
                         <tr>
                             <td>Data Operção</td>
