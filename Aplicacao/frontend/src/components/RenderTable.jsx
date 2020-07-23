@@ -25,6 +25,9 @@ const initialState = {
 
 export default class Table extends Component {
 
+    constructor(props){
+        super(props)
+    }
     state = { ...initialState }
 
     state2 = []

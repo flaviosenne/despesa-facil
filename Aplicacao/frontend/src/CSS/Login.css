@@ -1,8 +1,8 @@
 .login{
-    width: 50%;
+    width: 30%;
     position: static;
     min-height: 350px;
-    margin: auto;
+    margin: 40px auto;
     padding: 10px;
     border: dotted black;
     display: grid;
@@ -62,8 +62,13 @@
 }
 
 
-@media(max-width: 600px){
+@media(max-width: 900px){
     .login{
-        width: 90%;
+        width: 50%;
+    }
+}
+@media(max-width: 400px){
+    .login{
+        width: 80%;
     }
 }
