@@ -172,9 +172,28 @@ export default class Table extends Component {
         }
     }
 
+    // abrir e fechar os olhos da tabela
+
     eyes(e){
         e.preventDefault()
+        if(e.target.src == 'http://localhost:3000/static/media/eyesOpen.37dca91e.png'){
+            this.img(eyes2)
+        }else{
+            this.img(eyes)
+            
+        }
         this.UNSAFE_componentWillMount()
+    }
+    aux = eyes
+    img(img){
+        if(img == eyes){
+            this.aux = eyes
+        }
+        if(img == eyes2){
+            this.aux = eyes2
+        }
+        return this.aux
+
     }
     render() {
         return (
@@ -182,7 +201,7 @@ export default class Table extends Component {
                 <table className="table table-hover">
 
                     <thead>
-                            <img  onClick= {(e) => this.eyes(e)} id = 'eyes'className = "icon"src={eyes} alt="eyes"/>
+                            <img  onClick= {(e) => this.eyes(e)} id = 'eyes' src = {this.img(0)}className = "icon"alt="eyes"/>
                         <tr>
                             <td>Data Operção</td>
                             <td>Descrição</td>
