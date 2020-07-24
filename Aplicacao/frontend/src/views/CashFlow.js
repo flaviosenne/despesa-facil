@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 
 import '../CSS/Cash.css';
 import Header from '../components/Header'
@@ -8,7 +8,7 @@ import incluir from '../icons/incluir.png'
 import { Link } from 'react-router-dom';
 
 import axios from 'axios'
-import {filtrar, listRecep, renderDateFilter} from '../services/API'
+import {filtrar, listRecep} from '../services/API'
 import icon from '../icons/cash.png'
 const props = {icon, route: '/home'}
 
@@ -85,7 +85,7 @@ export default class CashFlow extends Component {
                     <img className="icon" src={relatorio} alt="icone incluir" />
                 </div>
 
-        <label  className="receita"> Receita: R$ {listRecep(this.state)}</label>
+        <label  className="receita"> Receita: R$ {listRecep(this.state).toFixed(2)}</label>
             </div>
             <Table/>
             </>

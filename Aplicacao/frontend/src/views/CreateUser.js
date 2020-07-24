@@ -23,15 +23,14 @@ export default User => {
         try{
             
             console.log(name, email, password, user)
-            if((pass == password)  &&  (user.length > 3)){
+            if(pass === password  &&  user.length > 3){
 
                 await axios.post('http://46.101.232.55:80/user', {
                     name, email, user, password
                 })
-                alert(user + ' cadastrado com sucesso')
+                alert(user.name + ' cadastrado com sucesso')
                 history.push('/login')
-            }
-            
+            }           
             
         }catch(err){
             console.log(err)

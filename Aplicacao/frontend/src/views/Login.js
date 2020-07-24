@@ -10,10 +10,7 @@ import axios from 'axios'
 const baseUrl = "http://46.101.232.55:80/user"
 const props = { icon, route: '/' }
 
-
-
 export default class Login extends Component {
-
 
     constructor(props) {
         super(props)

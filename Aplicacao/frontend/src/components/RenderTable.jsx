@@ -4,7 +4,7 @@ import axios from 'axios'
 import alterar from '../icons/alterar.png'
 import remover from '../icons/remover.png'
 import { Link } from 'react-router-dom'
-import { renderDate } from '../services/API'
+import { renderDate, filtrar, formatDate } from '../services/API'
 import eyes from '../icons/eyesOpen.png'
 import eyes2 from '../icons/eyesClose.png'
 
@@ -25,31 +25,47 @@ const initialState = {
 
 export default class Table extends Component {
 
-    constructor(props){
-        super(props)
-    }
     state = { ...initialState }
 
     state2 = []
     cont = 0
     // metodo que irá ser executado assim que o componente for renderizado
     async UNSAFE_componentWillMount(cont) {
-        if(cont == undefined  || cont == 1){
+        if (cont == undefined || cont == 1) {
             this.filter()
             await axios(baseUrl).then(resp => {
                 this.setState({ list: resp.data })
             })
+            
+            // listar despesas cadastradas conforme o dia em que está buscando
+            // em um periodo de um mes
+            const date = formatDate(new Date()).split('/')
+            const start = date[2] + '-' + (date[1] < 10 ? '0' + date[1] : date[1]) + '-' + date[0]
+            const end = date[2] + '-' + ((parseInt(date[1]) + 1) < 10 ? '0' + (parseInt(date[1]) + 1) : (parseInt(date[1])) + 1) + '-' + date[0]
+
+
+            this.state2 = []
+            for (let i = 0; i < filtrar(this.state, start, end).length; i++) {
+                // percorrer todos os ddos
+                for (let dadosIndices in this.state.list) {
+                    // comparar os indices
+                    if (dadosIndices == filtrar(this.state, start, end)[i]) {
+                        // guardar dentro de um array as despesas filtradas
+                        this.state2.push(this.state.list[dadosIndices])
+                    }
+
+                }
+            }
         }
 
     }
-
-
 
     filter() {
 
         if (renderDate() == undefined) {
             //caso o usuario não filtrou por nenhum periodo
             // será renderizado a listagem normal
+
             return undefined
         }
         else {
@@ -66,9 +82,9 @@ export default class Table extends Component {
 
                 }
             }
-            if(this.state2.length > 0){
+            if (this.state2.length > 0) {
                 this.UNSAFE_componentWillMount(this.cont++)
-                
+
 
             }
             renderDate(this.state2)
@@ -88,108 +104,61 @@ export default class Table extends Component {
     }
 
 
-    formatDate(date) {
-
-        var data = new Date(date)
-
-        return data.getDate() + '/' + Number(data.getMonth() + 1) + '/' + data.getFullYear()
-    }
-
     renderTable() {
-        if (this.state2.length == 0) {
-            return (
-                <>
-                    <tbody>
-                        {this.state.list.map(cash => {
-                            return (
+        return (
+            <>
+                <tbody>
+                    {this.state2.map(cash => {
+                        return (
 
-                                <tr key={cash._id}>
-                                    <td>{this.formatDate(cash.date)}</td>
-                                    <td>{cash.description}</td>
-                                    <td>{cash.status}</td>
-                                    <td>R${cash.value.toFixed(2)}</td>
-                                    <td>
+                            <tr key={cash._id}>
+                                <td>{formatDate(cash.date)}</td>
+                                <td>{cash.description}</td>
+                                <td>{cash.status}</td>
+                                <td>R${cash.value.toFixed(2)}</td>
+                                <td>
 
-                                        <Link to={this.ViewUpdateExpense(cash._id)}>
-                                            <img
-                                                className="icon"
-                                                src={alterar}
-                                                alt="aletar"
-                                            />
-                                        </Link>
-
-
+                                    <Link to={this.ViewUpdateExpense(cash._id)}>
                                         <img
                                             className="icon"
-                                            src={remover}
-                                            onClick={() => this.remove(cash._id)}
-                                            alt="remover" />
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                                            src={alterar}
+                                            alt="aletar"
+                                        />
+                                    </Link>
+                                    <img
+                                        className="icon"
+                                        src={remover}
+                                        onClick={() => this.remove(cash._id)}
+                                        alt="remover" />
+                                </td>
+                            </tr>
+                        )
+                    })}
 
-                    </tbody>
-                </>
-            )
-        }
-        else {
-            return (
-                <>
-                    <tbody>
-                        {this.state2.map(cash => {
-                            return (
-
-                                <tr key={cash._id}>
-                                    <td>{this.formatDate(cash.date)}</td>
-                                    <td>{cash.description}</td>
-                                    <td>{cash.status}</td>
-                                    <td>R${cash.value.toFixed(2)}</td>
-                                    <td>
-
-                                        <Link to={this.ViewUpdateExpense(cash._id)}>
-                                            <img
-                                                className="icon"
-                                                src={alterar}
-                                                alt="aletar"
-                                            />
-                                        </Link>
-
-
-                                        <img
-                                            className="icon"
-                                            src={remover}
-                                            onClick={() => this.remove(cash._id)}
-                                            alt="remover" />
-                                    </td>
-                                </tr>
-                            )
-                        })}
-
-                    </tbody>
-                </>
-            )
-        }
+                </tbody>
+            </>
+        )
+        // }
     }
 
     // abrir e fechar os olhos da tabela
 
-    eyes(e){
+    eyes(e) {
         e.preventDefault()
-        if(e.target.src == 'http://localhost:3000/static/media/eyesOpen.37dca91e.png'){
-            this.img(eyes2)
-        }else{
+        if (e.target.src == 'http://localhost:3000/static/media/eyesClose.1b64e2d8.png') {
             this.img(eyes)
-            
+        } else {
+            this.img(eyes2)
+
         }
         this.UNSAFE_componentWillMount()
     }
-    aux = eyes
-    img(img){
-        if(img == eyes){
+    aux = eyes2
+    img(img) {
+        if (img == eyes) {
             this.aux = eyes
         }
-        if(img == eyes2){
+        if (img == eyes2) {
             this.aux = eyes2
         }
         return this.aux
@@ -199,9 +168,10 @@ export default class Table extends Component {
         return (
             <>
                 <table className="table table-hover">
-
                     <thead>
-                            <img  onClick= {(e) => this.eyes(e)} id = 'eyes' src = {this.img(0)}className = "icon"alt="eyes"/>
+
+                        <img onClick={(e) => this.eyes(e)} id='eyes'
+                        src={this.img(0)} className="icon" alt="eyes" />
                         <tr>
                             <td>Data Operção</td>
                             <td>Descrição</td>

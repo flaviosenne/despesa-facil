@@ -23,24 +23,20 @@ export default User => {
     const post = async (e) => {
 
         e.preventDefault()
-        try {
-            if(type == 'receita'){
-                await axios.post('http://46.101.232.55:80/recep', {
-                    date, value
-                })
-                alert('Receita cadastrada com sucesso')
-                history.push('/fluxo-caixa')
+        if (type === 'receita') {
+            await axios.post('http://46.101.232.55:80/recep', {
+                date, value
+            })
+            alert('Receita cadastrada com sucesso')
+            history.push('/fluxo-caixa')
 
-            }else{
-                await axios.post('http://46.101.232.55:80/expense', {
-                    date, value, description, status
-                })
-                alert('Despesa cadastrada com sucesso')
-                history.push('/fluxo-caixa')
+        } else {
+            await axios.post('http://46.101.232.55:80/expense', {
+                date, value, description, status
+            })
+            alert('Despesa cadastrada com sucesso')
+            history.push('/fluxo-caixa')
 
-            }
-        } catch (err) {
-            console.log(err)
         }
     }
     return (
@@ -48,65 +44,65 @@ export default User => {
             <Header {...props} />
             <div className='usuario login'>
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
-               
+
                 <label> Data </label>
                 <input
                     value={date}
-                    type="date" 
-                    onChange = {e => setDate(e.target.value)}/>
+                    type="date"
+                    onChange={e => setDate(e.target.value)} />
 
                 <label> Tipo </label>
                 <div className="tipo">
 
                     <input
-                        value='despesa' 
-                        type="radio" 
-                        name="tipo" 
-                        onChange = {e => setType(e.target.value)}/> 
-                        <label >Despesa</label>
+                        value='despesa'
+                        type="radio"
+                        name="tipo"
+                        onChange={e => setType(e.target.value)} />
+                    <label >Despesa</label>
                 </div>
-               
+
                 <div className="tipo">
                     <input
-                        value='receita' 
-                        type="radio" 
-                        name="tipo" 
-                        onChange = {e => setType(e.target.value)}
-                        />
-                        <label >Receita </label>
+                        value='receita'
+                        type="radio"
+                        name="tipo"
+                        onChange={e => setType(e.target.value)}
+                    />
+                    <label >Receita </label>
                 </div>
 
                 <label> Descrição </label>
                 <input
-                    value={description} 
-                    onChange = {e => setDescription(e.target.value)}/>
+                    value={description}
+                    onChange={e => setDescription(e.target.value)} />
 
-              
+
                 <label> Status </label>
                 <div className="tipo">
 
                     <input
-                        value='pendente' 
-                        type="radio" 
-                        name="status" 
-                        onChange = {e => setStatus(e.target.value)}/> 
-                        
-                        <label >Pendente</label>
+                        value='pendente'
+                        type="radio"
+                        name="status"
+                        onChange={e => setStatus(e.target.value)} />
+
+                    <label >Pendente</label>
                 </div>
                 <div className="tipo">
                     <input
-                        value='finalizado' 
-                        type="radio" 
+                        value='finalizado'
+                        type="radio"
                         name="status"
-                        onChange = {e => setStatus(e.target.value)} /> 
-                        <label >Finalizado </label>
+                        onChange={e => setStatus(e.target.value)} />
+                    <label >Finalizado </label>
                 </div>
 
                 <label> Valor </label>
                 <input
-                    value={value} 
+                    value={value}
                     type="number"
-                    onChange = {e => setValue(e.target.value)} />
+                    onChange={e => setValue(e.target.value)} />
 
                 <button onClick={e => post(e)} > Cadastrar </button>
                 <Link to="/fluxo-caixa" ><button > Cancelar </button></Link>
