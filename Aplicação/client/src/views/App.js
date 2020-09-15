@@ -43,10 +43,9 @@ export default Home => {
         </div>
 
         <div>
-        <Link to='relatorio'>
+        
 
           <img src={relatorio} alt="icone relatorio" />
-        </Link>
 
           <p>
             Com o relatório em mãos, é possível

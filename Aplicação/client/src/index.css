@@ -38,10 +38,10 @@ a, Link{
     background: rgb(26, 28, 32);
     margin: 0 auto;
     width: 100%;
-    color: #fff;
+    color: rgb(255, 255, 255);
 }
 .light{
-    background: rgb(238, 231, 231);
+    background: rgb(255, 255, 255);
     color: #000;
 }
 .border-light{
