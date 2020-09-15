@@ -1,0 +1,42 @@
+.footer{
+    position: static;
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    padding: 10px;
+}
+
+.footer a{
+  text-decoration: none;  
+}
+
+.footer a:hover{
+    text-decoration: underline;  
+
+}
+ul li{
+    list-style: none;
+    text-align: start;
+    margin: 15px 0;
+}
+
+
+.icon-footer{
+    margin: 0;
+    display: flex;
+    padding: 10px;
+}
+.icon-footer img{
+    margin: 40px 2px;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+}
+
+.icon-footer img:hover{
+    height: 62px;
+    width: 62px;
+    cursor: pointer;
+}

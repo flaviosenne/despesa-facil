@@ -1,0 +1,216 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+a, Link{
+    color: black;
+    text-decoration: none;
+}
+
+.teste{
+    width:50%;
+    height:100vh;
+
+    margin: 20px auto;
+}
+.teste div{
+    max-height:400px;
+}
+
+/* theme dark-default */
+
+/* ----------------------- */
+.usuario-light{
+    background:linear-gradient(to right, rgb(24, 163, 156), rgb(12, 123, 143), rgb(70, 70, 167));
+}
+.usuario-dark{
+    background: linear-gradient(to right, rgb(199, 70, 124), rgb(192, 41, 104), rgb(131, 12, 62));
+}
+
+.button{
+    display: flex;
+    justify-content: space-around;
+}
+.dark, .light{
+    background: rgb(26, 28, 32);
+    margin: 0 auto;
+    width: 100%;
+    color: #fff;
+}
+.light{
+    background: rgb(238, 231, 231);
+    color: #000;
+}
+.border-light{
+    border: none;
+    border-bottom: solid 2.5px rgb(70, 195, 199);
+}
+.border-dark{
+    border: none;
+    border-bottom: solid 2.5px rgb(199, 70, 124);
+}
+
+/* ----------------------- */
+
+
+/* Layout Button  */
+/* ----------------------- */
+.btn{
+    text-align: center;
+    align-items: center;
+    font-size: 20px;
+    margin: 0 auto;
+        max-width: 200px;
+        padding: 10px;
+        border: none;
+        background-color: rgb(49, 22, 54);
+        color: white;
+        border-radius: 4px;
+    }
+    
+    .btn:hover{
+        text-decoration: none;
+        background-color:  rgba(49, 22, 54, 0.8);
+        font-weight: 300;
+    }
+    
+    .tap{
+        max-width:40px;
+    }
+    .tap:active{
+        max-width:43px;
+    }
+/* ----------------------- */
+
+
+
+/* Layout Landing Page */
+/* ----------------------- */
+.landingPage{
+    min-height: 600px;
+    margin: 0 auto;
+    display: grid;
+}
+
+.landingPage p{
+    margin: 30px auto; 
+}
+
+.landingPage img {
+    display: flex;
+    margin: 20px auto;
+    width: 70px;
+}
+
+.landingPage div{
+    border: dotted 1.5px gray;
+    border-radius: 20px;
+    margin: 10px;
+    height: 250px;
+    padding: 10px;
+}
+/* ----------------------- */
+
+
+/* Designer Response */
+/* ----------------------- */
+@media(min-width: 650px){
+    .landingPage{
+        height: 500px;
+        margin: 0 auto;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .landingPage img {
+        display: flex;
+        margin: 0 auto;
+    }
+    .landingPage button{
+            display: flex;
+            justify-content: center;
+        }
+        
+    }
+    
+
+
+/* ----------------------- */
+
+
+
+/* Layout Table List Expense */
+/* ----------------------- */
+table.table {
+    width: 70%;
+    margin: 20px auto;
+}   
+
+
+.finalized {
+    background-color: rgb(74, 173, 74);
+}
+
+.pendent {
+    background-color: rgb(127, 163, 29);
+    
+}
+table img.icon{
+    display: inline-block;
+    justify-items: space-between;
+    max-width: 30px;
+    margin: 10px;
+    padding: 0;
+}
+table img.icon:hover{
+    padding: 1px;
+}
+/* ----------------------- */
+
+@media(min-width: 900px){
+    .landingPage{
+        height: 600px;
+    margin: 0 auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+}
+@media(max-width: 500px){
+table.table {
+    max-width: 100%;
+    font-size: 10pt;
+    margin: 10px auto;
+}   
+table.table img {
+    width: 20px;
+    display: inline-block;
+}
+
+}
+
+/* Carousel */
+.image{
+    margin: 10px auto;
+    width: 80%;
+    height:400px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 4px grey;
+}
+
+.carousel-btn{
+    /* background-color: red; */
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    margin: 10px auto;
+}
+
+.msg{
+    position: absolute;
+    margin: auto;
+    bottom: 0;
+}

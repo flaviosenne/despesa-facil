@@ -1,0 +1,58 @@
+.login{
+    width: 30%;
+    position: static;
+    min-height: 350px;
+    margin: 40px auto;
+    padding: 10px;
+    border: dotted rgb(0, 0, 0);
+    display: grid;
+    justify-content: center;
+}
+.login img {
+    width: 80px;
+    margin: 0 auto;
+}
+
+.login input{
+    width: 100%;
+    padding: 0;
+    border: none;
+    font-size: 20px;
+    height: 30px;
+    margin-bottom: 20px;
+    background: none;
+    border-bottom: solid black;
+}
+
+.login a {
+    padding: 10px;
+    text-decoration: none;
+    text-align: center;
+   
+}
+.login a:hover{
+    font-size: 16.5px;
+} 
+.login a + a{
+    font-size: 12px;
+}
+
+.login a + a:hover{
+    font-size: 12.5px;
+}
+
+.login label{
+    text-align: start;
+}
+
+
+@media(max-width: 900px){
+    .login{
+        width: 50%;
+    }
+}
+@media(max-width: 400px){
+    .login{
+        width: 80%;
+    }
+}

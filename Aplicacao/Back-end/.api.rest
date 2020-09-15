@@ -1,2 +1,0 @@
-### list recep
-GET http://localhost:80/recep

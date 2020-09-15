@@ -1,0 +1,123 @@
+### Get Test
+
+GET http://localhost:3001/user/c5c64f87
+
+
+### Post users
+
+POST http://localhost:3001/user
+Content-Type: application/json
+
+{
+    "name":"lucas",
+    "user":"lucao",
+    "email":"luca@email",
+    "password":"123"
+}
+
+
+### Post expense
+
+POST http://localhost:3001/expense
+Content-Type: application/json
+Authorization: f85a62e2
+
+{
+    "description":"xbox",
+    "status":"pendente",
+    "value":900
+}
+
+### Get expense
+
+GET http://localhost:3001/expense
+
+
+
+### PUT expense
+
+PUT http://localhost:3001/expense/3
+Content-Type: application/json
+
+{
+    "description":"notebook slim",
+    "date":"13/10/2020",
+    "id_user":"1381a095",
+    "value":2000
+}
+
+
+
+
+
+
+
+### Post expense
+
+DELETE  http://localhost:3001/expense/2
+Content-Type: application/json
+Authorization: 1381a095
+
+### Get expense
+
+GET http://localhost:3001/profile
+Authorization: f85a62e2
+
+
+
+### login
+
+POST http://localhost:3001/sessions
+Content-Type: application/json
+
+{
+    "user":"",
+    "password":""
+}
+
+
+
+### Post expense
+
+POST http://localhost:3001/recep
+Content-Type: application/json
+Authorization: f85a62e2
+
+{
+    "value":100,
+    "headers":{
+        "Authorization":"f85a62e2"
+    }
+}
+
+### Get expense
+
+GET http://localhost:3001/recep
+
+
+
+### PUT recep
+
+PUT http://localhost:3001/recep/1
+Content-Type: application/json
+
+{
+    
+    "date":"13/10/2020",
+    "value":2000,
+    "headers":{
+        "Authorization":"f85a62e2"
+    }
+}
+
+
+
+
+
+
+
+### Post recep
+
+DELETE  http://localhost:3001/recep/2
+Content-Type: application/json
+Authorization: 1381a095
