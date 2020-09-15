@@ -6,10 +6,12 @@ module.exports = {
 
         const expense = await connection('expense')
             .where('id_user', id_user)
+            .orderBy('date', 'asc')
             .select()
-       
-        const recep = await connection('recep')
+            
+            const recep = await connection('recep')
             .where('id_user', id_user)
+            .orderBy('date', 'asc')
             .select()
 
             return res.json({expense, recep})
