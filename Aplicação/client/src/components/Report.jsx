@@ -3,7 +3,7 @@ import Header from './Header'
 import icon from '../icons/relatorio.png'
 import '../CSS/Paper.css'
 import axios from 'axios'
-import {listRecep, listExpense }from '../services/Methods'
+import { listRecep, listExpense } from '../services/Methods'
 const baseUrl = 'http://104.248.130.44:3001/profile'
 // const baseUrl = 'http://localhost:3001/profile'
 
@@ -23,21 +23,21 @@ export default class Report extends Component {
             .then(resp => {
                 this.setState({ expenseAPI: resp.data.expense })
                 this.setState({ recepAPI: resp.data.recep })
-            
+
             })
 
-        }
-        
-        day = new Date().getDate() < 10
+    }
+
+    day = new Date().getDate() < 10
         ? '0' + new Date().getDate() :
         new Date().getDate()
-        
-        month = (new Date().getMonth() + 1) < 10
+
+    month = (new Date().getMonth() + 1) < 10
         ? '0' + (new Date().getMonth() + 1) :
         new Date().getMonth()
-        
-        year = new Date().getFullYear()
-        
+
+    year = new Date().getFullYear()
+
 
     render() {
         return (
@@ -64,11 +64,17 @@ export default class Report extends Component {
                             <span><strong>Despesas:</strong><br />
                         R$ {listExpense(this.state.expenseAPI)}</span><br />
                             <span><strong>Total:</strong><br /> R$ {
-                            (listRecep(this.state.recepAPI) - 
-                            listExpense(this.state.expenseAPI)).toFixed(2)}</span>
+                                (listRecep(this.state.recepAPI) -
+                                    listExpense(this.state.expenseAPI)).toFixed(2)}</span>
+                        <span>Foi gasto {((listExpense(this.state.expenseAPI) /
+                        listRecep(this.state.recepAPI)) * 100).toFixed(0)}% <br/>do valor total</span>
                         </div>
                     </div>
-                    Despesas
+
+                    <strong>
+                        Despesas
+                    </strong>
+
                     <table className='table table-hover'>
                         <thead>
                             <tr>
@@ -81,7 +87,7 @@ export default class Report extends Component {
                         </thead>
                         <tbody>
                             {this.state.expenseAPI.map(expense => {
-                                // this.expense+= expense.value
+
                                 return (
 
                                     <tr>
@@ -96,28 +102,31 @@ export default class Report extends Component {
                     </table>
 
 
-                    Receita
+                    <strong>
+                        Receita
+                    </strong>
                     <table className='table table-hover'>
                         <thead>
                             <tr>
                                 <td>data</td>
+                                <td>descrição</td>
                                 <td>valor</td>
                             </tr>
                         </thead>
                         <tbody>
                             {this.state.recepAPI.map(recep => {
-                                // this.recep += recep.value
-                    
+
                                 return (
                                     <tr>
                                         <td>{recep.date}</td>
+                                        <td>{recep.description}</td>
                                         <td>R${recep.value}</td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </table>
-                
+
                 </div>
 
             </>

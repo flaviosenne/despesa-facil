@@ -70,7 +70,7 @@ export default class Cash extends Component {
             for (let i = 0; i < receita.length; i++) {
                 this.recep2.push(this.state.recep[receita[i]])
             }
-            console.log(despesa)
+            // console.log(despesa)
             window.localStorage.setItem('recep',listRecep(this.recep2).toFixed(2))
             window.localStorage.setItem('expense',listExpense(this.state2).toFixed(2))
             this.UNSAFE_componentWillMount(-1)

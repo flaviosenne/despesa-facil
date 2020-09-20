@@ -3,6 +3,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('recep', (table) => {
         table.increments()
 
+        table.string('description').notNullable()
         table.timestamp('date').notNullable()
         table.decimal('value').notNullable()
 

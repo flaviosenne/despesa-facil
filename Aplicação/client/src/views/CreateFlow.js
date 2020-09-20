@@ -24,11 +24,10 @@ export default User => {
     const history = useHistory()
 
     const post = async (e) => {
-
         e.preventDefault()
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
-                date, value,
+                date, value, description,
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
                 },

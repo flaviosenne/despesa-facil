@@ -10,8 +10,6 @@ module.exports = {
         
         const expense = await connection('expense')
         .join('users', 'users.id', '=', 'expense.id_user')
-        .limit(10)
-        .offset((page - 1)* 10)
         .select(
             ['expense.*',
              'users.name',
@@ -27,7 +25,7 @@ module.exports = {
         const DATE = new Date()
         const year = (DATE.getFullYear())
         const month = (DATE.getMonth()+1) < 10? '0' + (DATE.getMonth()+1):(DATE.getMonth()+1)
-        const day = (DATE.getDate())
+        const day = (DATE.getDate()) < 10? '0' + (DATE.getDate()):(DATE.getDate())
 
         const {description, status, value, date} = req.body
         const id_user = req.body.headers.Authorization

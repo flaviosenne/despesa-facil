@@ -12,7 +12,7 @@ export const  remove = async (e, id)=> {
     // assim que deletar o item, o metodo UNSAFE_componentWillMount é chamado para atualizar a pagina
 }
 export const  formatDateToReact = (date) => {
-        var date1 = (date.split('/'))
+        var date1 = (date.split('-'))
 
         var year = date1[2]
         var month = date1[1]
@@ -24,14 +24,24 @@ export const  formatDateToReact = (date) => {
 export const formatDate = (date) => {
 
     // data do filtro
-    const data = date.split('-')
+    const date1 = date.split('-')
     // data sem filtro
-    const data2 = date.split('/')
-
-    return (data2[0].length == 2 )? 
-        //aumentar o mes
-        data2[0] + '/0'+ (Number(data2[1])+1)+'/'+ data2[2]:
-        data[2] + '/' + data[1] + '/' + data[0]
+    const date2 = date.split('-')
+    
+    // date format yyyy-mm-dd
+    const day1 = date1[2]
+    const month1 = date1[1] 
+    const year1 = date1[0]
+    
+    
+    // console.log(date2)
+    // date format dd-mm-yyyy
+    const day2 = date2[0]  
+    const month2 = date2[1]
+    const year2 = date2[2]
+   
+    return day2.length == 2 ?(day2 + '-'+month2+'-'+year2):
+    (day1 + '-'+month1+'-'+year1)
 }
 
 export const ViewUpdateExpense = (id) => {
@@ -52,15 +62,14 @@ export const getDateNow = () =>{
     
     const month2 = (dateNow.getMonth()+2) < 10
         ? '0' + (dateNow.getMonth()+2) :
-        dateNow.getMonth()
+        dateNow.getMonth()+2
 
     const year = dateNow.getFullYear()
     
-    const dateStart = day + '/'+month+ '/'+year
+    const dateStart = day + '-'+month+ '-'+year
     
-    const dateEnd = day + '/'+month2+ '/'+ year
+    const dateEnd = day + '-'+month2+ '-'+ year
      
-
     return {dateStart, dateEnd}
             
 }
@@ -71,20 +80,23 @@ export const filtrar =(state, inicio, fim) =>{
     state.forEach(dados => {
         periodoFiltrado.push(dados.date)
     })
-
+    
     // // iniciando o contador com menos um para ele iniciar o incremento do 0
     // // facilitando a busca do indice futuramente
     var cont = -1
     var indices = []
     for(let periodo of periodoFiltrado){
         cont ++
+        // console.log('9' > '10')
         var dateBase = periodo.split('/')
-        var dateStart = formatDate(inicio).split('/')
-        var dateEnd = formatDate(fim).split('/')
-
-        // console.log(fim, dateEnd)
+        var dateStart = formatDate(inicio).split('-')
+        var dateEnd = formatDate(fim).split('-')
+        
+        // console.log('inicio',dateStart, '----------', 'base',dateBase)
+        // console.log('fim',dateEnd)
+        
     
-        if((dateBase[1] > dateStart[1]) && (dateBase[1] <= dateEnd[1])){
+        if((dateBase[1] > dateStart[1]) && (dateBase[1]) <= dateEnd[1]){
             // console.log('proximo mes')
             // no proximo mes
             if(

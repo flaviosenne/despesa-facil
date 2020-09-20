@@ -29,7 +29,7 @@ module.exports = {
         const month = (DATE.getMonth()+1) < 10? '0' + (DATE.getMonth()+1):(DATE.getMonth()+1)
         const day = (DATE.getDate())
 
-        const {value, date} = req.body
+        const {value, date, description} = req.body
         const id_user = req.body.headers.Authorization
        
 
@@ -38,6 +38,7 @@ module.exports = {
             var date2 = date.split('-')
         }
         const [id] = await connection('recep').insert({
+            description,
             value,
             date: date != undefined? 
                 (date2[2]+'/'+date2[1]+'/'+date2[0]):

@@ -1,5 +1,6 @@
 const connection = require("../database/connection")
 
+const helpers = require('../services/helpers')
 module.exports = {
     async index(req, res){
         const id_user = req.headers.authorization
@@ -14,6 +15,10 @@ module.exports = {
             .orderBy('date', 'asc')
             .select()
 
+            helpers.orderBy(expense)
+            helpers.orderBy(recep)
+           
+            
             return res.json({expense, recep})
     },
     async remove(req, res){
