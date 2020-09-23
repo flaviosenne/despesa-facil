@@ -4,5 +4,5 @@ http://104.248.130.44:3000
 
 ## user test
 
-## useer: joao
+## user: joao
 ## pass: joao
