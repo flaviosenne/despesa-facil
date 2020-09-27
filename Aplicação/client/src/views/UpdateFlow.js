@@ -48,7 +48,9 @@ export default User => {
         try {
 
             await axios.put(baseURL + '/expense/' + id, {
-                id, date: formatDate(date), value, description, status
+                id, date: formatDate(date), 
+                value: value.split('-')[0] == ''?0:value,
+                description, status
             })
             alert('Despesa atualizada com sucesso')
             history.push('/fluxo-caixa')
