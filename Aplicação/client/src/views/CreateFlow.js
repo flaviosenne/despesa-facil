@@ -25,24 +25,27 @@ export default User => {
 
     const post = async (e) => {
         e.preventDefault()
+                
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
-                date, value, description,
+                date, 
+                value: value.split('-')[0] == ''?0:value,
+                description,
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
                 },
             })
             alert('Receita cadastrada com sucesso')
             history.push('/fluxo-caixa')
-
+            
         } else {
             axios.post(baseURL + '/expense', {
-
+                
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
                 },
                 date,
-                value,
+                value: value.split('-')[0] == ''?0:value,
                 description,
                 status,
 

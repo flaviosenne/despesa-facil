@@ -22,24 +22,29 @@ module.exports = {
     },
 
     async createExpense(req, res){
-        const DATE = new Date()
-        const year = (DATE.getFullYear())
-        const month = (DATE.getMonth()+1) < 10? '0' + (DATE.getMonth()+1):(DATE.getMonth()+1)
-        const day = (DATE.getDate()) < 10? '0' + (DATE.getDate()):(DATE.getDate())
+        const day = new Date().getDate() < 10
+        ? '0' + new Date().getDate() :
+        new Date().getDate()
+
+        const month = (new Date().getMonth() + 1) < 10
+        ? '0' + (new Date().getMonth() + 1) :
+        new Date().getMonth()
+
+        const year = new Date().getFullYear()
 
         const {description, status, value, date} = req.body
         const id_user = req.body.headers.Authorization
        
 
         // formatar data que vem do front-end
-        if(date != undefined){
+        if(date != ''){
             var date2 = date.split('-')
         }
         const [id] = await connection('expense').insert({
             description,
             status,
             value,
-            date: date != undefined? 
+            date: date != ''? 
                 (date2[2]+'/'+date2[1]+'/'+date2[0]):
                 (day+ '/'+month+'/'+ year),
             id_user

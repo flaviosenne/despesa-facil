@@ -34,13 +34,13 @@ module.exports = {
        
 
         // formatar data que vem do front-end
-        if(date != undefined){
+        if(date != ''){
             var date2 = date.split('-')
         }
         const [id] = await connection('recep').insert({
             description,
             value,
-            date: date != undefined? 
+            date: date != ''? 
                 (date2[2]+'/'+date2[1]+'/'+date2[0]):
                 (day+ '/'+month+'/'+ year),
             id_user

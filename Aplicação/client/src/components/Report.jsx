@@ -58,53 +58,19 @@ export default class Report extends Component {
                         </div>
                         <div className='dois'>
 
-
-                            <span><strong>Receitas:</strong><br />
-                        R$ {listRecep(this.state.recepAPI)}</span><br />
-                            <span><strong>Despesas:</strong><br />
-                        R$ {listExpense(this.state.expenseAPI)}</span><br />
                             <span><strong>Total:</strong><br /> R$ {
                                 (listRecep(this.state.recepAPI) -
                                     listExpense(this.state.expenseAPI)).toFixed(2)}</span>
-                        <span>Foi gasto {((listExpense(this.state.expenseAPI) /
-                        listRecep(this.state.recepAPI)) * 100).toFixed(0)}% <br/>do valor total</span>
+                            <span>Foi gasto {((listExpense(this.state.expenseAPI) /
+                                listRecep(this.state.recepAPI)) * 100).toFixed(0)}% <br />do valor total</span>
                         </div>
                     </div>
 
-                    <strong>
-                        Despesas
-                    </strong>
+                    <span>
+                        <strong>Receitas:</strong><br />
+                        R$ {listRecep(this.state.recepAPI)}
+                    </span><br />
 
-                    <table className='table table-hover'>
-                        <thead>
-                            <tr>
-
-                                <td>data</td>
-                                <td>descrição</td>
-                                <td>status</td>
-                                <td>valor</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.expenseAPI.map(expense => {
-
-                                return (
-
-                                    <tr>
-                                        <td>{expense.date}</td>
-                                        <td>{expense.description}</td>
-                                        <td>{expense.status}</td>
-                                        <td>R${expense.value}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-
-
-                    <strong>
-                        Receita
-                    </strong>
                     <table className='table table-hover'>
                         <thead>
                             <tr>
@@ -126,7 +92,34 @@ export default class Report extends Component {
                             })}
                         </tbody>
                     </table>
+                    <span>
+                        <strong>Despesas:</strong><br />
+                        R$ {listExpense(this.state.expenseAPI)}
+                    </span><br />
 
+                    <table className='table table-hover'>
+                        <thead>
+                            <tr>
+                                <td>data</td>
+                                <td>descrição</td>
+                                <td>status</td>
+                                <td>valor</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.expenseAPI.map(expense => {
+                                return (
+
+                                    <tr>
+                                        <td>{expense.date}</td>
+                                        <td>{expense.description}</td>
+                                        <td>{expense.status}</td>
+                                        <td>R${expense.value}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
 
             </>
