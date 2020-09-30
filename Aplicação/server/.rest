@@ -54,9 +54,9 @@ Content-Type: application/json
 
 ### Post expense
 
-DELETE  http://localhost:3001/expense/2
+DELETE  http://localhost:3001/expense/11
 Content-Type: application/json
-Authorization: 1381a095
+Authorization: a83454ae
 
 ### Get expense
 

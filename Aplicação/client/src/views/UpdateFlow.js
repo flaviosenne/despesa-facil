@@ -34,6 +34,7 @@ export default User => {
             list.push(resp.data[0])
         })
 
+        console.log(list[0].date)
         setDate(formatDateToReact(list[0].date))
         setStatus(list[0].status)
         setDescription(list[0].description)
@@ -53,6 +54,7 @@ export default User => {
                 description, status
             })
             alert('Despesa atualizada com sucesso')
+            
             history.push('/fluxo-caixa')
 
         }

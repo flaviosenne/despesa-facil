@@ -12,7 +12,7 @@ export const  remove = async (e, id)=> {
     // assim que deletar o item, o metodo UNSAFE_componentWillMount é chamado para atualizar a pagina
 }
 export const  formatDateToReact = (date) => {
-        var date1 = (date.split('-'))
+        var date1 = (date.split('/'))
 
         var year = date1[2]
         var month = date1[1]
@@ -41,7 +41,9 @@ export const formatDate = (date) => {
     const year2 = date2[2]
    
     return day2.length == 2 ?(day2 + '-'+month2+'-'+year2):
-    (day1 + '-'+month1+'-'+year1)
+    // quando estou atualizando a despesa
+    // o formato vem diferente
+    (day1 + '/'+month1+'/'+year1)
 }
 
 export const ViewUpdateExpense = (id) => {
