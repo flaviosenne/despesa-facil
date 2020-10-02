@@ -43,7 +43,7 @@ export const formatDate = (date) => {
     return day2.length == 2 ?(day2 + '-'+month2+'-'+year2):
     // quando estou atualizando a despesa
     // o formato vem diferente
-    (day1 + '/'+month1+'/'+year1)
+    (day1 + '-'+month1+'-'+year1)
 }
 
 export const ViewUpdateExpense = (id) => {
@@ -111,7 +111,7 @@ export const filtrar =(state, inicio, fim) =>{
                 (dateBase[1] <= dateEnd[1]) &&
                 (dateBase[2] <= dateEnd[2])
                 ){
-                    
+                    // console.log(cont)                   
                     indices.push(cont)
                 }
             }
