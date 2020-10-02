@@ -29,7 +29,7 @@ export default User => {
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
                 date, 
-                value: value.split('-')[0] == ''?0:value,
+                value:Number(value) < 0 ? 0:Number(value),
                 description,
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
@@ -45,7 +45,7 @@ export default User => {
                     'Authorization': window.localStorage.getItem('user')
                 },
                 date,
-                value: value.split('-')[0] == ''?0:value,
+                value:Number(value) < 0 ? 0:Number(value),
                 description,
                 status,
 

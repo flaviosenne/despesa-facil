@@ -54,14 +54,17 @@ export default class Cash extends Component {
     cont = 0
 
     async UNSAFE_componentWillMount(cont, indicesDespesa, indicesReceita) {
+
+
         await axios(baseUrl, { headers: { 'Authorization': window.localStorage.getItem('user') } }).then(resp => {
             this.setState({ expense: resp.data.expense })
             this.setState({ recep: resp.data.recep })
         })
-        
+
+        console.log(cont)
         if (cont == undefined) {
             this.state2 = []
-            
+
             var despesa = filtrar(this.state.expense, getDateNow().dateStart, getDateNow().dateEnd)
             var receita = filtrar(this.state.recep, getDateNow().dateStart, getDateNow().dateEnd)
             for (let i = 0; i < despesa.length; i++) {
@@ -71,8 +74,8 @@ export default class Cash extends Component {
                 this.recep2.push(this.state.recep[receita[i]])
             }
             // console.log(despesa)
-            window.localStorage.setItem('recep',listRecep(this.recep2).toFixed(2))
-            window.localStorage.setItem('expense',listExpense(this.state2).toFixed(2))
+            window.localStorage.setItem('recep', listRecep(this.recep2).toFixed(2))
+            window.localStorage.setItem('expense', listExpense(this.state2).toFixed(2))
             this.UNSAFE_componentWillMount(-1)
         }
         if (cont == 1 || cont == 0) {
@@ -104,7 +107,7 @@ export default class Cash extends Component {
                         <span>de:</span>
                         <input
                             type='date'
-                            className = {window.localStorage.getItem('theme')}
+                            className={window.localStorage.getItem('theme')}
                             onChange={e => this.dataInicio = e.target.value}
                         />
                     </div>
@@ -112,41 +115,41 @@ export default class Cash extends Component {
                         <span> até: </span>
                         <input
                             type='date'
-                            className = {window.localStorage.getItem('theme')}
+                            className={window.localStorage.getItem('theme')}
                             onChange={e => this.dataFim = e.target.value}
                         />
                     </div>
                     <div className="filtro">
                         <Link to="/despesa"><img className="icon" src={incluir} alt="icone incluir" /></Link>
-                        <div className = 'button'>
+                        <div className='button'>
 
-                        <button className='btn' onClick={() => this.filtro()}>
-                            Filtrar
+                            <button className='btn' onClick={() => this.filtro()}>
+                                Filtrar
                         </button>
                         </div>
-                        <Link to = 'relatorio'>
+                        <Link to='relatorio'>
 
-                        <img className="icon" src={relatorio} alt="icone incluir" />
+                            <img className="icon" src={relatorio} alt="icone incluir" />
                         </Link>
                     </div>
 
                     <div className='titulo'>
-                        
+
                         <label className={listTotal(this.state2, this.recep2).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
-                        <p>
-                            Total: R$
+                            <p>
+                                Total: R$
                         </p>
-                        {listTotal(this.state2, this.recep2).toFixed(2)}</label>
-                        
+                            {listTotal(this.state2, this.recep2).toFixed(2)}</label>
+
                         <label className="receita">
                             <p>
                                 Receita: R$
                             </p>
                             {listRecep(this.recep2).toFixed(2)}</label>
-                        
+
                         <label className="despesa">
-                        <p>
-                            Despesa: R$
+                            <p>
+                                Despesa: R$
                         </p>
                             {listExpense(this.state2).toFixed(2)}</label>
                     </div>
@@ -164,8 +167,9 @@ export default class Cash extends Component {
                     </thead>
                     <tbody>
                         {this.state2.map(cash => {
+
                             return (
-                                <tr key={cash.id}>
+                                <tr key={cash.id} className={cash.status == 'finalizado' ? 'finalized' : 'pendent'} >
                                     <td>{cash.date}</td>
                                     <td>{cash.description}</td>
                                     <td>{cash.status}</td>
@@ -180,6 +184,7 @@ export default class Cash extends Component {
                                         </Link>
                                         <img
                                             onClick={(e) => {
+
                                                 remove(e, cash.id)
                                                 this.UNSAFE_componentWillMount()
                                             }}

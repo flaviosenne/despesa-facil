@@ -76,7 +76,7 @@ export default UserUpdate => {
                 <label > Usuario </label>
                 <input value={user} onChange={e => setUser(e.target.value)} />
                 
-                
+                <label> clique na mãozinha para aplicar o tema </label>
                 <div className = 'tema'>
 
                 Padrão
@@ -103,7 +103,7 @@ export default UserUpdate => {
                 <div className = 'button'>
 
                 <Link ><button className = 'btn' onClick={e => update(e)} > Atualizar </button></Link>
-                <Link to="/home" ><button className = 'btn'> Cancelar </button></Link>
+                <Link to = '/fluxo-caixa'><button className = 'btn' > Cancelar </button></Link>
                 </div>
             </div>
         </>

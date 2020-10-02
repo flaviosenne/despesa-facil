@@ -46,6 +46,24 @@ export const formatDate = (date) => {
     (day1 + '-'+month1+'-'+year1)
 }
 
+
+
+export const formatDateUpdate = (date) => {
+
+
+    const date2 = date.split('-')
+    
+    // console.log(date2)
+    // date format dd-mm-yyyy
+    const day2 = date2[2]  
+    const month2 = date2[1]
+    const year2 = date2[0]
+   
+    return (day2 + '/'+month2+'/'+year2)
+}
+
+
+
 export const ViewUpdateExpense = (id) => {
 
     return '/despesa-update/' + id

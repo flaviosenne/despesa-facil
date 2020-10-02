@@ -8,7 +8,7 @@ const baseUrl = 'http://104.248.130.44:3001/profile'
 // const baseUrl = 'http://localhost:3001/profile'
 
 const props = {
-    icon, route: '/home',
+    icon, route: '/fluxo-caixa',
     user: `/usuario/${window.localStorage.getItem('user')}`
 }
 export default class Report extends Component {
@@ -58,7 +58,7 @@ export default class Report extends Component {
                         </div>
                         <div className='dois'>
 
-                            <span><strong>Total:</strong><br /> R$ {
+                            <span><strong>Valor Disponível:</strong><br /> R$ {
                                 (listRecep(this.state.recepAPI) -
                                     listExpense(this.state.expenseAPI)).toFixed(2)}</span>
                             <span>Foi gasto {((listExpense(this.state.expenseAPI) /
@@ -83,7 +83,7 @@ export default class Report extends Component {
                             {this.state.recepAPI.map(recep => {
 
                                 return (
-                                    <tr>
+                                    <tr key={recep.id}>
                                         <td>{recep.date}</td>
                                         <td>{recep.description}</td>
                                         <td>R${recep.value}</td>
@@ -110,7 +110,7 @@ export default class Report extends Component {
                             {this.state.expenseAPI.map(expense => {
                                 return (
 
-                                    <tr>
+                                    <tr key={expense.id}>
                                         <td>{expense.date}</td>
                                         <td>{expense.description}</td>
                                         <td>{expense.status}</td>

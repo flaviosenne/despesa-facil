@@ -9,7 +9,7 @@ import dinheiro from '../icons/dinheiro.png'
 import icon from '../icons/cash+.png'
 import axios from 'axios'
 
-import { formatDate, formatDateToReact } from '../services/Methods'
+import { formatDateUpdate, formatDateToReact } from '../services/Methods'
 import { UserTheme } from '../services/Theme';
 const props = { icon, route: '/fluxo-caixa' }
 
@@ -49,8 +49,8 @@ export default User => {
         try {
 
             await axios.put(baseURL + '/expense/' + id, {
-                id, date: formatDate(date), 
-                value: value.split('-')[0] == ''?0:value,
+                id, date: formatDateUpdate(date), 
+                value:Number(value) < 0 ? 0:Number(value),
                 description, status
             })
             alert('Despesa atualizada com sucesso')

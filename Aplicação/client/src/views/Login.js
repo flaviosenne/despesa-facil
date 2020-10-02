@@ -37,7 +37,7 @@ export default Login => {
 
                     window.localStorage.setItem('user', data.data.id)
                     window.localStorage.setItem('name', data.data.name)
-                    history.push('/home')
+                    history.push('/fluxo-caixa')
                     window.location.reload()
                     return
                 }  else{
@@ -72,7 +72,7 @@ export default Login => {
                     type="password" />
 
                 <Link className = {window.localStorage.getItem('theme') }to="/usuario" > Criar Conta</Link>
-                <a href="#/" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</a>
+                {/* <a href="#/" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</a> */}
                 <button className = 'btn' onClick={e => login(e)}> Enviar </button>
             </div>
         </>
