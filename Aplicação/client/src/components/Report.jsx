@@ -34,7 +34,7 @@ export default class Report extends Component {
 
     month = (new Date().getMonth() + 1) < 10
         ? '0' + (new Date().getMonth() + 1) :
-        new Date().getMonth()
+        new Date().getMonth()+1
 
     year = new Date().getFullYear()
 

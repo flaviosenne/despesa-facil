@@ -60,7 +60,7 @@ export const getDateNow = () =>{
 
     const month = (dateNow.getMonth()+1) < 10
         ? '0' + (dateNow.getMonth()+1) :
-        dateNow.getMonth()
+        dateNow.getMonth()+1
     
     const month2 = (dateNow.getMonth()+2) < 10
         ? '0' + (dateNow.getMonth()+2) :
