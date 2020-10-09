@@ -4,8 +4,8 @@ import icon from '../icons/relatorio.png'
 import '../CSS/Paper.css'
 import axios from 'axios'
 import { listRecep, listExpense } from '../services/Methods'
-const baseUrl = 'http://104.248.130.44:3001/profile'
-// const baseUrl = 'http://localhost:3001/profile'
+// const baseUrl = 'http://104.248.130.44:3001/profile'
+const baseUrl = 'http://localhost:3001/profile'
 
 const props = {
     icon, route: '/fluxo-caixa',

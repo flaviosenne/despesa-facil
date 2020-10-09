@@ -8,8 +8,8 @@ import icon from '../icons/user+.png'
 import axios from 'axios'
 import { UserTheme } from '../services/Theme';
 
-// const baseURL = 'http://localhost:3001'
-const baseURL = 'http://104.248.130.44:3001'
+const baseURL = 'http://localhost:3001'
+// const baseURL = 'http://104.248.130.44:3001'
 const props = { icon, route: '/login' }
 export default User => {
     const [name, setName] = useState('')

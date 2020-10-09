@@ -42,8 +42,8 @@ const initialState = {
     total: [],
     dates: []
 }
-const baseUrl = 'http://104.248.130.44:3001/profile'
-// const baseUrl = 'http://localhost:3001/profile'
+// const baseUrl = 'http://104.248.130.44:3001/profile'
+const baseUrl = 'http://localhost:3001/profile'
 
 export default class Cash extends Component {
     state = { ...initialState }

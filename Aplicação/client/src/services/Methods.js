@@ -1,6 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'http://104.248.130.44:3001/profile'
-// const baseUrl = 'http://localhost:3001/profile'
+// const baseUrl = 'http://104.248.130.44:3001/profile'
+const baseUrl = 'http://localhost:3001/profile'
 
 export const  remove = async (e, id)=> {
     e.preventDefault()

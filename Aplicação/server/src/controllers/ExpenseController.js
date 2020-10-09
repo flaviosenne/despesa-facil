@@ -1,9 +1,8 @@
 const connection = require('../database/connection')
 
+const { existUserDatabase} = require('../services/helpers')
 module.exports = {
     async listExpense(req, res){
-
-        const {page=1} =  req.query
 
         const [count] = await connection('expense').count()
         
@@ -28,29 +27,47 @@ module.exports = {
 
         const month = (new Date().getMonth() + 1) < 10
         ? '0' + (new Date().getMonth() + 1) :
-        new Date().getMonth()
+        new Date().getMonth()+1
 
         const year = new Date().getFullYear()
 
-        const {description, status, value, date} = req.body
+        const {description, status, value, date, category} = req.body
         const id_user = req.body.headers.Authorization
-       
-
+ 
         // formatar data que vem do front-end
         if(date != ''){
-            var date2 = date.split('-')
+            var date1 = date.split('-')
         }
+
+        const user = await existUserDatabase(id_user)
+        
+        if(!user) return res.json({msg: 'user not found'})
+        
+        // console.log(toUpperCase(category))
+        const categories = await connection('category')
+        .where('category', category.toUpperCase().trim())
+        .first()
+
+        if(!categories)
+            await connection('category').insert(
+                {category: category.toUpperCase().trim()})
+        
+        
         const [id] = await connection('expense').insert({
-            description,
+            category: (category.toUpperCase()).trim() || 'NÂO DEFINIDO',
+            description: description.trim(),
             status,
             value,
             date: date != ''? 
-                (date2[2]+'/'+date2[1]+'/'+date2[0]):
+                (date1[2]+'/'+date1[1]+'/'+date1[0]):
                 (day+ '/'+month+'/'+ year),
+
+            // date: !date?(day + '/'+month+'/'+year):date,
             id_user
         })
 
         return res.json({id})
+        
         
     },
     async deleteExpense(req, res){

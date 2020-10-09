@@ -8,8 +8,8 @@ import icon from '../icons/user.png'
 
 import axios from 'axios'
 
-const baseUrl = "http://104.248.130.44:3001/sessions"
-// const baseUrl = "http://localhost:3001/sessions"
+// const baseUrl = "http://104.248.130.44:3001/sessions"
+const baseUrl = "http://localhost:3001/sessions"
 const props = { icon, route: '/' }
 
 export default Login => {

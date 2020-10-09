@@ -1,6 +1,15 @@
-### Get Test
+### Get Category
 
-GET http://localhost:3001/user/c5c64f87
+GET http://localhost:3001/category-expense
+Content-Type: application/json
+
+{
+    "category": " eletronico  "
+}
+
+### Get User
+
+GET http://localhost:3001/user
 
 
 ### Post users
@@ -10,8 +19,8 @@ Content-Type: application/json
 
 {
     "name":"lucas",
-    "user":"lucao",
-    "email":"luca@email",
+    "user":"   lucao2  ",
+    "email":"luc2a@email",
     "password":"123"
 }
 
@@ -20,12 +29,15 @@ Content-Type: application/json
 
 POST http://localhost:3001/expense
 Content-Type: application/json
-Authorization: f85a62e2
 
 {
-    "description":"xbox",
+    "description":"  mouse     ",
     "status":"pendente",
-    "value":900
+    "value":90,
+    "headers": {
+        "Authorization": "7c61c7f8"
+    },
+    "category": "  eletronico  "
 }
 
 ### Get expense

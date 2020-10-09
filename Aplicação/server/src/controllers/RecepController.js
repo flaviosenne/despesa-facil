@@ -1,17 +1,13 @@
 const connection = require('../database/connection')
-
+const { existUserDatabase} = require('../services/helpers')
 module.exports = {
     async listRecep(req, res){
 
-        const {page=1} =  req.query
-
-        const [count] = await connection('recep').count()
-        
+        const [count] = await connection('recep').count()   
         
         const recep = await connection('recep')
         .join('users', 'users.id', '=', 'recep.id_user')
-        .limit(10)
-        .offset((page - 1)* 10)
+
         .select(
             ['recep.*',
              'users.name',
@@ -29,16 +25,26 @@ module.exports = {
         const month = (DATE.getMonth()+1) < 10? '0' + (DATE.getMonth()+1):(DATE.getMonth()+1)
         const day = (DATE.getDate())
 
-        const {value, date, description} = req.body
+        const {value, date, description, category} = req.body
         const id_user = req.body.headers.Authorization
        
+
+        const user = await existUserDatabase(id_user)
+        
+        if(!user) return res.json({msg: 'user not found'})
+        
+        // console.log(toUpperCase(category))
+        const categories = await connection('category')
+        .where('category', category.toUpperCase().trim())
+        .first()
 
         // formatar data que vem do front-end
         if(date != ''){
             var date2 = date.split('-')
         }
         const [id] = await connection('recep').insert({
-            description,
+            category: (category.toUpperCase()).trim() || 'NÂO DEFINIDO',
+            description: description.trim(),
             value,
             date: date != ''? 
                 (date2[2]+'/'+date2[1]+'/'+date2[0]):

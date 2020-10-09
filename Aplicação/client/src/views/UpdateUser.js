@@ -7,8 +7,8 @@ import {UserTheme} from '../services/Theme'
 import finger from '../icons/finger.webp'
 import axios from 'axios'
 
-const baseURL = 'http://104.248.130.44:3001'
-// const baseURL = 'http://localhost:3001'
+// const baseURL = 'http://104.248.130.44:3001'
+const baseURL = 'http://localhost:3001'
 const props = { icon, route: '/home' }
 export default UserUpdate => {
     

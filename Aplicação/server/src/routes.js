@@ -5,6 +5,8 @@ const controllerExpense = require('./controllers/ExpenseController')
 const controllerRecep = require('./controllers/RecepController')
 const ProfileController = require('./controllers/ProfileController')
 const SessionController = require('./controllers/SessionController')
+const CategoryController = require('./controllers/Category')
+const FilterByCategoryController = require('./controllers/FilterByCategory')
 const route = Router()
 
 
@@ -29,5 +31,10 @@ route.get('/recep', controllerRecep.listRecep)
 route.delete('/recep/:id', controllerRecep.deleteRecep)
 route.put('/recep/:id', controllerRecep.updateRecep)
 route.get('/recep/:id', controllerRecep.getOneRecep)
+
+
+route.get('/category', CategoryController.listCategory)
+route.delete('/category/:id', CategoryController.removeCategory)
+route.get('/category-expense', FilterByCategoryController.filterByCategory)
 
 module.exports = route

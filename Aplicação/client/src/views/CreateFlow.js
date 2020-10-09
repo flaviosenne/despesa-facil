@@ -12,8 +12,8 @@ import { UserTheme } from '../services/Theme';
 
 const props = { icon, route: '/fluxo-caixa' }
 
-// const baseURL = 'http://localhost:3001'
-const baseURL = 'http://104.248.130.44:3001'
+const baseURL = 'http://localhost:3001'
+// const baseURL = 'http://104.248.130.44:3001'
 export default User => {
     const [date, setDate] = useState('')
     const [type, setType] = useState('')

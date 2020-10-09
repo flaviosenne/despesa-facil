@@ -1,3 +1,4 @@
+const connection = require('../database/connection')
 module.exports = {
     orderBy(value){
         var aux
@@ -11,5 +12,22 @@ module.exports = {
             value[j + 1] = aux;
         }
         return value
+    },
+    async existEmailDatabase(email){
+        console.log(email)
+
+        const result = await connection('users')
+        .where('email', email)
+        .select('email')
+        
+        return result
+    },
+    async existUserDatabase(id){
+
+        const result = await connection('users')
+        .where('id', id)
+        .select('id').first()
+        
+        return result
     }
 }
