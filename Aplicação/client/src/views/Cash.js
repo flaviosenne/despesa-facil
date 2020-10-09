@@ -40,10 +40,11 @@ const initialState = {
     expense: [],
     recep: [],
     total: [],
-    dates: []
+    dates: [],
+    categories: []
 }
-// const baseUrl = 'http://104.248.130.44:3001/profile'
-const baseUrl = 'http://localhost:3001/profile'
+// const baseUrl = 'http://104.248.130.44:3001'
+const baseUrl = 'http://localhost:3001'
 
 export default class Cash extends Component {
     state = { ...initialState }
@@ -52,16 +53,20 @@ export default class Cash extends Component {
     dataInicio = ''
     dataFim = ''
     cont = 0
+    
 
     async UNSAFE_componentWillMount(cont, indicesDespesa, indicesReceita) {
 
+        await axios.get(baseUrl+'/category').then(cat => {
+            this.setState({categories: cat.data})
 
-        await axios(baseUrl, { headers: { 'Authorization': window.localStorage.getItem('user') } }).then(resp => {
+        })
+        console.log(this.categories)
+        await axios(baseUrl+'/profile', { headers: { 'Authorization': window.localStorage.getItem('user') } }).then(resp => {
             this.setState({ expense: resp.data.expense })
             this.setState({ recep: resp.data.recep })
         })
 
-        console.log(cont)
         if (cont == undefined) {
             this.state2 = []
 
@@ -73,7 +78,7 @@ export default class Cash extends Component {
             for (let i = 0; i < receita.length; i++) {
                 this.recep2.push(this.state.recep[receita[i]])
             }
-            // console.log(despesa)
+            
             window.localStorage.setItem('recep', listRecep(this.recep2).toFixed(2))
             window.localStorage.setItem('expense', listExpense(this.state2).toFixed(2))
             this.UNSAFE_componentWillMount(-1)
@@ -118,6 +123,19 @@ export default class Cash extends Component {
                             className={window.localStorage.getItem('theme')}
                             onChange={e => this.dataFim = e.target.value}
                         />
+                   
+                    </div>
+                    <div className = 'categoria'>
+                        <select>
+                            
+                                {this.state.categories.map(result => {
+                                    return (
+                                        <option>
+                                            {result.category}
+                                        </option>
+                                    )
+                                })}                            
+                        </select>
                     </div>
                     <div className="filtro">
                         <Link to="/despesa"><img className="icon" src={incluir} alt="icone incluir" /></Link>

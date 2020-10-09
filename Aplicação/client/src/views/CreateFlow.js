@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
 import Header from '../components/Header'
@@ -20,34 +20,45 @@ export default User => {
     const [status, setStatus] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
+    const [category, setCategory] = useState('')
 
     const history = useHistory()
 
+    async function get(e){
+        e.preventDefault()
+        await axios.get(baseURL+'/category').then(cat => {
+            setCategory(cat)
+        })
+    }
+        
+        
+  
     const post = async (e) => {
         e.preventDefault()
-                
+
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
-                date, 
-                value:Number(value) < 0 ? 0:Number(value),
+                date,
+                value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
-                },
+                }
             })
             alert('Receita cadastrada com sucesso')
             history.push('/fluxo-caixa')
-            
+
         } else {
             axios.post(baseURL + '/expense', {
-                
+
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
                 },
                 date,
-                value:Number(value) < 0 ? 0:Number(value),
+                value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 status,
+                
 
             }
             ).then(resp => {
@@ -61,7 +72,7 @@ export default User => {
     return (
         <>
             <Header {...props} />
-            <div className={UserTheme()}>
+            <div className={UserTheme() } onChange = {e => get(e)}>
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
 
                 <label> Data </label>
@@ -97,7 +108,15 @@ export default User => {
                     value={description}
                     onChange={e => setDescription(e.target.value)} />
 
-
+                <div className='categoria'>
+                    <select >
+                        <option>
+                            CATEGORIA
+                        </option>
+                        {console.log(category.data)}
+                       
+                    </select>
+                </div>
                 <label> Status </label>
                 <div className="tipo">
 

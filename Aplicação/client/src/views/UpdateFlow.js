@@ -21,6 +21,7 @@ export default User => {
     const [status, setStatus] = useState()
     const [description, setDescription] = useState()
     const [value, setValue] = useState()
+    const [category, setCategory] = useState()
 
     const history = useHistory()
 
@@ -34,11 +35,12 @@ export default User => {
             list.push(resp.data[0])
         })
 
-        console.log(list[0].date)
+        // console.log(list[0].date)
         setDate(formatDateToReact(list[0].date))
         setStatus(list[0].status)
         setDescription(list[0].description)
         setValue(list[0].value)
+        setCategory(list[0].category)
         return list
 
     }
@@ -49,12 +51,12 @@ export default User => {
         try {
 
             await axios.put(baseURL + '/expense/' + id, {
-                id, date: formatDateUpdate(date), 
-                value:Number(value) < 0 ? 0:Number(value),
-                description, status
+                id, date: formatDateUpdate(date),
+                value: Number(value) < 0 ? 0 : Number(value),
+                description, status, category
             })
             alert('Despesa atualizada com sucesso')
-            
+
             history.push('/fluxo-caixa')
 
         }
@@ -80,6 +82,11 @@ export default User => {
                 <input
                     value={description}
                     onChange={e => setDescription(e.target.value)} />
+                
+                <label> Categoria</label>
+                <input
+                    value={category}
+                    onChange={e => setCategory(e.target.value)} />
 
 
                 <label> Status </label>
@@ -110,8 +117,8 @@ export default User => {
 
                 <div className='button'>
 
-                    <Link><button className = 'btn' onClick={e => post(e)} > Atualizar </button></Link>
-                    <Link to="/fluxo-caixa" ><button className = 'btn' > Cancelar </button></Link>
+                    <Link><button className='btn' onClick={e => post(e)} > Atualizar </button></Link>
+                    <Link to="/fluxo-caixa" ><button className='btn' > Cancelar </button></Link>
                 </div>
             </div>
         </>

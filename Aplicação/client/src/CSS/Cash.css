@@ -95,8 +95,26 @@
     color: red;
     }
 
+    .categoria{
+        /* background-color: red; */
+        margin: 0 auto;
+        padding: 15px;
+        width: 60%;
+        display: block;
+        text-align: center;
+    }
+    .categoria select{
+        width: 60%;
+        font-size: 18pt;
+        border: solid;
+        border-radius: 4px;
+        border-color: none;
+    }
 
     @media(max-width: 650px){
+        .categoria{
+            width: 100%;
+        }
         .data{
             width: 70%;
         }
