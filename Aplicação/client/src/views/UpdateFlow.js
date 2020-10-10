@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
 import Header from '../components/Header'
@@ -22,13 +22,15 @@ export default User => {
     const [description, setDescription] = useState()
     const [value, setValue] = useState()
     const [category, setCategory] = useState()
+    const [categories, setCategories] = useState([])
 
     const history = useHistory()
 
-
-    const list = []
-    async function get(e) {
-        e.preventDefault()
+        
+    const get = async(e) => {
+        axios.get(baseURL+'/category').then(cat => {
+            setCategories(cat)
+        })
 
         const id = User.match.params.id
         await axios.get(baseURL + '/expense/' + id).then(resp => {
@@ -41,9 +43,12 @@ export default User => {
         setDescription(list[0].description)
         setValue(list[0].value)
         setCategory(list[0].category)
-        return list
 
+        return list
     }
+
+    const list = []
+   
     const post = async (e) => {
 
         const id = User.match.params.id
@@ -68,7 +73,7 @@ export default User => {
     return (
         <>
             <Header {...props} />
-            <div className={UserTheme()} onLoad={e => get(e)}>
+            <div className={UserTheme()} onLoad = {e => get(e)}>
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
 
                 <label> Data </label>
@@ -83,10 +88,23 @@ export default User => {
                     value={description}
                     onChange={e => setDescription(e.target.value)} />
                 
-                <label> Categoria</label>
-                <input
-                    value={category}
-                    onChange={e => setCategory(e.target.value)} />
+                <div className='categoria1'>
+                    <select name = 'category' 
+                    onChange = {e => setCategory(e.target.value)}>
+                        <option value = "não definido">
+                            ....
+                        </option>
+                        {!categories.data? '': categories.data.map(cat => {
+                            return (
+                                <option 
+                                value = {cat.category}>
+                                    {cat.category}
+                                </option>
+                            )
+                        })}
+                       
+                    </select>
+                </div>
 
 
                 <label> Status </label>

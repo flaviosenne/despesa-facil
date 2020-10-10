@@ -30,6 +30,8 @@
     margin: 0px;
 }
 
+
+
 @media(max-width: 600px){
     .usuario{
         width: 95%;
@@ -43,4 +45,18 @@
 }
 .tema input{
     margin-top: 15px;
+}
+.categoria1{
+    margin: 0 auto;
+    padding: 10px;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.categoria1 select{
+    width: 100%;
+    font-size: 18pt;
+    border: solid;
+    border-radius: 4px;
+    border-color: none;
 }

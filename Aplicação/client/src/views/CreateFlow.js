@@ -20,22 +20,24 @@ export default User => {
     const [status, setStatus] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
+    const [categories, setCategories] = useState([''])
     const [category, setCategory] = useState('')
 
     const history = useHistory()
 
-    async function get(e){
-        e.preventDefault()
-        await axios.get(baseURL+'/category').then(cat => {
-            setCategory(cat)
-        })
-    }
+    useEffect(() => {
         
+        axios.get(baseURL+'/category').then(cat => {
+            setCategories(cat)
+        })
+    
+    }, 1)   
         
   
     const post = async (e) => {
         e.preventDefault()
 
+        
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
                 date,
@@ -43,7 +45,8 @@ export default User => {
                 description,
                 headers: {
                     'Authorization': window.localStorage.getItem('user')
-                }
+                },
+                category
             })
             alert('Receita cadastrada com sucesso')
             history.push('/fluxo-caixa')
@@ -58,8 +61,8 @@ export default User => {
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 status,
+                category
                 
-
             }
             ).then(resp => {
 
@@ -69,10 +72,12 @@ export default User => {
         }
 
     }
-    return (
+    
+    return  (
+        
         <>
             <Header {...props} />
-            <div className={UserTheme() } onChange = {e => get(e)}>
+            <div className={UserTheme() } >
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
 
                 <label> Data </label>
@@ -108,12 +113,20 @@ export default User => {
                     value={description}
                     onChange={e => setDescription(e.target.value)} />
 
-                <div className='categoria'>
-                    <select >
-                        <option>
-                            CATEGORIA
+                <div className='categoria1'>
+                    <select name = 'category' 
+                    onChange = {e => setCategory(e.target.value)}>
+                        <option value = 'não definido'>
+                            ....
                         </option>
-                        {console.log(category.data)}
+                        {!categories.data? '': categories.data.map(cat => {
+                            return (
+                                <option value = {cat.category}
+                                >
+                                    {cat.category}
+                                </option>
+                            )
+                        })}
                        
                     </select>
                 </div>
