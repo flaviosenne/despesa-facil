@@ -7,17 +7,6 @@ Content-Type: application/json
     "category": " eletronico  "
 }
 
-### Get Date
-
-GET http://localhost:3001/filter-expense
-Content-Type: application/json
-Authorization: 7c61c7f8
-
-{
-    "dateStart": "09-08-2020",
-    "dateEnd":"10-09-2020",
-    "category":"  eletronico  "
-}
 
 ### Get User
 
@@ -44,14 +33,31 @@ Content-Type: application/json
 
 
 {
-    "description":"  moto     ",
-    "status":"pendente",
-    "value":150,
-    "category": "  veiculo  ",
+    "description":"  calça     ",
+    "status":"finalizado",
+    "value":550,
+    "category": "  roupa  ",
     "headers": {
-        "Authorization": "ce847126"
+        "Authorization": "75c236ca"
     },
-    "date":"2020-11-05"
+    "date":"2020-10-14"
+}
+
+
+### Post recep
+
+POST http://localhost:3001/recep
+Content-Type: application/json
+
+
+{
+    "description":"  pagamento   ",
+    "value":750,
+    "category": "  salario  ",
+    "headers": {
+        "Authorization": "75c236ca"
+    },
+    "date":"2020-10-10"
 }
 
 ### Get expense
@@ -60,42 +66,40 @@ GET http://localhost:3001/expense
 
 
 
-### PUT expense
+### Get recep
 
-PUT http://localhost:3001/expense/3
-Content-Type: application/json
-
-{
-    "description":"notebook slim",
-    "date":"13/10/2020",
-    "id_user":"1381a095",
-    "value":2000
-}
+GET http://localhost:3001/recep
 
 
 
-
-
-
-
-### Post expense
-
-DELETE  http://localhost:3001/expense/11
-Content-Type: application/json
-Authorization: a83454ae
 
 ### Get expense
 
-GET http://localhost:3001/profile
+GET http://localhost:3001/profile-expense
 Content-Type: application/json
-Authorization: ce847126
+Authorization: 75c236ca
 
 {
-    "category":" alimento  ",
-    "dateStart":"2020-10-15",
-    "dateEnd":"2020-10-20"
+
 }
 
+
+### delete expense
+Delete http://localhost:3001/profile-expense/4
+Content-Type: application/json
+Authorization: 75c236ca
+
+
+
+### Get recep
+
+GET http://localhost:3001/profile-recep
+Content-Type: application/json
+Authorization: 75c236ca
+
+{
+    
+}
 
 ### login
 

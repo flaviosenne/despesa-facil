@@ -6,26 +6,37 @@ const controllerRecep = require('./controllers/RecepController')
 const ProfileController = require('./controllers/ProfileController')
 const SessionController = require('./controllers/SessionController')
 const CategoryController = require('./controllers/Category')
-const FilterController = require('./controllers/FilterExpense')
+
 const route = Router()
 
-
+// todos usuarios
 route.post('/user', controllerUser.createUser)
 route.get('/user', controllerUser.listUser)
 route.get('/user/:id', controllerUser.getOneUser)
 route.put('/user/:id', controllerUser.updateUser)
 
-route.get('/profile', ProfileController.index)
-route.delete('/profile/:id', ProfileController.remove)
 
+// despesas de usuario específico
+route.get('/profile-expense', ProfileController.indexExpense)
+route.delete('/profile-expense/:id', ProfileController.removeExpense)
+
+// receitas de usuario específico
+route.get('/profile-recep', ProfileController.indexRecep)
+
+
+// login
 route.post('/sessions', SessionController.create)
 
+
+// todas despesas
 route.post('/expense', controllerExpense.createExpense)
 route.get('/expense', controllerExpense.listExpense)
 route.delete('/expense/:id', controllerExpense.deleteExpense)
 route.put('/expense/:id', controllerExpense.updateExpense)
 route.get('/expense/:id', controllerExpense.getOneExpense)
 
+
+// todas receitas
 route.post('/recep', controllerRecep.createRecep)
 route.get('/recep', controllerRecep.listRecep)
 route.delete('/recep/:id', controllerRecep.deleteRecep)
@@ -33,9 +44,8 @@ route.put('/recep/:id', controllerRecep.updateRecep)
 route.get('/recep/:id', controllerRecep.getOneRecep)
 
 
+// todas categorias
 route.get('/category', CategoryController.listCategory)
 route.delete('/category/:id', CategoryController.removeCategory)
-route.get('/category-expense', FilterController.filterByCategory)
-route.get('/filter-expense', FilterController.filterByDateAndCategoryAndProfile)
 
 module.exports = route

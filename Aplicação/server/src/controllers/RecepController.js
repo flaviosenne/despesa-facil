@@ -20,11 +20,7 @@ module.exports = {
     },
 
     async createRecep(req, res){
-        const DATE = new Date()
-        const year = (DATE.getFullYear())
-        const month = (DATE.getMonth()+1) < 10? '0' + (DATE.getMonth()+1):(DATE.getMonth()+1)
-        const day = (DATE.getDate())
-
+        
         const {value, date, description, category} = req.body
         const id_user = req.body.headers.Authorization
        
@@ -33,22 +29,17 @@ module.exports = {
         
         if(!user) return res.json({msg: 'user not found'})
         
-        // console.log(toUpperCase(category))
+
         const categories = await connection('category')
         .where('category', category.toUpperCase().trim())
         .first()
 
-        // formatar data que vem do front-end
-        if(date != ''){
-            var date2 = date.split('-')
-        }
+     
         const [id] = await connection('recep').insert({
             category: (category.toUpperCase()).trim() || 'NÂO DEFINIDO',
             description: description.trim(),
             value,
-            date: date != ''? 
-                (date2[2]+'/'+date2[1]+'/'+date2[0]):
-                (day+ '/'+month+'/'+ year),
+            date,
             id_user
         })
 
