@@ -6,7 +6,7 @@ const controllerRecep = require('./controllers/RecepController')
 const ProfileController = require('./controllers/ProfileController')
 const SessionController = require('./controllers/SessionController')
 const CategoryController = require('./controllers/Category')
-const FilterByCategoryController = require('./controllers/FilterByCategory')
+const FilterController = require('./controllers/FilterExpense')
 const route = Router()
 
 
@@ -35,6 +35,7 @@ route.get('/recep/:id', controllerRecep.getOneRecep)
 
 route.get('/category', CategoryController.listCategory)
 route.delete('/category/:id', CategoryController.removeCategory)
-route.get('/category-expense', FilterByCategoryController.filterByCategory)
+route.get('/category-expense', FilterController.filterByCategory)
+route.get('/filter-expense', FilterController.filterByDateAndCategoryAndProfile)
 
 module.exports = route

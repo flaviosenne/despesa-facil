@@ -35,9 +35,9 @@ module.exports = {
         const id_user = req.body.headers.Authorization
  
         // formatar data que vem do front-end
-        if(date != ''){
-            var date1 = date.split('-')
-        }
+        // if(date != ''){
+        //     var date1 = date.split('-')
+        // }
 
         const user = await existUserDatabase(id_user)
         
@@ -58,9 +58,10 @@ module.exports = {
             description: description.trim(),
             status,
             value,
-            date: date != ''? 
-                (date1[2]+'/'+date1[1]+'/'+date1[0]):
-                (day+ '/'+month+'/'+ year),
+            date,
+            // date: date != ''? 
+                // (date1[2]+'/'+date1[1]+'/'+date1[0]):
+                // (day+ '/'+month+'/'+ year),
 
             // date: !date?(day + '/'+month+'/'+year):date,
             id_user

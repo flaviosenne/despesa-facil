@@ -5,7 +5,7 @@ exports.up = function(knex) {
 
         table.string('description').notNullable()
         table.string('status').notNullable()
-        table.timestamp('date').notNullable()
+        table.date('date').notNullable()
         table.decimal('value').notNullable()
         table.string('category').notNullable()
 

@@ -1,20 +1,43 @@
 const connection = require("../database/connection")
-const { filterByCategory} = require('./FilterByCategory')
+const { queryExpenseDatabaseCategory,
+    queryExpenseDatabaseDateDefault,
+    queryExpenseDatabaseDateAndCategory,
+    queryExpenseDatabaseDate}
+     = require('../services/helpers')
 const helpers = require('../services/helpers')
 module.exports = {
     async index(req, res){
+        const { dateStart, dateEnd, category }=req.body
+        
         const id_user = req.headers.authorization
+        
+        if(!category && !dateStart && !dateEnd){
+            console.log('cheguei aqui')
+            const expense = await queryExpenseDatabaseDateDefault(id_user)
+            
+            return res.json(expense)
+        }
+        
+        if(dateStart && dateEnd && category){
+            console.log('cheguei aqui 1')
+            const expense = await queryExpenseDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
-        const { category} = req.headers
-       
-            const result = await filterByCategory(category, id_user)
-           
-            console.log(result)
-            return res.json({
-                expense: helpers.orderBy(result.expense) 
-                ,
-                recep:  helpers.orderBy(result.recep) 
-            })
+            return res.json(expense)
+        }
+
+        if(category){
+            console.log('cheguei aqui 2')
+            const expense = await queryExpenseDatabaseCategory(id_user, category.toUpperCase().trim())
+            
+            return res.json(expense)
+        }
+        
+        if(dateStart && dateEnd){
+            console.log('cheguei aqui 3')
+            const expense = await queryExpenseDatabaseDate(id_user, dateStart, dateEnd)
+
+            return res.json(expense)
+        }
            
     },
     async remove(req, res){
@@ -31,6 +54,6 @@ module.exports = {
             }
 
             res.status(204)
-            return res.json({msg: 'deleted'})
+            return res.json({msg: 'expense deleted'})
     }
 }

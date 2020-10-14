@@ -7,6 +7,18 @@ Content-Type: application/json
     "category": " eletronico  "
 }
 
+### Get Date
+
+GET http://localhost:3001/filter-expense
+Content-Type: application/json
+Authorization: 7c61c7f8
+
+{
+    "dateStart": "09-08-2020",
+    "dateEnd":"10-09-2020",
+    "category":"  eletronico  "
+}
+
 ### Get User
 
 GET http://localhost:3001/user
@@ -18,9 +30,9 @@ POST http://localhost:3001/user
 Content-Type: application/json
 
 {
-    "name":"lucas",
-    "user":"   lucao2  ",
-    "email":"luc2a@email",
+    "name":"joao",
+    "user":"   joao  ",
+    "email":"joao@email",
     "password":"123"
 }
 
@@ -30,14 +42,16 @@ Content-Type: application/json
 POST http://localhost:3001/expense
 Content-Type: application/json
 
+
 {
-    "description":"  mouse     ",
+    "description":"  moto     ",
     "status":"pendente",
-    "value":90,
+    "value":150,
+    "category": "  veiculo  ",
     "headers": {
-        "Authorization": "7c61c7f8"
+        "Authorization": "ce847126"
     },
-    "category": "  eletronico  "
+    "date":"2020-11-05"
 }
 
 ### Get expense
@@ -73,8 +87,14 @@ Authorization: a83454ae
 ### Get expense
 
 GET http://localhost:3001/profile
-Authorization: f85a62e2
+Content-Type: application/json
+Authorization: ce847126
 
+{
+    "category":" alimento  ",
+    "dateStart":"2020-10-15",
+    "dateEnd":"2020-10-20"
+}
 
 
 ### login
@@ -98,7 +118,7 @@ Authorization: f85a62e2
 {
     "value":100,
     "headers":{
-        "Authorization":"f85a62e2"
+        "Authorization":"ce847126"
     }
 }
 
