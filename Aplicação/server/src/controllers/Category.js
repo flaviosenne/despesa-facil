@@ -2,6 +2,7 @@ const connection = require('../database/connection')
 module.exports = {
     async listCategory(req, res){
         const category = await connection('category')
+        .orderBy('category', 'asc')
         .select()
  
         return res.json(category)

@@ -41,7 +41,7 @@ const initialState = {
     recep: [],
     total: [],
     dates: [],
-    categories: []
+    categories: [],
 }
 // const baseUrl = 'http://104.248.130.44:3001'
 const baseUrl = 'http://localhost:3001'
@@ -53,19 +53,30 @@ export default class Cash extends Component {
     dataInicio = ''
     dataFim = ''
     cont = 0
+    category=  'NÃO DEFINIDO'
     
+
 
     async UNSAFE_componentWillMount(cont, indicesDespesa, indicesReceita) {
 
-        await axios.get(baseUrl+'/category').then(cat => {
-            this.setState({categories: cat.data})
+        await axios.get(baseUrl + '/category').then(cat => {
+            this.setState({ categories: cat.data })
 
         })
-        console.log(this.categories)
-        await axios(baseUrl+'/profile', { headers: { 'Authorization': window.localStorage.getItem('user') } }).then(resp => {
-            this.setState({ expense: resp.data.expense })
-            this.setState({ recep: resp.data.recep })
-        })
+
+        console.log(this.category)
+        await axios(baseUrl + '/profile', {
+            headers:
+            {
+                'Authorization':
+                window.localStorage.getItem('user'),
+                category: this.category
+            }
+                   })
+            .then(resp => {
+                this.setState({ expense: resp.data.expense })
+                this.setState({ recep: resp.data.recep })
+            })
 
         if (cont == undefined) {
             this.state2 = []
@@ -78,7 +89,7 @@ export default class Cash extends Component {
             for (let i = 0; i < receita.length; i++) {
                 this.recep2.push(this.state.recep[receita[i]])
             }
-            
+
             window.localStorage.setItem('recep', listRecep(this.recep2).toFixed(2))
             window.localStorage.setItem('expense', listExpense(this.state2).toFixed(2))
             this.UNSAFE_componentWillMount(-1)
@@ -123,18 +134,20 @@ export default class Cash extends Component {
                             className={window.localStorage.getItem('theme')}
                             onChange={e => this.dataFim = e.target.value}
                         />
-                   
+
                     </div>
-                    <div className = 'categoria'>
-                        <select>
-                            
-                                {this.state.categories.map(result => {
-                                    return (
-                                        <option>
-                                            {result.category}
-                                        </option>
-                                    )
-                                })}                            
+                    <div className='categoria'>
+                        <select onChange = { e => this.category = e.target.value}>
+                            <option value={"não definido"}>
+                                ...
+                                </option>
+                            {this.state.categories.map(result => {
+                                return (
+                                    <option value={result.category}>
+                                        {result.category}
+                                    </option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className="filtro">

@@ -1,11 +1,19 @@
 const connection = require('../database/connection')
 module.exports ={
-    async filterByCategory(req, res) {
-        const { category } = req.body
+    async filterByCategory(category, id_user) {
         const expense = await connection('expense')
-        .where('category', category.toUpperCase().trim())
+        .where('id_user', id_user)
+        .andWhere('category', category.toUpperCase().trim())
+        .orderBy('date', 'asc')
+        .select()
+        
+        const recep = await connection('recep')
+        .where('id_user', id_user)
+        .andWhere('category', category.toUpperCase().trim())
+        .orderBy('date', 'asc')
         .select()
 
-        return res.json(expense)
+       
+        return {expense, recep}
     }
 }

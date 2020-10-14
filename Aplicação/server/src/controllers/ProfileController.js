@@ -1,25 +1,21 @@
 const connection = require("../database/connection")
-
+const { filterByCategory} = require('./FilterByCategory')
 const helpers = require('../services/helpers')
 module.exports = {
     async index(req, res){
         const id_user = req.headers.authorization
 
-        const expense = await connection('expense')
-            .where('id_user', id_user)
-            .orderBy('date', 'asc')
-            .select()
-            
-            const recep = await connection('recep')
-            .where('id_user', id_user)
-            .orderBy('date', 'asc')
-            .select()
-
-            helpers.orderBy(expense)
-            helpers.orderBy(recep)
+        const { category} = req.headers
+       
+            const result = await filterByCategory(category, id_user)
            
-            
-            return res.json({expense, recep})
+            console.log(result)
+            return res.json({
+                expense: helpers.orderBy(result.expense) 
+                ,
+                recep:  helpers.orderBy(result.recep) 
+            })
+           
     },
     async remove(req, res){
         const {id} = req.params

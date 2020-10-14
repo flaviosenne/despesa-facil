@@ -23,6 +23,7 @@ export default User => {
     const [value, setValue] = useState()
     const [category, setCategory] = useState()
     const [categories, setCategories] = useState([])
+    const [newCategory, setNewCategory] = useState()
 
     const history = useHistory()
 
@@ -54,11 +55,16 @@ export default User => {
         const id = User.match.params.id
         e.preventDefault()
         try {
+            if(newCategory)
+            axios.post(baseURL+'/category-expense', {
+                category: newCategory
+            })
 
             await axios.put(baseURL + '/expense/' + id, {
                 id, date: formatDateUpdate(date),
                 value: Number(value) < 0 ? 0 : Number(value),
-                description, status, category
+                description, status, 
+                category: newCategory ? newCategory:category
             })
             alert('Despesa atualizada com sucesso')
 
@@ -105,7 +111,10 @@ export default User => {
                        
                     </select>
                 </div>
-
+                <label> Adicione Nova Categoria Caso Nescessário</label>
+                <input
+                    value={newCategory}
+                    onChange={e => setNewCategory(e.target.value)} />
 
                 <label> Status </label>
                 <div className="tipo">

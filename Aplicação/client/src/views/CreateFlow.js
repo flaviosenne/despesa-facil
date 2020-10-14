@@ -21,7 +21,8 @@ export default User => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [categories, setCategories] = useState([''])
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState('não definido')
+    const [newCategory, setNewCategory] = useState()
 
     const history = useHistory()
 
@@ -52,6 +53,11 @@ export default User => {
             history.push('/fluxo-caixa')
 
         } else {
+            if(newCategory)
+                axios.post(baseURL+'/category-expense', {
+                    category: newCategory
+                })
+
             axios.post(baseURL + '/expense', {
 
                 headers: {
@@ -61,10 +67,11 @@ export default User => {
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 status,
-                category
+                category: newCategory ? newCategory:category
                 
             }
             ).then(resp => {
+
 
                 alert('Despesa cadastrada com sucesso')
                 history.push('/fluxo-caixa')
@@ -116,7 +123,7 @@ export default User => {
                 <div className='categoria1'>
                     <select name = 'category' 
                     onChange = {e => setCategory(e.target.value)}>
-                        <option value = 'não definido'>
+                        <option selected value = 'não definido'>
                             ....
                         </option>
                         {!categories.data? '': categories.data.map(cat => {
@@ -130,6 +137,11 @@ export default User => {
                        
                     </select>
                 </div>
+                <br/>
+                <label> Adicione Nova Categoria Caso Nescessário</label>
+                <input
+                    value={newCategory}
+                    onChange={e => setNewCategory(e.target.value)} />
                 <label> Status </label>
                 <div className="tipo">
 
