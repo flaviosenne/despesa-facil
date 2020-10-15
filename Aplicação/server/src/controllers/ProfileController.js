@@ -9,7 +9,8 @@ module.exports = {
     async indexExpense(req, res) {
         const { dateStart, dateEnd, category } = req.body
 
-        const id_user = req.headers.authorization
+        const id_user = req.body.headers.Authorization
+
 
         if (!category && !dateStart && !dateEnd) {
             const expense = await queryExpenseDatabaseDateDefault('expense', id_user)

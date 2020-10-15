@@ -1,6 +1,6 @@
 import axios from 'axios'
 // const baseUrl = 'http://104.248.130.44:3001/profile'
-const baseUrl = 'http://localhost:3001/profile'
+const baseUrl = 'http://localhost:3001/profile-expense'
 
 export const  remove = async (e, id)=> {
     e.preventDefault()
@@ -188,5 +188,13 @@ export const listTotal =(expense, recep) =>{
     })
 
     return receita - despesa
+
+}
+
+export const formatDateOfServer =(dateServer) =>{
+    
+    const date = dateServer.split('-')
+
+    return date[2]+'/'+date[1]+'/'+date[0]
 
 }

@@ -17,7 +17,7 @@ route.put('/user/:id', controllerUser.updateUser)
 
 
 // despesas de usuario específico
-route.get('/profile-expense', ProfileController.indexExpense)
+route.post('/profile-expense', ProfileController.indexExpense)
 route.delete('/profile-expense/:id', ProfileController.removeExpense)
 
 // receitas de usuario específico

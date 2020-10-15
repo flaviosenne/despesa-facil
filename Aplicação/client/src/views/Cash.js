@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 
 import {
+    formatDateOfServer,
     listRecep,
     listTotal,
     filtrar,
@@ -48,71 +49,40 @@ const baseUrl = 'http://localhost:3001'
 
 export default class Cash extends Component {
     state = { ...initialState }
-    state2 = []
-    recep2 = []
-    dataInicio = ''
-    dataFim = ''
+    dataInicio 
+    dataFim
     cont = 0
-    category=  'NÃO DEFINIDO'
-    
+    category 
 
-
-    async UNSAFE_componentWillMount(cont, indicesDespesa, indicesReceita) {
-
-        await axios.get(baseUrl + '/category').then(cat => {
-            this.setState({ categories: cat.data })
-
-        })
-
-        console.log(this.category)
-        await axios(baseUrl + '/profile', {
-            headers:
-            {
-                'Authorization':
-                window.localStorage.getItem('user'),
-                category: this.category
-            }
-                   })
-            .then(resp => {
-                this.setState({ expense: resp.data.expense })
-                this.setState({ recep: resp.data.recep })
+    async UNSAFE_componentWillMount(){
+            
+            await axios.post(baseUrl+'/profile-expense', {
+                headers: {Authorization: window.localStorage.getItem('user')},
+                    dateStart: this.dataInicio,
+                    dateEnd: this.dataFim,
+                    category: this.category
+            }).then(expense => {
+                this.setState({expense: expense.data})
+            })
+            
+            await axios.get(baseUrl+'/profile-recep', {
+                headers: {Authorization: window.localStorage.getItem('user')}
+            }).then(recep => {
+                this.setState({recep: recep.data})
+            })
+            
+            await axios.get(baseUrl+'/category').then(cat => {
+                this.setState({categories: cat.data})
             })
 
-        if (cont == undefined) {
-            this.state2 = []
-
-            var despesa = filtrar(this.state.expense, getDateNow().dateStart, getDateNow().dateEnd)
-            var receita = filtrar(this.state.recep, getDateNow().dateStart, getDateNow().dateEnd)
-            for (let i = 0; i < despesa.length; i++) {
-                this.state2.push(this.state.expense[despesa[i]])
-            }
-            for (let i = 0; i < receita.length; i++) {
-                this.recep2.push(this.state.recep[receita[i]])
-            }
-
-            window.localStorage.setItem('recep', listRecep(this.recep2).toFixed(2))
-            window.localStorage.setItem('expense', listExpense(this.state2).toFixed(2))
-            this.UNSAFE_componentWillMount(-1)
-        }
-        if (cont == 1 || cont == 0) {
-            this.state2 = []
-            for (let i = 0; i < indicesDespesa.length; i++) {
-                this.state2.push(this.state.expense[indicesDespesa[i]])
-            }
-            this.recep2 = []
-            for (let i = 0; i < indicesReceita.length; i++) {
-                this.recep2.push(this.state.recep[indicesReceita[i]])
-            }
-            this.UNSAFE_componentWillMount(-1)
-        }
     }
 
-    filtro() {
-        const indicesDespesa = filtrar(this.state.expense, this.dataInicio, this.dataFim)
-        const indicesReceita = filtrar(this.state.recep, this.dataInicio, this.dataFim)
-        this.UNSAFE_componentWillMount(this.cont++, indicesDespesa, indicesReceita)
+    get(){
+        
+        this.UNSAFE_componentWillMount()
     }
 
+     
     render() {
         return (
             <>
@@ -137,7 +107,7 @@ export default class Cash extends Component {
 
                     </div>
                     <div className='categoria'>
-                        <select onChange = { e => this.category = e.target.value}>
+                        <select onChange={e => this.category = e.target.value}>
                             <option value={"não definido"}>
                                 ...
                                 </option>
@@ -154,7 +124,7 @@ export default class Cash extends Component {
                         <Link to="/despesa"><img className="icon" src={incluir} alt="icone incluir" /></Link>
                         <div className='button'>
 
-                            <button className='btn' onClick={() => this.filtro()}>
+                            <button className='btn' onClick={() => this.get()}>
                                 Filtrar
                         </button>
                         </div>
@@ -164,9 +134,9 @@ export default class Cash extends Component {
                         </Link>
                     </div>
 
-                    <div className='titulo'>
+                    {/* <div className='titulo'>
 
-                        <label className={listTotal(this.state2, this.recep2).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
+                        <label className={listTotal(this.state.expense, this.recep).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
                             <p>
                                 Total: R$
                         </p>
@@ -183,7 +153,7 @@ export default class Cash extends Component {
                                 Despesa: R$
                         </p>
                             {listExpense(this.state2).toFixed(2)}</label>
-                    </div>
+                    </div> */}
                 </div>
 
                 <table className="table table-hover">
@@ -197,11 +167,11 @@ export default class Cash extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state2.map(cash => {
+                        {this.state.expense.map(cash => {
 
                             return (
                                 <tr key={cash.id} className={cash.status == 'finalizado' ? 'finalized' : 'pendent'} >
-                                    <td>{cash.date}</td>
+                                    <td>{formatDateOfServer(cash.date)}</td>
                                     <td>{cash.description}</td>
                                     <td>{cash.status}</td>
                                     <td>R${cash.value.toFixed(2)}</td>
