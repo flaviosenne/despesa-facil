@@ -4,13 +4,10 @@ import axios from 'axios'
 
 import {
     formatDateOfServer,
-    listRecep,
     listTotal,
-    filtrar,
     remove,
-    listExpense,
     ViewUpdateExpense,
-    getDateNow
+    listValueData
 } from '../services/Methods'
 
 import Header from '../components/Header'
@@ -31,17 +28,8 @@ const props = {
 }
 
 const initialState = {
-    cash: {
-        id: null,
-        date: '',
-        description: '',
-        status: '',
-        value: null
-    },
     expense: [],
     recep: [],
-    total: [],
-    dates: [],
     categories: [],
 }
 // const baseUrl = 'http://104.248.130.44:3001'
@@ -77,8 +65,7 @@ export default class Cash extends Component {
 
     }
 
-    get(){
-        
+    get(){        
         this.UNSAFE_componentWillMount()
     }
 
@@ -108,8 +95,9 @@ export default class Cash extends Component {
                     </div>
                     <div className='categoria'>
                         <select onChange={e => this.category = e.target.value}>
-                            <option value={undefined}>
-                                ...
+                            <option 
+                                value={undefined}>
+                                {undefined}
                             </option>
                             {this.state.categories.map(result => {
                                 return (
@@ -134,26 +122,26 @@ export default class Cash extends Component {
                         </Link>
                     </div>
 
-                    {/* <div className='titulo'>
+                    <div className='titulo'>
 
-                        <label className={listTotal(this.state.expense, this.recep).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
+                        <label className={listTotal(this.state.expense, this.state.recep).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
                             <p>
                                 Total: R$
                         </p>
-                            {listTotal(this.state2, this.recep2).toFixed(2)}</label>
+                            {listTotal(this.state.expense, this.state.recep).toFixed(2)}</label>
 
                         <label className="receita">
                             <p>
                                 Receita: R$
                             </p>
-                            {listRecep(this.recep2).toFixed(2)}</label>
+                            {listValueData(this.state.recep).toFixed(2)}</label>
 
                         <label className="despesa">
                             <p>
                                 Despesa: R$
                         </p>
-                            {listExpense(this.state2).toFixed(2)}</label>
-                    </div> */}
+                            {listValueData(this.state.expense).toFixed(2)}</label>
+                    </div>
                 </div>
 
                 <table className="table table-hover">
@@ -184,9 +172,9 @@ export default class Cash extends Component {
                                             />
                                         </Link>
                                         <img
-                                            onClick={(e) => {
+                                            onClick={ async (e) => {
 
-                                                remove(e, cash.id)
+                                                await remove(e, cash.id)
                                                 this.UNSAFE_componentWillMount()
                                             }}
                                             className="icon"

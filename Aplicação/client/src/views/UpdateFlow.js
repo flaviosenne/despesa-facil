@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
 import Header from '../components/Header'
@@ -9,7 +9,7 @@ import dinheiro from '../icons/dinheiro.png'
 import icon from '../icons/cash+.png'
 import axios from 'axios'
 
-import { formatDateUpdate, formatDateToReact } from '../services/Methods'
+
 import { UserTheme } from '../services/Theme';
 const props = { icon, route: '/fluxo-caixa' }
 
