@@ -39,7 +39,7 @@ export default User => {
         })
 
         // console.log(list[0].date)
-        setDate(formatDateToReact(list[0].date))
+        setDate(list[0].date)
         setStatus(list[0].status)
         setDescription(list[0].description)
         setValue(list[0].value)
@@ -61,7 +61,7 @@ export default User => {
             })
 
             await axios.put(baseURL + '/expense/' + id, {
-                id, date: formatDateUpdate(date),
+                id, date,
                 value: Number(value) < 0 ? 0 : Number(value),
                 description, status, 
                 category: newCategory ? newCategory:category
@@ -103,6 +103,7 @@ export default User => {
                         {!categories.data? '': categories.data.map(cat => {
                             return (
                                 <option 
+                                selected = {cat.category == category} 
                                 value = {cat.category}>
                                     {cat.category}
                                 </option>
@@ -123,6 +124,7 @@ export default User => {
                         value='pendente'
                         type="radio"
                         name="status"
+                        checked = {status == 'pendente'}
                         onChange={e => setStatus(e.target.value)} />
 
                     <label >Pendente</label>
@@ -130,6 +132,7 @@ export default User => {
                 <div className="tipo">
                     <input
                         value='finalizado'
+                        checked = {status == 'finalizado'}
                         type="radio"
                         name="status"
                         onChange={e => setStatus(e.target.value)} />

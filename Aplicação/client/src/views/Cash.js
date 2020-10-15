@@ -52,7 +52,7 @@ export default class Cash extends Component {
     dataInicio 
     dataFim
     cont = 0
-    category 
+    category = undefined
 
     async UNSAFE_componentWillMount(){
             
@@ -108,9 +108,9 @@ export default class Cash extends Component {
                     </div>
                     <div className='categoria'>
                         <select onChange={e => this.category = e.target.value}>
-                            <option value={"não definido"}>
+                            <option value={undefined}>
                                 ...
-                                </option>
+                            </option>
                             {this.state.categories.map(result => {
                                 return (
                                     <option value={result.category}>

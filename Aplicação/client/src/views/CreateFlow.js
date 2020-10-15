@@ -15,7 +15,7 @@ const props = { icon, route: '/fluxo-caixa' }
 const baseURL = 'http://localhost:3001'
 // const baseURL = 'http://104.248.130.44:3001'
 export default User => {
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState()
     const [type, setType] = useState('')
     const [status, setStatus] = useState('')
     const [description, setDescription] = useState('')
@@ -38,7 +38,7 @@ export default User => {
     const post = async (e) => {
         e.preventDefault()
 
-        
+        console.log(date, category)
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
                 date,
