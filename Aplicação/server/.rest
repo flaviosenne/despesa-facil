@@ -85,15 +85,14 @@ Authorization: 75c236ca
 
 
 ### delete expense
-Delete http://localhost:3001/profile-expense/4
+Delete http://localhost:3001/profile-expense/3
 Content-Type: application/json
 Authorization: 75c236ca
 
 
 
 ### Get recep
-
-GET http://localhost:3001/profile-recep
+delete http://localhost:3001/profile-recep/3
 Content-Type: application/json
 Authorization: 75c236ca
 

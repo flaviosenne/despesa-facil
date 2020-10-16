@@ -20,8 +20,10 @@ route.put('/user/:id', controllerUser.updateUser)
 route.post('/profile-expense', ProfileController.indexExpense)
 route.delete('/profile-expense/:id', ProfileController.removeExpense)
 
+route.post('/profile-all', ProfileController.indexExpenseAll)
 // receitas de usuario específico
 route.get('/profile-recep', ProfileController.indexRecep)
+route.delete('/profile-recep/:id', ProfileController.removeExpense)
 
 
 // login

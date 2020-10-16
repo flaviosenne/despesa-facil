@@ -21,7 +21,13 @@ a, Link{
 }
 
 /* select */
+.dotted {
+    border: dotted;
+}
+.underline{
+    text-decoration: underline;
 
+}
 
 
 /* theme dark-default */
@@ -148,7 +154,7 @@ a, Link{
 
 /* Layout Table List Expense */
 /* ----------------------- */
-table.table {
+table {
     width: 70%;
     margin: 20px auto;
     text-align: center;
