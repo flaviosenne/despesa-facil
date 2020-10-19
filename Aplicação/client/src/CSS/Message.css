@@ -1,0 +1,22 @@
+.message{
+    position: absolute;
+    right: 0;
+    color: rgb(161, 156, 156);
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    width: 20%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.message button{
+    border: none;
+    background: none;
+    width: 10%;
+}
+.message button:hover{
+    background: rgba(0, 0, 0, 0.3);
+}
+.none{
+    display: none;
+}

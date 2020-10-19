@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
-
+import { useAlert } from 'react-alert'
 import Header from '../components/Header'
 import '../CSS/CreateUser.css';
-
 
 import dinheiro from '../icons/dinheiro.png'
 import icon from '../icons/cash+.png'
@@ -23,6 +22,8 @@ export default User => {
     const [categories, setCategories] = useState([''])
     const [category, setCategory] = useState('não definido')
     const [newCategory, setNewCategory] = useState()
+    const [msg, setMsg] = useState()
+    const [cl, setCl] = useState()
 
     const history = useHistory()
 
@@ -34,11 +35,22 @@ export default User => {
     
     }, 1)   
         
-  
+    // const ViewMsg = (msg)=>{
+    //     setCl('message')        
+    //     setMsg(msg)        
+
+    //     setTimeout(() => {
+    //         setCl('none')        
+    //     }, 3000)
+
+    // }
+
+        
+    const alert = useAlert()
     const post = async (e) => {
         e.preventDefault()
-
-        console.log(date, category)
+        
+    
         if (type === 'receita') {
             await axios.post(baseURL + '/recep', {
                 date,
@@ -49,18 +61,18 @@ export default User => {
                 },
                 category
             })
-            alert('Receita cadastrada com sucesso')
+            alert.show('Receita cadastrada com sucesso')
             history.push('/fluxo-caixa')
-
+            
         } else {
             if(newCategory)
                 axios.post(baseURL+'/category-expense', {
                     category: newCategory
                 })
 
-            axios.post(baseURL + '/expense', {
+                axios.post(baseURL + '/expense', {
 
-                headers: {
+                    headers: {
                     'Authorization': window.localStorage.getItem('user')
                 },
                 date,
@@ -71,19 +83,21 @@ export default User => {
                 
             }
             ).then(resp => {
+                
 
-
-                alert('Despesa cadastrada com sucesso')
+                alert.show('Despesa cadastrada com sucesso')
                 history.push('/fluxo-caixa')
             }).catch(err => console.log(err))
         }
-
+        
     }
     
     return  (
         
         <>
             <Header {...props} />
+            
+            {/* <Message cl = {showMessage(cl)} msg = {showMessage(msg)}/> */}
             <div className={UserTheme() } >
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
 
@@ -171,6 +185,7 @@ export default User => {
 
                     <Link><button className='btn' onClick={e => post(e)} > Cadastrar </button></Link>
                     <Link to="/fluxo-caixa" ><button className='btn' > Cancelar </button></Link>
+                    
                 </div>
             </div>
         </>

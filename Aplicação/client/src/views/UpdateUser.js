@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import Header from '../components/Header'
-import '../CSS/CreateUser.css';
+
 import { Link, useHistory } from 'react-router-dom'
-import icon from '../icons/user+.png'
+import { useAlert } from 'react-alert'
+
+import Header from '../components/Header'
+
 import {UserTheme} from '../services/Theme'
-import finger from '../icons/finger.webp'
+
 import axios from 'axios'
+
+import '../CSS/CreateUser.css';
+
+import icon from '../icons/user+.png'
+import finger from '../icons/finger.webp'
 
 // const baseURL = 'http://104.248.130.44:3001'
 const baseURL = 'http://localhost:3001'
 const props = { icon, route: '/home' }
 export default UserUpdate => {
+    const alert = useAlert()
     
     const [theme, setTheme] = useState('light')
     const [border, setBorder] = useState('border-light')
@@ -40,7 +48,6 @@ export default UserUpdate => {
         setEmail(user.data[0].email)
         setUser(user.data[0].user)
 
-
         return user.data[0].user
     }
     async function update(e) {
@@ -51,7 +58,7 @@ export default UserUpdate => {
             await axios.put(baseURL + '/user/' + UserUpdate.match.params.id, {
                 name, email, user
             })
-            alert(user + ' atualizado com sucesso')
+            alert.show(user + ' atualizado com sucesso')
             window.localStorage.setItem('name', name)
             history.push('/fluxo-caixa')
 

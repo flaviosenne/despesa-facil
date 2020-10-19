@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { FaBeer } from 'react-icons/fa';
+
+
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 
@@ -176,6 +177,7 @@ export default class Cash extends Component {
                                             onClick={ async (e) => {
 
                                                 await remove(e, cash.id)
+
                                                 this.UNSAFE_componentWillMount()
                                             }}
                                             className="icon"

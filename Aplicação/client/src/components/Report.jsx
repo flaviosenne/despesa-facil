@@ -135,28 +135,7 @@ export default class Report extends Component {
                                     listValueData(this.state.expenseAPI)).toFixed(2)} </td>                                                        
                         </tr>
                     </table>
-                    {/* <span>
-                        <strong>TotalReceitas:</strong><br />
-                        R$ {listValueData(this.state.recepAPI)}
-                    </span><br /> */}
-
-                    {/* <div>
-
-                        <span>
-                            <strong>Total Despesas:</strong>
-                                R$ {listValueData(this.state.expenseAPI)}
-                        </span><br />
-                        <span>
-                            <strong>Despesas Pendentes:</strong>
-                                R$ {listDataPendent(this.state.expenseAPI)}
-                        </span><br />
-
-                        <span>
-                            <strong>Despesas Pagas:</strong>
-                                R$ {listDataFinalized(this.state.expenseAPI)}
-                        </span><br />
-                    </div> */}
-
+ 
                             <hr/>
                             <hr/>
                     <table className='table table-hover'>

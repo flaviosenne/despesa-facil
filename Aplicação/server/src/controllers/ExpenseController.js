@@ -99,11 +99,11 @@ module.exports = {
         const { id } = req.params
         // const id_user = req.body.header.authorization
 
-        const { description, status, date, value, id_user } = req.body
+        const { description, status, date, value, id_user, category } = req.body
         const expense = await connection('expense')
             .where('id', id)
             .update({
-                description, status, date, value, id_user
+                description, status, date, value, id_user, category
             })
 
 

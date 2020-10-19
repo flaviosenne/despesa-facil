@@ -13,6 +13,7 @@ export const  remove = async (e, id)=> {
     // assim que deletar o item, o metodo UNSAFE_componentWillMount é chamado para atualizar a pagina
 }
 
+
 // export const formatDate = (date) => {
 
 //     // data do filtro

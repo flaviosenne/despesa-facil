@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import Header from '../components/Header'
 import '../CSS/CreateUser.css';
 import { Link, useHistory } from 'react-router-dom'
-import icon from '../icons/user+.png'
+import { useAlert } from 'react-alert'
 
+import icon from '../icons/user+.png'
 
 import axios from 'axios'
 import { UserTheme } from '../services/Theme';
@@ -12,6 +13,9 @@ const baseURL = 'http://localhost:3001'
 // const baseURL = 'http://104.248.130.44:3001'
 const props = { icon, route: '/login' }
 export default User => {
+
+    const alert = useAlert()
+    
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [user, setUser] = useState('')
@@ -31,7 +35,7 @@ export default User => {
                
                     name, email, user, password
                 })
-                alert(user + ' cadastrado com sucesso')
+                alert.show(user + ' cadastrado com sucesso')
                 history.push('/login')
                 return
             }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
+import { useAlert } from 'react-alert'
 import Header from '../components/Header'
 import '../CSS/CreateUser.css';
 
@@ -26,7 +27,7 @@ export default User => {
     const [newCategory, setNewCategory] = useState()
 
     const history = useHistory()
-
+    const alert = useAlert()
         
     const get = async(e) => {
         axios.get(baseURL+'/category').then(cat => {
@@ -64,9 +65,9 @@ export default User => {
                 id, date,
                 value: Number(value) < 0 ? 0 : Number(value),
                 description, status, 
-                category: newCategory ? newCategory:category
+                category: !category ? newCategory: category
             })
-            alert('Despesa atualizada com sucesso')
+            alert.show('Despesa atualizada com sucesso')
 
             history.push('/fluxo-caixa')
 

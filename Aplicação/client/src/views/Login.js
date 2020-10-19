@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import bcrypt from 'bcryptjs'
+import { useAlert } from 'react-alert'
 import { Link, useHistory } from 'react-router-dom'
 import '../CSS/Login.css';
 
@@ -11,8 +12,8 @@ import axios from 'axios'
 // const baseUrl = "http://104.248.130.44:3001/sessions"
 const baseUrl = "http://localhost:3001/sessions"
 const props = { icon, route: '/' }
-
 export default Login => {
+    const alert = useAlert()
 
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
@@ -33,7 +34,7 @@ export default Login => {
                 bcrypt.compareSync(password, data.data.password)
                 
                 if(hash){
-                    alert('login feito com sucesso')
+                    alert.show('login feito com sucesso')
 
                     window.localStorage.setItem('user', data.data.id)
                     window.localStorage.setItem('name', data.data.name)
