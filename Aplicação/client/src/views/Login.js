@@ -34,12 +34,13 @@ export default Login => {
                 bcrypt.compareSync(password, data.data.password)
                 
                 if(hash){
-                    alert.show('login feito com sucesso')
+                    
+                    alert.show('Seja Bem Vindo '+ data.data.name)
 
                     window.localStorage.setItem('user', data.data.id)
                     window.localStorage.setItem('name', data.data.name)
                     history.push('/fluxo-caixa')
-                    window.location.reload()
+                    
                     return
                 }  else{
                     return alert('usuario ou senha incorreta')
@@ -73,7 +74,7 @@ export default Login => {
                     type="password" />
 
                 <Link className = {window.localStorage.getItem('theme') }to="/usuario" > Criar Conta</Link>
-                {/* <a href="#/" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</a> */}
+                <a href="/email" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</a>
                 <button className = 'btn' onClick={e => login(e)}> Enviar </button>
             </div>
         </>

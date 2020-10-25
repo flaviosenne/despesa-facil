@@ -45,6 +45,9 @@
     text-align: start;
 }
 
+.email{
+    text-align: justify;
+}
 
 @media(max-width: 900px){
     .login{
