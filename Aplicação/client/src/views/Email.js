@@ -9,7 +9,7 @@ import icon from '../icons/msg.png'
 
 import axios from 'axios'
 
-const baseUrl = "http://localhost:3001/sessions"
+const baseUrl = "http://localhost:3001"
 const props = { icon, route: '/' }
 export default Email => {
     const history = useHistory()
@@ -19,13 +19,14 @@ export default Email => {
 
 
     function sendEmail(e) {
-
-        history.push('/senha')
-        setTimeout(() => {
-            alert.show('email enviado')
-
-        },3000)
         e.preventDefault()
+
+        axios.post(baseUrl+'/send-email', {email})
+
+        alert.show('email enviado')
+        
+        history.push('/senha') 
+        
     }
 
     return (

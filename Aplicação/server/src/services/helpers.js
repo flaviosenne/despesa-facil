@@ -29,7 +29,8 @@ module.exports = {
 
         const result = await connection('users')
             .where('email', email)
-            .select('email')
+            .select('id', 'email')
+            .first()
 
         return result
     },
@@ -37,10 +38,23 @@ module.exports = {
 
         return await connection('users')
             .where('id', id)
-            .select('id').first()
+            .select('id')
+            .first()
 
     },
 
+    async codeIsValid(code){
+
+        const data = await connection('codeRecoveryPassword')
+        .select()
+        .where({code: code})
+        .andWhere({used: false})
+        .first()
+
+        return data
+        
+
+    },
 
     // queries expense in database 
     async queryExpenseDatabaseCategory(table, id_user, category) {

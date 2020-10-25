@@ -1,15 +1,20 @@
-const crypto = require('crypto')
-const bcrypt = require('bcryptjs')
-const {existEmailDatabase} = require('../services/helpers')
 const connection = require('../database/connection')
+const {existEmailDatabase} = require('../services/helpers')
+
+const crypto = require('crypto')
+
+const bcrypt = require('bcryptjs')
+
+
 const salt = bcrypt.genSaltSync(10)
+
 module.exports = {
     async createUser(req, res) {
         const { name, user, email, password } = req.body
 
         const isEmail = await existEmailDatabase(email)
         
-        if(isEmail.length > 0)
+        if(isEmail)
             return res.json({msg: 'Email already exist'})
                
         
@@ -26,7 +31,7 @@ module.exports = {
         await connection('users').insert({
             // método trim remove os espaços em branco do começo
             //e do fim da string
-            id, name, user: user.trim(), email, password: hash
+            id, name, user: user.trim(), email: email.toLowerCase(), password: hash
         })
 
         res.status(200)

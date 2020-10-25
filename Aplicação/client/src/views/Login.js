@@ -46,7 +46,7 @@ export default Login => {
                     return alert('usuario ou senha incorreta')
                 }
             }
-        }).catch(err => alert('usuario ou senha incorreta'))    
+        }).catch(err => alert.show('usuario ou senha incorreta'))    
         
     }
 

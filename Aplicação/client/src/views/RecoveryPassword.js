@@ -10,7 +10,7 @@ import icon from '../icons/password.png'
 import axios from 'axios'
 
 // const baseUrl = "http://104.248.130.44:3001/sessions"
-const baseUrl = "http://localhost:3001/sessions"
+const baseUrl = "http://localhost:3001"
 const props = { icon, route: '/email' }
 export default Recovery => {
     const alert = useAlert()
@@ -25,8 +25,12 @@ export default Recovery => {
    
     function recovery(e) {
 
-        history.push('/login')
         e.preventDefault()
+
+        console.log(token, password)
+        axios.post(baseUrl+'/update-password', {code: token, password})
+        alert.show('Password updated')
+        history.push('/login')
     }
 
     return (
@@ -41,7 +45,7 @@ export default Recovery => {
                     className = {window.localStorage.getItem('theme')}
                     value={token}
                     id="user"
-                    name="user" />
+                    name="code" />
 
                 <label> Nova Senha </label>
                 <input

@@ -6,7 +6,7 @@ const controllerRecep = require('./controllers/RecepController')
 const ProfileController = require('./controllers/ProfileController')
 const SessionController = require('./controllers/SessionController')
 const CategoryController = require('./controllers/Category')
-
+const RecoVeryPassword = require('./controllers/RecoveryPassword')
 const route = Router()
 
 // todos usuarios
@@ -24,6 +24,11 @@ route.post('/profile-all', ProfileController.indexExpenseAll)
 // receitas de usuario específico
 route.get('/profile-recep', ProfileController.indexRecep)
 route.delete('/profile-recep/:id', ProfileController.removeExpense)
+
+
+// update password
+route.post('/send-email', RecoVeryPassword.sendEmail)
+route.put('/update-password', RecoVeryPassword.updatePassword)
 
 
 // login
