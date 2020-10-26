@@ -27,8 +27,8 @@ export default Recovery => {
 
         e.preventDefault()
 
-        console.log(token, password)
-        axios.post(baseUrl+'/update-password', {code: token, password})
+        
+        axios.put(baseUrl+'/update-password', {code: token, password})
         alert.show('Password updated')
         history.push('/login')
     }
