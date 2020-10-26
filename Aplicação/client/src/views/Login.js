@@ -27,7 +27,7 @@ export default Login => {
 
         e.preventDefault()
         axios.post(baseUrl, {
-            user, password
+            user: user.trim().toLowerCase(), password
         }).then(data => {
             if(data.status == 200){   
                 const hash = 
@@ -74,7 +74,7 @@ export default Login => {
                     type="password" />
 
                 <Link className = {window.localStorage.getItem('theme') }to="/usuario" > Criar Conta</Link>
-                <a href="/email" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</a>
+                <Link to="/email" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</Link>
                 <button className = 'btn' onClick={e => login(e)}> Enviar </button>
             </div>
         </>

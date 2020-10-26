@@ -33,7 +33,9 @@ export default User => {
 
                 await axios.post(baseURL+'/user', {
                
-                    name, email, user, password
+                    name, password,
+                    email: email.trim().toLowerCase(),
+                    user: user.trim().toLowerCase()
                 })
                 alert.show(user + ' cadastrado com sucesso')
                 history.push('/login')

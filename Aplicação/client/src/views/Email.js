@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import bcrypt from 'bcryptjs'
 import { useAlert } from 'react-alert'
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import '../CSS/Login.css';
 
 import Header from '../components/Header'
@@ -10,7 +10,7 @@ import icon from '../icons/msg.png'
 import axios from 'axios'
 
 const baseUrl = "http://localhost:3001"
-const props = { icon, route: '/' }
+const props = { icon, route: '/login' }
 export default Email => {
     const history = useHistory()
     const alert = useAlert()
@@ -44,7 +44,7 @@ export default Email => {
                     id="user"
                     name="user"
                     placeholder = 'Insira seu Email' />
-                
+                         <Link className = {window.localStorage.getItem('theme') }to="/senha" > Já tenho o código</Link>
                 <button className = 'btn' onClick={e => sendEmail(e)}> Enviar </button>
             </div>
         </>

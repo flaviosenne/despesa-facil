@@ -42,7 +42,7 @@ module.exports = {
     async updatePassword(req, res){
         const {code, password} =req.body
         
-        console.log(req.body)
+        
         const data = await codeIsValid(code)
 
         if(!data) return res.status(403).json({msg: 'code invalid'})
