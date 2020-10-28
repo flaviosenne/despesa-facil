@@ -8,6 +8,7 @@ const salt = bcrypt.genSaltSync(10)
 const { existEmailDatabase, codeIsValid } = require('../services/helpers')
 
 module.exports = {
+    
     async sendEmail(req, res) {
 
         const { email } = req.body

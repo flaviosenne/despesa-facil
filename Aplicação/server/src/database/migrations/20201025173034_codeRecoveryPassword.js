@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('codeRecoveryPassword', table => {
-      table.increments('id')
+      table.increments('id').primary()
       table.string('code').notNullable()
       table.boolean('used').notNullable().defaultTo(false)
       

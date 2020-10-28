@@ -12,6 +12,7 @@ const dateStart = year + '-' + month + '-' + day
 const dateEnd = year + '-' + Number(month + 1) + '-' + day
 
 module.exports = {
+    
     orderBy(value) {
         var aux
         for (let i = 0; i < value.length; i++) {
@@ -56,11 +57,112 @@ module.exports = {
 
     },
 
-    // queries expense in database 
-    async queryExpenseDatabaseCategory(table, id_user, category) {
 
 
-        return await connection(table)
+    // --------------------------------//
+    //Query expense in database 
+    async queryExpenseDatabaseCategory(id_user, category) {
+
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('category', category)
+            .andWhere('id_user', id_user)
+            .andWhere('type', 'expense')
+            .orderBy('date', 'asc')
+            .select()
+
+    },
+
+    async queryExpenseDatabaseDate(id_user, dateStart, dateEnd) {
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('id_user', id_user)
+            .andWhere('type', 'expense')
+            .orderBy('date', 'asc')
+            .select()
+    },
+
+    async queryExpenseDatabaseDateDefault(id_user) {
+
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('id_user', id_user)
+            .andWhere('type', 'expense')
+            .orderBy('date', 'asc')
+            .select()
+
+    },
+
+    async queryExpenseDatabaseDateAndCategory(id_user, dateStart, dateEnd, category) {
+
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('type', 'expense')
+            .andWhere('category', category)
+            .andWhere('id_user', id_user)
+            .orderBy('date', 'asc')
+            .select()
+
+    },
+
+
+
+    // --------------------------------//
+    //Query recep
+    
+    async queryRecepDatabaseCategory(id_user, category) {
+
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('category', category)
+            .andWhere('id_user', id_user)
+            .andWhere('type', 'recep')
+            .orderBy('date', 'asc')
+            .select()
+
+    },
+
+    async queryRecepDatabaseDate(id_user, dateStart, dateEnd) {
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('id_user', id_user)
+            .andWhere('type', 'recep')
+            .orderBy('date', 'asc')
+            .select()
+    },
+
+    async queryRecepDatabaseDateDefault(id_user) {
+
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('id_user', id_user)
+            .andWhere('type', 'recep')
+            .orderBy('date', 'asc')
+            .select()
+
+    },
+
+
+    async queryRecepDatabaseDateAndCategory(id_user, dateStart, dateEnd, category) {
+
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('type', 'recep')
+            .andWhere('category', category)
+            .andWhere('id_user', id_user)
+            .orderBy('date', 'asc')
+            .select()
+
+    },
+    
+
+
+
+    // ---------------------------//
+    // Query generic
+    async queryDatabaseCategory(id_user, category) {
+
+        return await connection('flow')
             .whereBetween('date', [dateStart, dateEnd])
             .andWhere('category', category)
             .andWhere('id_user', id_user)
@@ -68,32 +170,28 @@ module.exports = {
             .select()
 
     },
-    async queryExpenseDatabaseDate(table, id_user, dateStart, dateEnd) {
-        return await connection(table)
+
+    async queryDatabaseDate(id_user, dateStart, dateEnd) {
+        return await connection('flow')
+            .whereBetween('date', [dateStart, dateEnd])
+            .andWhere('id_user', id_user)
+            .orderBy('date', 'asc')
+            .select()
+    },
+
+    async queryDatabaseDateDefault(id_user) {
+
+        return await connection('flow')
             .whereBetween('date', [dateStart, dateEnd])
             .andWhere('id_user', id_user)
             .orderBy('date', 'asc')
             .select()
 
-
     },
 
-    async queryExpenseDatabaseDateDefault(table, id_user) {
+    async queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category) {
 
-        return await connection(table)
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('id_user', id_user)
-            .orderBy('date', 'asc')
-            .select()
-
-
-
-    },
-
-
-    async queryExpenseDatabaseDateAndCategory(table, id_user, dateStart, dateEnd, category) {
-
-        return await connection(table)
+        return await connection('flow')
             .whereBetween('date', [dateStart, dateEnd])
             .andWhere('category', category)
             .andWhere('id_user', id_user)
@@ -101,4 +199,6 @@ module.exports = {
             .select()
 
     }
+
+
 }

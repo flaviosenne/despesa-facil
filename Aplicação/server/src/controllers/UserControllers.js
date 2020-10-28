@@ -5,7 +5,6 @@ const crypto = require('crypto')
 
 const bcrypt = require('bcryptjs')
 
-
 const salt = bcrypt.genSaltSync(10)
 
 module.exports = {
@@ -31,11 +30,13 @@ module.exports = {
         await connection('users').insert({
             // método trim remove os espaços em branco do começo
             //e do fim da string
-            id, name, user: user.trim(), email: email.toLowerCase(), password: hash
+            id, name,
+            user: user.toLowerCase().trim(),
+            email: email.toLowerCase().trim(),
+            password: hash
         })
 
-        res.status(200)
-        return res.json(id)
+        return res.status(201).json(id)
     },
 
     async listUser(req, res) {
@@ -43,16 +44,17 @@ module.exports = {
 
         return res.json(users)
     },
+
     async getOneUser(req, res) {
         const { id } = req.params
         const user = await connection('users').where('id', id).select()
 
         return res.json(user)
     },
+
     async updateUser(req, res) {
 
         const { id } = req.params
-        // const id_user = req.body.header.authorization
 
         const { name, user, email } = req.body
 
