@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import { useAlert } from 'react-alert'
 import { Link, useHistory } from 'react-router-dom'
 import '../CSS/Login.css';
@@ -12,6 +12,8 @@ import axios from 'axios'
 // const baseUrl = "http://104.248.130.44:3001/sessions"
 const baseUrl = "http://localhost:3001/sessions"
 const props = { icon, route: '/' }
+const secret = 'r45g5-l-v5kv50fk254g503;/vtv5-2c2'
+
 export default Login => {
     const alert = useAlert()
 
@@ -22,32 +24,34 @@ export default Login => {
 
     // validar os campos digitados pelo usuario com os já cadastrados na api
     // usuario da API
-   
+
     function login(e) {
 
         e.preventDefault()
         axios.post(baseUrl, {
-            user: user.trim().toLowerCase(), password
+            user, password
         }).then(data => {
-            if(data.status == 200){   
-                const hash = 
-                bcrypt.compareSync(password, data.data.password)
+            if (data.status == 200) {
                 
-                if(hash){
+                window.localStorage.setItem('token', data.data.token)
+                
+                jwt.verify(window.localStorage.getItem('token'), secret, (err, result) => {
+                    if (err != null) {
+                        alert.show('algo deu errado')
+                        console.log(err)
+                    }
+                    window.localStorage.setItem('id', result.id)
+                    window.localStorage.setItem('name', result.name)
+                    alert.show('Seja Bem Vindo ' + user)
                     
-                    alert.show('Seja Bem Vindo '+ data.data.name)
+                })
+                
+                history.push('/fluxo-caixa')
 
-                    window.localStorage.setItem('user', data.data.id)
-                    window.localStorage.setItem('name', data.data.name)
-                    history.push('/fluxo-caixa')
-                    
-                    return
-                }  else{
-                    return alert('usuario ou senha incorreta')
-                }
+                return
             }
-        }).catch(err => alert.show('usuario ou senha incorreta'))    
-        
+        }).catch(err => alert.show('usuario ou senha incorreta'))
+
     }
 
     return (
@@ -59,7 +63,7 @@ export default Login => {
                 <input
                     onChange={e => setUser(e.target.value)}
                     type='text'
-                    className = {window.localStorage.getItem('theme')}
+                    className={window.localStorage.getItem('theme')}
                     value={user}
                     id="user"
                     name="user" />
@@ -68,14 +72,14 @@ export default Login => {
                 <input
                     onChange={e => setPassword(e.target.value)}
                     value={password}
-                    className = {window.localStorage.getItem('theme')}
+                    className={window.localStorage.getItem('theme')}
                     id="pass"
                     name="password"
                     type="password" />
 
-                <Link className = {window.localStorage.getItem('theme') }to="/usuario" > Criar Conta</Link>
-                <Link to="/email" className = {window.localStorage.getItem('theme')}> Esqueci minha senha</Link>
-                <button className = 'btn' onClick={e => login(e)}> Enviar </button>
+                <Link className={window.localStorage.getItem('theme')} to="/usuario" > Criar Conta</Link>
+                <Link to="/email" className={window.localStorage.getItem('theme')}> Esqueci minha senha</Link>
+                <button className='btn' onClick={e => login(e)}> Enviar </button>
             </div>
         </>
     )

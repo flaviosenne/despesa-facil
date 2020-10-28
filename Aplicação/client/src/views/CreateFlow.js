@@ -20,10 +20,7 @@ export default User => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [categories, setCategories] = useState([''])
-    const [category, setCategory] = useState('não definido')
     const [newCategory, setNewCategory] = useState()
-    const [msg, setMsg] = useState()
-    const [cl, setCl] = useState()
 
     const history = useHistory()
 
@@ -35,15 +32,6 @@ export default User => {
     
     }, 1)   
         
-    // const ViewMsg = (msg)=>{
-    //     setCl('message')        
-    //     setMsg(msg)        
-
-    //     setTimeout(() => {
-    //         setCl('none')        
-    //     }, 3000)
-
-    // }
 
         
     const alert = useAlert()
@@ -52,12 +40,13 @@ export default User => {
         
     
         if (type === 'receita') {
-            await axios.post(baseURL + '/recep', {
+            await axios.post(baseURL + '/flow', {
                 date,
+                type: 'recep',
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 headers: {
-                    'Authorization': window.localStorage.getItem('user')
+                    'Authorization': window.localStorage.getItem('id')
                 },
                 category
             })
@@ -70,12 +59,13 @@ export default User => {
                     category: newCategory
                 })
 
-                axios.post(baseURL + '/expense', {
+                axios.post(baseURL + '/flow', {
 
                     headers: {
-                    'Authorization': window.localStorage.getItem('user')
+                    'Authorization': window.localStorage.getItem('id')
                 },
                 date,
+                type: 'expense',
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 status,

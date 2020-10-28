@@ -31,17 +31,15 @@ export default User => {
             
             if(pass === password  &&  user.length > 3){
 
-                await axios.post(baseURL+'/user', {
-               
+                await axios.post(baseURL+'/user', { 
                     name, password,
-                    email: email.trim().toLowerCase(),
-                    user: user.trim().toLowerCase()
+                    email, user
                 })
                 alert.show(user + ' cadastrado com sucesso')
                 history.push('/login')
                 return
             }
-            alert('usuario não é valido, observe as credenciais')           
+            alert.show('usuario não é valido, observe as credenciais')           
             
         }catch(err){
             console.log(err)

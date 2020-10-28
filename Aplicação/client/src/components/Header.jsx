@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import power from '../icons/power.png'
 import info from '../icons/about.png'
 import { useAlert } from 'react-alert'
 
 import '../CSS/Header.css';
-
 
 export default Header => {
     const alert = useAlert()
@@ -17,7 +16,7 @@ export default Header => {
 
         alert.show('Tchau ' + window.localStorage.getItem('name'))
 
-        window.localStorage.setItem('user', 0)
+        window.localStorage.setItem('id', 0)
         window.localStorage.setItem('name', '')
         history.push('/')
     }
@@ -37,7 +36,7 @@ export default Header => {
 
                 setCont(<div className={menu()}>
                     <p>
-                        <Link className='user' to={`/usuario/${window.localStorage.getItem('user')}`}>
+                        <Link className='user' to={`/usuario/${window.localStorage.getItem('id')}`}>
                             Minha conta
                         </Link>
                     </p>

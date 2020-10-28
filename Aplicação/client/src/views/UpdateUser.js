@@ -57,8 +57,8 @@ export default UserUpdate => {
 
             await axios.put(baseURL + '/user/' + UserUpdate.match.params.id, {
                 name, 
-                email: email.trim().toLowerCase(),
-                user: user.trim().toLowerCase()
+                email,
+                user
             })
             alert.show(user + ' atualizado com sucesso')
             window.localStorage.setItem('name', name)

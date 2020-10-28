@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import '../index.css';
+
 import cifrao from '../icons/cifrao.png'
 import Header from '../components/Header'
 import relatorio from '../icons/relatorio.png'
