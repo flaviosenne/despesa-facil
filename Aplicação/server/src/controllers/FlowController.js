@@ -164,7 +164,6 @@ module.exports = {
                 { category: category.toUpperCase().trim() })
 
 
-        console.log(type)
         const [id] = await connection('flow').insert({
             category: id_category.id,
             type,

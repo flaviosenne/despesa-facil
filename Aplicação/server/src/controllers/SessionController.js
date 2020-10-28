@@ -1,6 +1,8 @@
 const connection = require("../database/connection");
 const bcrypt = require('bcryptjs')
 
+
+const jwt = require('jsonwebtoken')
 module.exports = {
 
     async create(req, res) {
@@ -15,16 +17,23 @@ module.exports = {
             .select()
             .first()
 
-        if(!User){
-            return res.status(404).json({ msg: 'User not found' })
-        }
+        if(!User)  return res.status(404).json({ msg: 'User not found' })
+        
 
         const hash = bcrypt.compareSync(password, User.password)
 
-        if (!hash) {
-            return res.status(404).json({ msg: 'User not found' })
-        } else {
-            return res.status(200).json(User)
-        }
+        if (!hash) return res.status(404).json({ msg: 'User not found' })
+        
+        const token = jwt.sign(
+            {
+            user: User.user,
+            email: User.email,
+            name: User.name
+            },
+            process.env.SECRET,
+            { expiresIn: '1h' })
+
+        return res.status(200).json({token})
+
     }
 }
