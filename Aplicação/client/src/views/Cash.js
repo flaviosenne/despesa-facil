@@ -12,6 +12,8 @@ import {
     listValueData
 } from '../services/Methods'
 
+import { useAlert } from 'react-alert'
+
 import Header from '../components/Header'
 
 import relatorio from '../icons/relatorio.png'
@@ -30,37 +32,45 @@ const props = {
 }
 
 const initialState = {
-    expense: [],
-    recep: [],
+    cash: [],
     categories: [],
 }
 // const baseUrl = 'http://104.248.130.44:3001'
 const baseUrl = 'http://localhost:3001'
 
+// const alert = useAlert()
 export default class Cash extends Component {
     state = { ...initialState }
     dataInicio 
     dataFim
     cont = 0
-    category = undefined
-
+    category = undefined    
+        
     async UNSAFE_componentWillMount(){
-            
-            await axios.post(baseUrl+'/profile-expense', {
-                headers: {Authorization: window.localStorage.getItem('user')},
-                    dateStart: this.dataInicio,
-                    dateEnd: this.dataFim,
-                    category: this.category
-            }).then(expense => {
-                this.setState({expense: expense.data})
+        if(window.localStorage.getItem('id') == 0){
+            this.props.history.push('/login')
+            alert('Necessário fazer login')
+        }
+
+        await axios.get(baseUrl+'/flow', {
+            headers: 
+            {
+                token: 'bearer '+window.localStorage.getItem('token'),
+                authorization: window.localStorage.getItem('id')
+            },
+            body: {
+                dateStart: this.dataInicio,
+                dateEnd: this.dataFim,
+                category: this.category
+            }
+        }).then(cash => {
+            console.log(cash)
+                this.setState({cash: cash.data})
             })
-            
-            await axios.get(baseUrl+'/profile-recep', {
-                headers: {Authorization: window.localStorage.getItem('user')}
-            }).then(recep => {
-                this.setState({recep: recep.data})
+            .catch(err => {
+                this.props.history.push("/login");
             })
-            
+               
             await axios.get(baseUrl+'/category').then(cat => {
                 this.setState({categories: cat.data})
             })
@@ -126,23 +136,23 @@ export default class Cash extends Component {
 
                     <div className='titulo'>
 
-                        <label className={listTotal(this.state.expense, this.state.recep).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
+                        <label className={listTotal(this.state.cash).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
                             <p>
                                 Total: R$
                         </p>
-                            {listTotal(this.state.expense, this.state.recep).toFixed(2)}</label>
+                            {listTotal(this.state.cash).toFixed(2)}</label>
 
                         <label className="receita">
                             <p>
                                 Receita: R$
                             </p>
-                            {listValueData(this.state.recep).toFixed(2)}</label>
+                            {listValueData(this.state.cash).toFixed(2)}</label>
 
                         <label className="despesa">
                             <p>
                                 Despesa: R$
                         </p>
-                            {listValueData(this.state.expense).toFixed(2)}</label>
+                            {listValueData(this.state.cash).toFixed(2)}</label>
                     </div>
                 </div>
 
@@ -157,7 +167,7 @@ export default class Cash extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.expense.map(cash => {
+                        {this.state.cash.map(cash => {
 
                             return (
                                 <tr key={cash.id} className={cash.status == 'finalizado' ? 'finalized' : 'pendent'} >

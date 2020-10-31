@@ -20,75 +20,72 @@ export default User => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [categories, setCategories] = useState([''])
+    const [category, setCategory] = useState(undefined)
     const [newCategory, setNewCategory] = useState()
 
     const history = useHistory()
 
     useEffect(() => {
-        
-        axios.get(baseURL+'/category').then(cat => {
+
+        axios.get(baseURL + '/category').then(cat => {
             setCategories(cat)
         })
-    
-    }, 1)   
-        
 
-        
+    }, 1)
+
+
     const alert = useAlert()
     const post = async (e) => {
         e.preventDefault()
-        
-    
+
+
         if (type === 'receita') {
             await axios.post(baseURL + '/flow', {
+                token: 'bearer ' + window.localStorage.getItem('token'),
+                authorization: window.localStorage.getItem('id'),
                 date,
                 type: 'recep',
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
-                headers: {
-                    'Authorization': window.localStorage.getItem('id')
-                },
-                category
+                category: newCategory ? newCategory : category
             })
             alert.show('Receita cadastrada com sucesso')
             history.push('/fluxo-caixa')
-            
+
         } else {
-            if(newCategory)
-                axios.post(baseURL+'/category-expense', {
+            if (newCategory)
+                axios.post(baseURL + '/category-expense', {
                     category: newCategory
                 })
 
-                axios.post(baseURL + '/flow', {
-
-                    headers: {
-                    'Authorization': window.localStorage.getItem('id')
-                },
+            axios.post(baseURL + '/flow', 
+                {
+                token: 'bearer ' + window.localStorage.getItem('token'),
+                authorization: window.localStorage.getItem('id'),
                 date,
                 type: 'expense',
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
                 status,
-                category: newCategory ? newCategory:category
-                
+                category: newCategory ? newCategory : category
+
             }
             ).then(resp => {
-                
+
 
                 alert.show('Despesa cadastrada com sucesso')
                 history.push('/fluxo-caixa')
             }).catch(err => console.log(err))
         }
-        
+
     }
-    
-    return  (
-        
+
+    return (
+
         <>
             <Header {...props} />
-            
-            {/* <Message cl = {showMessage(cl)} msg = {showMessage(msg)}/> */}
-            <div className={UserTheme() } >
+
+            <div className={UserTheme()} >
                 <img className="dinheiro" src={dinheiro} alt="icone dinheiro" />
 
                 <label> Data </label>
@@ -125,23 +122,23 @@ export default User => {
                     onChange={e => setDescription(e.target.value)} />
 
                 <div className='categoria1'>
-                    <select name = 'category' 
-                    onChange = {e => setCategory(e.target.value)}>
-                        <option selected value = 'não definido'>
+                    <select name='category'
+                        onChange={e => setCategory(e.target.value)}>
+                        <option selected value='não definido'>
                             ....
                         </option>
-                        {!categories.data? '': categories.data.map(cat => {
+                        {!categories.data ? '' : categories.data.map(cat => {
                             return (
-                                <option value = {cat.category}
+                                <option value={cat.category}
                                 >
                                     {cat.category}
                                 </option>
                             )
                         })}
-                       
+
                     </select>
                 </div>
-                <br/>
+                <br />
                 <label> Adicione Nova Categoria Caso Nescessário</label>
                 <input
                     value={newCategory}
@@ -175,7 +172,7 @@ export default User => {
 
                     <Link><button className='btn' onClick={e => post(e)} > Cadastrar </button></Link>
                     <Link to="/fluxo-caixa" ><button className='btn' > Cancelar </button></Link>
-                    
+
                 </div>
             </div>
         </>

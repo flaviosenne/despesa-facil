@@ -25,21 +25,26 @@ export default User => {
     const [category, setCategory] = useState()
     const [categories, setCategories] = useState([])
     const [newCategory, setNewCategory] = useState()
-
+    
     const history = useHistory()
     const alert = useAlert()
-        
+    
+    const list = []
     const get = async(e) => {
         axios.get(baseURL+'/category').then(cat => {
             setCategories(cat)
         })
 
         const id = User.match.params.id
-        await axios.get(baseURL + '/expense/' + id).then(resp => {
-            list.push(resp.data[0])
+        await axios.get(baseURL + '/flow/' + id, {
+            headers: {
+                token: 'bearer '+ window.localStorage.getItem('token')}
+        }).then(resp => {
+            // console.log(resp.data)
+            list.push(resp.data)
         })
 
-        // console.log(list[0].date)
+        console.log(list)
         setDate(list[0].date)
         setStatus(list[0].status)
         setDescription(list[0].description)
@@ -49,7 +54,6 @@ export default User => {
         return list
     }
 
-    const list = []
    
     const post = async (e) => {
 
@@ -61,7 +65,9 @@ export default User => {
                 category: newCategory
             })
 
-            await axios.put(baseURL + '/expense/' + id, {
+            await axios.put(baseURL + '/flow/' + id, {
+                authorization: window.localStorage.getItem('id'),
+                token: 'bearer '+window.localStorage.getItem('token'),
                 id, date,
                 value: Number(value) < 0 ? 0 : Number(value),
                 description, status, 

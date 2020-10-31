@@ -22,10 +22,12 @@ const {
 module.exports = {
     
     async indexFlow(req, res) {
-        const { dateStart, dateEnd, category, type } = req.body
+
+        const { dateStart, dateEnd, category, type } = req.headers
 
         const id_user = req.headers.authorization
 
+        console.log(req.headers)
         if (type == 'expense') {
 
             if (!category && !dateStart && !dateEnd) {
@@ -98,7 +100,7 @@ module.exports = {
         if (dateStart && dateEnd && category) {
             const flow = await queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
-            return res.json(flow)
+            return res.json({flow})
         }
 
         if (category) {
@@ -130,7 +132,7 @@ module.exports = {
             return res.json({ msg: 'not found' })
         }
 
-        return res.status(204).json({ msg: 'expense deleted' })
+        return res.status(204).json({ msg: 'flow deleted' })
     },
 
     async createFlow(req, res) {
@@ -147,8 +149,8 @@ module.exports = {
         const year = new Date().getFullYear()
 
         const { description, status, type, value, date, category } = req.body
-        const id_user = req.headers.authorization
-
+        const id_user = req.body.authorization
+      
         const user = await existUserDatabase(id_user)
 
         if (!user) return res.json({ msg: 'user not found' })
@@ -182,7 +184,7 @@ module.exports = {
     async updateFlow(req, res) {
 
         const { id } = req.params
-        const id_user = req.headers.authorization
+        const id_user = req.body.authorization
 
         const { description, status, date, value, category } = req.body
        
@@ -224,7 +226,6 @@ module.exports = {
         const flow = await connection('flow')
             .select()
             .where('id', id).first()
-
 
         if (!flow) {
             return res.status(404).json({ msg: 'not found' })
