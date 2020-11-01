@@ -20,97 +20,107 @@ const {
     existUserDatabase } = require('../services/helpers')
 
 module.exports = {
-    
+
     async indexFlow(req, res) {
 
-        const { dateStart, dateEnd, category, type } = req.headers
+        const { category, type } = req.headers
+        const dateStart = req.headers.datestart
+        const dateEnd = req.headers.dateend
 
         const id_user = req.headers.authorization
 
-        console.log(req.headers)
-        if (type == 'expense') {
+        if (type == 'expense' || !type) {
 
-            if (!category && !dateStart && !dateEnd) {
+            if ((!category && !dateStart && !dateEnd) ||
+                (category == 'undefined' && dateStart
+                    == 'undefined' && dateEnd == 'undefined')) {
+
                 const flow = await queryExpenseDatabaseDateDefault(id_user)
-
                 return res.json(flow)
             }
 
-            if (dateStart && dateEnd && category) {
+            if ((dateStart && dateEnd && category) &&
+                (dateStart != 'undefined' && dateEnd
+                    != 'undefined' && category != 'undefined')) {
                 const flow = await queryExpenseDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
                 return res.json(flow)
             }
 
-            if (category) {
-                console.log(category)
+            if ((category) && (category != 'undefined')) {
+
                 const flow = await queryExpenseDatabaseCategory(id_user, category)
 
                 return res.json(flow)
             }
 
-            if (dateStart && dateEnd) {
+            if ((dateStart && dateEnd) &&
+                (dateStart != 'undefined' && dateEnd != 'undefined')) {
                 const flow = await queryExpenseDatabaseDate(id_user, dateStart, dateEnd)
-
                 return res.json(flow)
             }
 
         }
 
-        if (type == 'recep') {
-            if (!category && !dateStart && !dateEnd) {
-                const flow = await queryRecepDatabaseDateDefault(id_user)
+        if (type == 'recep' || !type) {
 
+            if ((!category && !dateStart && !dateEnd) ||
+                (category == 'undefined' && dateStart
+                    == 'undefined' && dateEnd == 'undefined')) {
+
+                const flow = await queryRecepDatabaseDateDefault(id_user)
                 return res.json(flow)
             }
 
-            if (dateStart && dateEnd && category) {
+            if ((dateStart && dateEnd && category) &&
+                (dateStart != 'undefined' && dateEnd
+                    != 'undefined' && category != 'undefined')) {
                 const flow = await queryRecepDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
                 return res.json(flow)
             }
 
-            if (category) {
-                console.log(category)
+            if ((category) && (category != 'undefined')) {
+
                 const flow = await queryRecepDatabaseCategory(id_user, category)
 
                 return res.json(flow)
             }
 
-            if (dateStart && dateEnd) {
+            if ((dateStart && dateEnd) &&
+                (dateStart != 'undefined' && dateEnd != 'undefined')) {
                 const flow = await queryRecepDatabaseDate(id_user, dateStart, dateEnd)
-
                 return res.json(flow)
             }
 
-            if (type) {
-                const flow = await queryRecepDatabaseDate(id_user, dateStart, dateEnd)
-
-                return res.json(flow)
-            }
         }
 
 
-        if (!category && !dateStart && !dateEnd) {
+        if ((!category && !dateStart && !dateEnd) ||
+        (category == 'undefined' && dateStart
+            == 'undefined' && dateEnd == 'undefined')) {
             const flow = await queryDatabaseDateDefault(id_user)
 
             return res.json(flow)
         }
 
-        if (dateStart && dateEnd && category) {
+        if ((dateStart && dateEnd && category) &&
+        (dateStart != 'undefined' && dateEnd
+            != 'undefined' && category != 'undefined')) {
             const flow = await queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
-            return res.json({flow})
+            return res.json({ flow })
         }
 
-        if (category) {
+        if((category) && (category != 'undefined')) {
 
             const flow = await queryDatabaseCategory(id_user, category)
 
             return res.json(flow)
         }
 
-        if (dateStart && dateEnd) {
+        if  ((dateStart && dateEnd) &&
+        (dateStart != 'undefined' && dateEnd != 'undefined')) {
             const flow = await queryDatabaseDate(id_user, dateStart, dateEnd)
 
             return res.json(flow)
@@ -150,7 +160,7 @@ module.exports = {
 
         const { description, status, type, value, date, category } = req.body
         const id_user = req.body.authorization
-      
+
         const user = await existUserDatabase(id_user)
 
         if (!user) return res.json({ msg: 'user not found' })
@@ -187,7 +197,7 @@ module.exports = {
         const id_user = req.body.authorization
 
         const { description, status, date, value, category } = req.body
-       
+
         var id_category = await connection('category')
             .select()
             .where('category', category.toUpperCase().trim())

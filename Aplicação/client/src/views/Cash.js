@@ -42,46 +42,48 @@ const baseUrl = 'http://localhost:3001'
 export default class Cash extends Component {
     state = { ...initialState }
     dataInicio 
-    dataFim
+    dataFim 
     cont = 0
-    category = undefined    
-        
-    async UNSAFE_componentWillMount(){
-        if(window.localStorage.getItem('id') == 0){
+    category 
+    type
+
+    async UNSAFE_componentWillMount() {
+        if (window.localStorage.getItem('id') == 0) {
             this.props.history.push('/login')
             alert('Necessário fazer login')
         }
 
-        await axios.get(baseUrl+'/flow', {
-            headers: 
+        await axios.get(baseUrl + '/flow',
             {
-                token: 'bearer '+window.localStorage.getItem('token'),
-                authorization: window.localStorage.getItem('id')
-            },
-            body: {
-                dateStart: this.dataInicio,
-                dateEnd: this.dataFim,
-                category: this.category
-            }
-        }).then(cash => {
-            console.log(cash)
-                this.setState({cash: cash.data})
+                headers:
+                {
+                    token: 'bearer ' + window.localStorage.getItem('token'),
+                    authorization: window.localStorage.getItem('id'),
+                        dateStart: this.dataInicio,
+                        dateEnd: this.dataFim, 
+                        category: this.category,
+                        type: this.type
+                }
+
+            }).then(cash => {
+                console.log(cash)
+                this.setState({ cash: cash.data })
             })
             .catch(err => {
                 this.props.history.push("/login");
             })
-               
-            await axios.get(baseUrl+'/category').then(cat => {
-                this.setState({categories: cat.data})
-            })
+
+        await axios.get(baseUrl + '/category').then(cat => {
+            this.setState({ categories: cat.data })
+        })
 
     }
 
-    get(){        
+    get() {
         this.UNSAFE_componentWillMount()
     }
 
-     
+
     render() {
         return (
             <>
@@ -107,7 +109,7 @@ export default class Cash extends Component {
                     </div>
                     <div className='categoria'>
                         <select onChange={e => this.category = e.target.value}>
-                            <option 
+                            <option
                                 value={undefined}>
                                 {undefined}
                             </option>
@@ -184,7 +186,7 @@ export default class Cash extends Component {
                                             />
                                         </Link>
                                         <img
-                                            onClick={ async (e) => {
+                                            onClick={async (e) => {
 
                                                 await remove(e, cash.id)
 
