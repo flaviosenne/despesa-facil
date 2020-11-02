@@ -6,13 +6,11 @@ import axios from 'axios'
 
 import {
     formatDateOfServer,
-    listTotal,
     remove,
     ViewUpdateExpense,
-    listValueData
+    listExpenseData,
+    listRecepData
 } from '../services/Methods'
-
-import { useAlert } from 'react-alert'
 
 import Header from '../components/Header'
 
@@ -35,10 +33,9 @@ const initialState = {
     cash: [],
     categories: [],
 }
-// const baseUrl = 'http://104.248.130.44:3001'
+
 const baseUrl = 'http://localhost:3001'
 
-// const alert = useAlert()
 export default class Cash extends Component {
     state = { ...initialState }
     dataInicio 
@@ -66,10 +63,10 @@ export default class Cash extends Component {
                 }
 
             }).then(cash => {
-                console.log(cash)
                 this.setState({ cash: cash.data })
             })
             .catch(err => {
+                alert('necessário fazer login')
                 this.props.history.push("/login");
             })
 
@@ -138,23 +135,25 @@ export default class Cash extends Component {
 
                     <div className='titulo'>
 
-                        <label className={listTotal(this.state.cash).toFixed(2)[0] == '-' ? "negativo" : 'positivo'}>
+                        <label className={(listRecepData(this.state.cash) 
+                            - listExpenseData(this.state.cash)).toFixed(2) < 0? "negativo" : 'positivo'}>
                             <p>
                                 Total: R$
                         </p>
-                            {listTotal(this.state.cash).toFixed(2)}</label>
+                            {(listRecepData(this.state.cash) 
+                            - listExpenseData(this.state.cash)).toFixed(2)}</label>
 
                         <label className="receita">
                             <p>
                                 Receita: R$
                             </p>
-                            {listValueData(this.state.cash).toFixed(2)}</label>
+                            {listRecepData(this.state.cash).toFixed(2)}</label>
 
                         <label className="despesa">
                             <p>
                                 Despesa: R$
                         </p>
-                            {listValueData(this.state.cash).toFixed(2)}</label>
+                            {listExpenseData(this.state.cash).toFixed(2)}</label>
                     </div>
                 </div>
 

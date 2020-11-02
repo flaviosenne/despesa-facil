@@ -3,7 +3,13 @@ import Header from './Header'
 import icon from '../icons/relatorio.png'
 import '../CSS/Paper.css'
 import axios from 'axios'
-import { listValueData, formatDateOfServer, listDataPendent, listDataFinalized } from '../services/Methods'
+import {
+    listExpenseData,
+    listRecepData,
+    formatDateOfServer,
+    listDataPendent,
+    listDataFinalized
+} from '../services/Methods'
 // const baseUrl = 'http://104.248.130.44:3001/profile'
 const baseUrl = 'http://localhost:3001'
 
@@ -22,22 +28,34 @@ export default class Report extends Component {
                 'finalizado'
             ]
     }
-    category = []
+    category
 
 
     async UNSAFE_componentWillMount() {
 
-        await axios.post(baseUrl + '/profile-all', {
+        await axios.get(baseUrl + '/flow-expense', {
             headers:
             {
-                Authorization: window.localStorage.getItem('user')
-            },
-            order: this.category
+                token: 'bearer ' + window.localStorage.getItem('token'),
+                authorization: window.localStorage.getItem('id'),
+                order: !this.category ? 'date': this.category
+            }
         })
             .then(resp => {
-                this.setState({ expenseAPI: resp.data.expense })
-                this.setState({ recepAPI: resp.data.recep })
+                this.setState({ expenseAPI: resp.data })
             })
+
+            await axios.get(baseUrl + '/flow-recep', {
+                headers:
+                {
+                    token: 'bearer ' + window.localStorage.getItem('token'),
+                    authorization: window.localStorage.getItem('id'),
+                    order: !this.category ? 'date': this.category
+                }
+            })
+                .then(resp => {
+                    this.setState({ recepAPI: resp.data })
+                })
     }
 
     day = new Date().getDate() < 10
@@ -94,56 +112,57 @@ export default class Report extends Component {
                         <div className='dois'>
 
                             <span><strong>Valor Disponível:</strong><br /> R$ {
-                                (listValueData(this.state.recepAPI) -
+                                (listRecepData(this.state.recepAPI) -
 
-                                    listValueData(this.state.expenseAPI)).toFixed(2)}</span>
+                                    listExpenseData(this.state.expenseAPI)).toFixed(2)}</span>
                             <span>Foi pago {((listDataFinalized(this.state.expenseAPI) /
-                                listValueData(this.state.recepAPI)) * 100).toFixed(0)}% <br />do valor da sua receita</span>
+                                listRecepData(this.state.recepAPI)) * 100).toFixed(0)}% <br />do valor da sua receita</span>
 
                             <span>{((listDataPendent(this.state.expenseAPI) /
-                                listValueData(this.state.recepAPI)) * 100).toFixed(0)}% <br />da sua receita já está comprometido</span>
+                                listRecepData(this.state.recepAPI)) * 100).toFixed(0)}% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>
-                            <hr/>
-                            <hr/>
-                    <table className = 'table table-bordered'>
+                    <hr />
+                    <hr />
+                    <table className='table table-bordered'>
                         <thead>
                             <td></td>
-                            <td className = 'underline'>Despesa</td>
-                            <td className = 'underline'>Receita</td>
+                            <td className='underline'>Despesa</td>
+                            <td className='underline'>Receita</td>
                         </thead>
                         <tr>
                             <td>Pago:</td>
                             <td>R$ {listDataFinalized(this.state.expenseAPI)}</td>
-                            <td></td>                                                        
+                            <td></td>
                         </tr>
                         <tr>
                             <td>Pendente:</td>
                             <td>R$ {listDataPendent(this.state.expenseAPI)}</td>
-                            <td></td>                                                        
+                            <td></td>
                         </tr>
                         <tr>
                             <td><strong>Total:</strong></td>
-                            <td>R$ {listValueData(this.state.expenseAPI)}</td>
-                            <td>R$ {listValueData(this.state.recepAPI)} </td>                                                        
+                            <td>R$ {listExpenseData(this.state.expenseAPI)}</td>
+                            <td>R$ {listRecepData(this.state.recepAPI)} </td>
                         </tr>
                         <tr>
                             <td><strong>Disponível:</strong></td>
                             <td></td>
-                            <td>R$ {(listValueData(this.state.recepAPI) -
+                            <td>R$ {(listRecepData(this.state.recepAPI) -
 
-                                    listValueData(this.state.expenseAPI)).toFixed(2)} </td>                                                        
+                                listExpenseData(this.state.expenseAPI)).toFixed(2)} </td>
                         </tr>
                     </table>
- 
-                            <hr/>
-                            <hr/>
+
+                    <hr />
+                    <hr />
                     <table className='table table-hover'>
                         <thead>
                             <tr>
                                 <td>data</td>
                                 <td>descrição</td>
                                 <td>categoria</td>
+                                <td>status</td>
                                 <td>valor</td>
                             </tr>
                         </thead>
@@ -155,6 +174,7 @@ export default class Report extends Component {
                                         <td>{formatDateOfServer(recep.date)}</td>
                                         <td>{recep.description}</td>
                                         <td>{recep.category}</td>
+                                        <td>{recep.status}</td>
                                         <td>R${recep.value}</td>
                                     </tr>
                                 )
@@ -162,8 +182,8 @@ export default class Report extends Component {
                         </tbody>
                     </table>
 
-                            <hr/>
-                            <hr/>
+                    <hr />
+                    <hr />
                     <table className='table table-hover'>
                         <thead>
                             <tr>

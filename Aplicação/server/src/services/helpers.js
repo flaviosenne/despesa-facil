@@ -12,7 +12,7 @@ const dateStart = year + '-' + month + '-' + day
 const dateEnd = year + '-' + Number(month + 1) + '-' + day
 
 module.exports = {
-    
+
     orderBy(value) {
         var aux
         for (let i = 0; i < value.length; i++) {
@@ -35,6 +35,7 @@ module.exports = {
 
         return result
     },
+
     async existUserDatabase(id) {
 
         return await connection('users')
@@ -44,119 +45,63 @@ module.exports = {
 
     },
 
-    async codeIsValid(code){
+    async codeIsValid(code) {
 
         const data = await connection('codeRecoveryPassword')
-        .select()
-        .where({code: code})
-        .andWhere({used: false})
-        .first()
+            .select()
+            .where({ code: code })
+            .andWhere({ used: false })
+            .first()
 
         return data
-        
+
 
     },
-
 
 
     // --------------------------------//
     //Query expense in database 
-    async queryExpenseDatabaseCategory(id_user, category) {
+    async queryExpenseDatabase(id_user, order) {
 
-        return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('category', category)
+        if(order == 'pendente' || order == 'finalizado'){
+            return await connection('flow')
+            .where('status', order)
             .andWhere('id_user', id_user)
             .andWhere('type', 'expense')
             .orderBy('date', 'asc')
             .select()
-
-    },
-
-    async queryExpenseDatabaseDate(id_user, dateStart, dateEnd) {
+        }
         return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('id_user', id_user)
+            .where('id_user', id_user)
             .andWhere('type', 'expense')
-            .orderBy('date', 'asc')
-            .select()
-    },
-
-    async queryExpenseDatabaseDateDefault(id_user) {
-
-        return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('id_user', id_user)
-            .andWhere('type', 'expense')
-            .orderBy('date', 'asc')
+            .orderBy(order, 'asc')
             .select()
 
     },
-
-    async queryExpenseDatabaseDateAndCategory(id_user, dateStart, dateEnd, category) {
-
-        return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('type', 'expense')
-            .andWhere('category', category)
-            .andWhere('id_user', id_user)
-            .orderBy('date', 'asc')
-            .select()
-
-    },
-
-
+   
 
     // --------------------------------//
     //Query recep
-    
-    async queryRecepDatabaseCategory(id_user, category) {
 
-        return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('category', category)
+    async queryRecepDatabase(id_user, order) {
+
+        if(order == 'pendente' || order == 'finalizado'){
+            return await connection('flow')
+            .where('status', order)
             .andWhere('id_user', id_user)
             .andWhere('type', 'recep')
             .orderBy('date', 'asc')
             .select()
-
-    },
-
-    async queryRecepDatabaseDate(id_user, dateStart, dateEnd) {
+        }
         return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('id_user', id_user)
+            .where('id_user', id_user)
             .andWhere('type', 'recep')
-            .orderBy('date', 'asc')
-            .select()
-    },
-
-    async queryRecepDatabaseDateDefault(id_user) {
-
-        return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('id_user', id_user)
-            .andWhere('type', 'recep')
-            .orderBy('date', 'asc')
+            .orderBy(order, 'asc')
             .select()
 
     },
 
-
-    async queryRecepDatabaseDateAndCategory(id_user, dateStart, dateEnd, category) {
-
-        return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
-            .andWhere('type', 'recep')
-            .andWhere('category', category)
-            .andWhere('id_user', id_user)
-            .orderBy('date', 'asc')
-            .select()
-
-    },
-    
-
-
+   
 
     // ---------------------------//
     // Query generic

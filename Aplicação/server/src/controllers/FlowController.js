@@ -1,99 +1,45 @@
 const connection = require("../database/connection")
 
 const {
-    queryExpenseDatabaseCategory,
-    queryExpenseDatabaseDateDefault,
-    queryExpenseDatabaseDateAndCategory,
-    queryExpenseDatabaseDate,
+    queryExpenseDatabase,
 
-    queryRecepDatabaseCategory,
-    queryRecepDatabaseDateDefault,
-    queryRecepDatabaseDateAndCategory,
-    queryRecepDatabaseDate,
-
+    queryRecepDatabase,
 
     queryDatabaseCategory,
     queryDatabaseDateDefault,
     queryDatabaseDateAndCategory,
     queryDatabaseDate,
 
-    existUserDatabase } = require('../services/helpers')
+    existUserDatabase} = require('../services/helpers')
 
 module.exports = {
 
+    async indexExpense(req, res){
+        const { order } = req.headers
+        const id_user = req.headers.authorization
+
+           const expense = await queryExpenseDatabase(id_user, order)
+
+           return res.status(200).json(expense)
+    },
+
+    async indexRecep(req, res){
+        const { order } = req.headers
+
+        const id_user = req.headers.authorization
+
+           const expense = await queryRecepDatabase(id_user, order)
+
+           return res.status(200).json(expense)
+    },
+
     async indexFlow(req, res) {
 
-        const { category, type } = req.headers
+        const { category } = req.headers
         const dateStart = req.headers.datestart
         const dateEnd = req.headers.dateend
 
         const id_user = req.headers.authorization
-
-        if (type == 'expense' || !type) {
-
-            if ((!category && !dateStart && !dateEnd) ||
-                (category == 'undefined' && dateStart
-                    == 'undefined' && dateEnd == 'undefined')) {
-
-                const flow = await queryExpenseDatabaseDateDefault(id_user)
-                return res.json(flow)
-            }
-
-            if ((dateStart && dateEnd && category) &&
-                (dateStart != 'undefined' && dateEnd
-                    != 'undefined' && category != 'undefined')) {
-                const flow = await queryExpenseDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
-
-                return res.json(flow)
-            }
-
-            if ((category) && (category != 'undefined')) {
-
-                const flow = await queryExpenseDatabaseCategory(id_user, category)
-
-                return res.json(flow)
-            }
-
-            if ((dateStart && dateEnd) &&
-                (dateStart != 'undefined' && dateEnd != 'undefined')) {
-                const flow = await queryExpenseDatabaseDate(id_user, dateStart, dateEnd)
-                return res.json(flow)
-            }
-
-        }
-
-        if (type == 'recep' || !type) {
-
-            if ((!category && !dateStart && !dateEnd) ||
-                (category == 'undefined' && dateStart
-                    == 'undefined' && dateEnd == 'undefined')) {
-
-                const flow = await queryRecepDatabaseDateDefault(id_user)
-                return res.json(flow)
-            }
-
-            if ((dateStart && dateEnd && category) &&
-                (dateStart != 'undefined' && dateEnd
-                    != 'undefined' && category != 'undefined')) {
-                const flow = await queryRecepDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
-
-                return res.json(flow)
-            }
-
-            if ((category) && (category != 'undefined')) {
-
-                const flow = await queryRecepDatabaseCategory(id_user, category)
-
-                return res.json(flow)
-            }
-
-            if ((dateStart && dateEnd) &&
-                (dateStart != 'undefined' && dateEnd != 'undefined')) {
-                const flow = await queryRecepDatabaseDate(id_user, dateStart, dateEnd)
-                return res.json(flow)
-            }
-
-        }
 
 
         if ((!category && !dateStart && !dateEnd) ||
@@ -148,12 +94,12 @@ module.exports = {
     async createFlow(req, res) {
         const day =
             (new Date().getDate()) < 10 ?
-                +'0' + (new Date().getDate()) :
+                '0' + (new Date().getDate()) :
                 (new Date().getDate())
 
         const month =
             (new Date().getMonth() + 1) < 10 ?
-                +'0' + (new Date().getMonth() + 1) :
+                '0' + (new Date().getMonth() + 1) :
                 (new Date().getMonth() + 1)
 
         const year = new Date().getFullYear()

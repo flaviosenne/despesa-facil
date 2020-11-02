@@ -20,6 +20,8 @@ route.put('/user/:id', controllerUser.updateUser)
 
 // despesas de usuario específico
 route.post('/flow', logged, FlowController.createFlow)
+route.get('/flow-expense', logged, FlowController.indexExpense)
+route.get('/flow-recep', logged, FlowController.indexRecep)
 route.get('/flow', logged, FlowController.indexFlow)
 route.get('/flow/:id', logged, FlowController.getOneFlow)
 route.put('/flow/:id', logged, FlowController.updateFlow)

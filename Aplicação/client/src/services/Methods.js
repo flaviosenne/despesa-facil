@@ -21,13 +21,23 @@ export const ViewUpdateExpense = (id) => {
     return '/despesa-update/' + id
 }
 
-export const listValueData =(values) =>{
-    var data = 0
+export const listExpenseData =(cash) =>{
+    var expense = 0
     
-    // values.forEach(valueData => {
-    //     data += valueData.value
-    // })
-    return data
+    cash.forEach(data => {
+        if(data.type == 'expense') expense += data.value
+    })
+    return expense
+
+}
+
+export const listRecepData =(cash) =>{
+    var recep = 0
+    
+    cash.forEach(data => {
+        if(data.type == 'recep') recep += data.value
+    })
+    return recep
 
 }
 
@@ -40,6 +50,7 @@ export const listDataPendent =(data) =>{
     })
     return value
 }
+
 export const listDataFinalized =(data) =>{
     var value = 0
     
@@ -48,24 +59,6 @@ export const listDataFinalized =(data) =>{
             value += valueData.value
     })
     return value
-
-}
-
-export const listTotal =(expense, recep) =>{
-    
-    var despesa = 0
-    var receita = 0
-
-    // expense.forEach(valorDespesa => {
-    //     despesa += valorDespesa.value
-    //     console.log(valorDespesa)
-    // })
-
-    // recep.forEach(valorReceita => {
-    //     receita += valorReceita.value
-    // })
-
-    return receita - despesa
 
 }
 
