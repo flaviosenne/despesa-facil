@@ -33,31 +33,37 @@ export const listExpenseData =(cash) =>{
 
 export const listRecepData =(cash) =>{
     var recep = 0
-    
-    cash.forEach(data => {
-        if(data.type == 'recep') recep += data.value
-    })
+    console.log(cash)
+    if(cash != undefined){
+
+        cash.forEach(data => {
+            if(data.type == 'recep') recep += data.value
+        })
+    }
     return recep
 
 }
 
 export const listDataPendent =(data) =>{
     var value = 0
-    
-    data.forEach(valueData => {
-        if(valueData.status == 'pendente')
+            if(data != undefined){
+
+        data.forEach(valueData => {
+            if(valueData.status == 'pendente')
             value += valueData.value
-    })
+        })
+    }
     return value
 }
 
 export const listDataFinalized =(data) =>{
     var value = 0
-    
-    data.forEach(valueData => {
-        if(valueData.status == 'finalizado')
+    if(data != undefined){
+        data.forEach(valueData => {
+            if(valueData.status == 'finalizado')
             value += valueData.value
-    })
+        })
+    }
     return value
 
 }

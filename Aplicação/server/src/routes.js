@@ -42,7 +42,7 @@ route.post('/logged', logged)
 
 
 // todas categorias
-route.get('/category', CategoryController.listCategory)
+route.get('/category/:id', CategoryController.listCategory)
 route.delete('/category/:id', CategoryController.removeCategory)
 
 module.exports = route

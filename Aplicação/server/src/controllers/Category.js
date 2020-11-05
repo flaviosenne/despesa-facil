@@ -1,7 +1,9 @@
 const connection = require('../database/connection')
 module.exports = {
     async listCategory(req, res){
+        const id_user = req.params.id 
         const category = await connection('category')
+        .where('id_user', id_user)
         .orderBy('category', 'asc')
         .select()
  

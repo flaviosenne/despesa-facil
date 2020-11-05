@@ -27,7 +27,8 @@ export default User => {
 
     useEffect(() => {
 
-        axios.get(baseURL + '/category').then(cat => {
+        axios.get(baseURL + '/category/'+window.localStorage.getItem('id'))
+        .then(cat => {
             setCategories(cat)
         })
 
@@ -53,23 +54,18 @@ export default User => {
             history.push('/fluxo-caixa')
 
         } else {
-            if (newCategory)
-                axios.post(baseURL + '/category-expense', {
-                    category: newCategory
-                })
-
-            axios.post(baseURL + '/flow', 
+            axios.post(baseURL + '/flow',
                 {
-                token: 'bearer ' + window.localStorage.getItem('token'),
-                authorization: window.localStorage.getItem('id'),
-                date,
-                type: 'expense',
-                value: Number(value) < 0 ? 0 : Number(value),
-                description,
-                status,
-                category: newCategory ? newCategory : category
+                    token: 'bearer ' + window.localStorage.getItem('token'),
+                    authorization: window.localStorage.getItem('id'),
+                    date,
+                    type: 'expense',
+                    value: Number(value) < 0 ? 0 : Number(value),
+                    description,
+                    status,
+                    category: newCategory ? newCategory : category
 
-            }
+                }
             ).then(resp => {
 
 

@@ -1,5 +1,5 @@
 const connection = require('../database/connection')
-const {existEmailDatabase} = require('../services/helpers')
+const { existEmailDatabase } = require('../services/helpers')
 
 const crypto = require('crypto')
 
@@ -12,11 +12,11 @@ module.exports = {
         const { name, user, email, password } = req.body
 
         const isEmail = await existEmailDatabase(email)
-        
-        if(isEmail)
-            return res.json({msg: 'Email already exist'})
-               
-        
+
+        if (isEmail)
+            return res.json({ msg: 'Email already exist' })
+
+
         const id = crypto.randomBytes(4).toString('HEX')
 
         const hash = bcrypt.hashSync(password, salt, (err, hash) => {
@@ -62,7 +62,9 @@ module.exports = {
         const User = await connection('users')
             .where('id', id)
             .update({
-                id, name, user, email
+                name,
+                user: user.toLowerCase().trim(),
+                email: email.toLowerCase().trim(),
             })
 
         if (User == 0) {

@@ -10,63 +10,68 @@ const {
     queryDatabaseDateAndCategory,
     queryDatabaseDate,
 
-    existUserDatabase} = require('../services/helpers')
+    existUserDatabase } = require('../services/helpers')
 
 module.exports = {
 
-    async indexExpense(req, res){
+    async indexExpense(req, res) {
         const { order } = req.headers
         const id_user = req.headers.authorization
 
-           const expense = await queryExpenseDatabase(id_user, order)
+        const expense = await queryExpenseDatabase(id_user, order)
 
-           return res.status(200).json(expense)
+        return res.status(200).json(expense)
     },
 
-    async indexRecep(req, res){
+    async indexRecep(req, res) {
         const { order } = req.headers
 
         const id_user = req.headers.authorization
 
-           const expense = await queryRecepDatabase(id_user, order)
+        const expense = await queryRecepDatabase(id_user, order)
 
-           return res.status(200).json(expense)
+        return res.status(200).json(expense)
     },
 
     async indexFlow(req, res) {
 
         const { category } = req.headers
-        const dateStart = req.headers.datestart
-        const dateEnd = req.headers.dateend
+        var dateStart = req.headers.datestart
+        var dateEnd = req.headers.dateend
 
         const id_user = req.headers.authorization
 
+        if(dateStart > dateEnd){
+            var aux = dateEnd
+            dateEnd = dateStart
+            dateStart = aux
+        }
 
         if ((!category && !dateStart && !dateEnd) ||
-        (category == 'undefined' && dateStart
-            == 'undefined' && dateEnd == 'undefined')) {
+            (category == 'undefined' && dateStart
+                == 'undefined' && dateEnd == 'undefined')) {
             const flow = await queryDatabaseDateDefault(id_user)
 
             return res.json(flow)
         }
 
         if ((dateStart && dateEnd && category) &&
-        (dateStart != 'undefined' && dateEnd
-            != 'undefined' && category != 'undefined')) {
+            (dateStart != 'undefined' && dateEnd
+                != 'undefined' && category != 'undefined')) {
             const flow = await queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
-            return res.json({ flow })
+            return res.json(flow)
         }
 
-        if((category) && (category != 'undefined')) {
+        if ((category) && (category != 'undefined')) {
 
             const flow = await queryDatabaseCategory(id_user, category)
 
             return res.json(flow)
         }
 
-        if  ((dateStart && dateEnd) &&
-        (dateStart != 'undefined' && dateEnd != 'undefined')) {
+        if ((dateStart && dateEnd) &&
+            (dateStart != 'undefined' && dateEnd != 'undefined')) {
             const flow = await queryDatabaseDate(id_user, dateStart, dateEnd)
 
             return res.json(flow)
@@ -117,9 +122,14 @@ module.exports = {
             .where('category', category.toUpperCase().trim())
             .first()
 
-        if (!id_category)
+        if (!id_category) {
+
             id_category = await connection('category').insert(
-                { category: category.toUpperCase().trim() })
+                {
+                    category: category.toUpperCase().trim(),
+                    id_user
+                })
+        }
 
 
         const [id] = await connection('flow').insert({
@@ -152,7 +162,10 @@ module.exports = {
         if (!id_category) {
 
             await connection('category').insert(
-                { category: category.toUpperCase().trim() })
+                {
+                    category: category.toUpperCase().trim(),
+                    id_user
+                })
 
             id_category = await connection('category')
                 .select()

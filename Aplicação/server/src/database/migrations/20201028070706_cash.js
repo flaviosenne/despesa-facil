@@ -7,9 +7,9 @@ exports.up = function(knex) {
     table.string('type').notNullable()
     table.string('status').notNullable()
     table.date('date').notNullable()
-    table.decimal('value').notNullable()
-    
+    table.decimal('value').notNullable()    
     table.integer('category').notNullable()
+    
     table.string('id_user').notNullable()
     
     table.foreign('id_user').references('id').inTable('users')

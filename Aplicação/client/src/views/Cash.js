@@ -45,10 +45,10 @@ export default class Cash extends Component {
     type
 
     async UNSAFE_componentWillMount() {
-        if (window.localStorage.getItem('id') == 0) {
-            this.props.history.push('/login')
-            alert('Necessário fazer login')
-        }
+        // if (window.localStorage.getItem('id') == 0) {
+        //     this.props.history.push('/login')
+        //     alert('Necessário fazer login')
+        // }
 
         await axios.get(baseUrl + '/flow',
             {
@@ -58,19 +58,21 @@ export default class Cash extends Component {
                     authorization: window.localStorage.getItem('id'),
                         dateStart: this.dataInicio,
                         dateEnd: this.dataFim, 
-                        category: this.category,
-                        type: this.type
+                        category: this.category == '...'? undefined: this.category,
+                        // type: this.type
                 }
 
             }).then(cash => {
                 this.setState({ cash: cash.data })
             })
             .catch(err => {
-                alert('necessário fazer login')
-                this.props.history.push("/login");
+                console.log(err)
+                // alert('necessário fazer login')
+                // this.props.history.push("/login");
             })
 
-        await axios.get(baseUrl + '/category').then(cat => {
+        await axios.get(baseUrl + '/category/'+window.localStorage.getItem('id'))
+        .then(cat => {
             this.setState({ categories: cat.data })
         })
 
@@ -108,11 +110,11 @@ export default class Cash extends Component {
                         <select onChange={e => this.category = e.target.value}>
                             <option
                                 value={undefined}>
-                                {undefined}
+                                ...
                             </option>
                             {this.state.categories.map(result => {
                                 return (
-                                    <option value={result.category}>
+                                    <option value={result.id}>
                                         {result.category}
                                     </option>
                                 )

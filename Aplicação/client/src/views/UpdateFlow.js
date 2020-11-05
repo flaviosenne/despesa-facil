@@ -31,26 +31,25 @@ export default User => {
     
     const list = []
     const get = async(e) => {
-        axios.get(baseURL+'/category').then(cat => {
-            setCategories(cat)
+        axios.get(baseURL+'/category/'+window.localStorage.getItem('id'))
+        .then(cat => {
+            setCategories(cat.data)
         })
-
+        
         const id = User.match.params.id
         await axios.get(baseURL + '/flow/' + id, {
             headers: {
                 token: 'bearer '+ window.localStorage.getItem('token')}
         }).then(resp => {
-            // console.log(resp.data)
             list.push(resp.data)
         })
-
-        console.log(list)
+        
         setDate(list[0].date)
         setStatus(list[0].status)
         setDescription(list[0].description)
         setValue(list[0].value)
         setCategory(list[0].category)
-
+        
         return list
     }
 
@@ -60,18 +59,14 @@ export default User => {
         const id = User.match.params.id
         e.preventDefault()
         try {
-            if(newCategory)
-            axios.post(baseURL+'/category-expense', {
-                category: newCategory
-            })
-
+           
             await axios.put(baseURL + '/flow/' + id, {
                 authorization: window.localStorage.getItem('id'),
                 token: 'bearer '+window.localStorage.getItem('token'),
                 id, date,
                 value: Number(value) < 0 ? 0 : Number(value),
                 description, status, 
-                category: !category ? newCategory: category
+                category: !newCategory ? category: newCategory
             })
             alert.show('Despesa atualizada com sucesso')
 
@@ -80,7 +75,8 @@ export default User => {
         }
         catch (err) {
             console.log(err)
-        }
+        }    
+        
     }
 
     return (
@@ -107,10 +103,10 @@ export default User => {
                         <option value = "não definido">
                             ....
                         </option>
-                        {!categories.data? '': categories.data.map(cat => {
+                        {!categories ? '': categories.map(cat => {
                             return (
                                 <option 
-                                selected = {cat.category == category} 
+                                selected = {cat.id == category} 
                                 value = {cat.category}>
                                     {cat.category}
                                 </option>

@@ -28,29 +28,36 @@ export default Login => {
     function login(e) {
 
         e.preventDefault()
-        axios.post(baseUrl, {
-            user, password
-        }).then(data => {
-            if (data.status == 200) {
-                
-                window.localStorage.setItem('token', data.data.token)
-                
-                jwt.verify(window.localStorage.getItem('token'), secret, (err, result) => {
-                    if (err != null) {
-                        alert.show('algo deu errado')
-                        console.log(err)
-                    }
-                    window.localStorage.setItem('id', result.id)
-                    window.localStorage.setItem('name', result.name)
-                    alert.show('Seja Bem Vindo ' + user)
+        try{
+            axios.post(baseUrl, {
+                user, password
+            }).then(data => {
+                if (data.status == 200) {
                     
-                })
-                
-                history.push('/fluxo-caixa')
+                    window.localStorage.setItem('token', data.data.token)
+                    
+                    jwt.verify(window.localStorage.getItem('token'), secret, (err, result) => {
+                        if (err != null) {
+                            alert.show('algo deu errado')
+                            console.log(err)
+                        }
+                        window.localStorage.setItem('id', result.id)
+                        window.localStorage.setItem('name', result.name)
+                        alert.show('Seja Bem Vindo ' + user)
+                        
+                    })
+                    
+                    history.push('/fluxo-caixa')
+    
+                    return
+                }
 
-                return
-            }
-        }).catch(err => alert.show('usuario ou senha incorreta'))
+            }).catch((err) =>{
+                alert.show('usuario ou senha incorreta')
+            })
+        }catch(err){
+            console.log(err)
+        }       
 
     }
 
