@@ -33,6 +33,10 @@ export default class Report extends Component {
 
     async UNSAFE_componentWillMount() {
 
+        if (window.localStorage.getItem('id') == 0) {
+            this.props.history.push('/login')
+            alert('Necessário fazer login')
+        }
         await axios.get(baseUrl + '/flow-expense', {
             headers:
             {

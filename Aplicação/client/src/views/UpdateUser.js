@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert'
@@ -18,7 +18,10 @@ import finger from '../icons/finger.webp'
 const baseURL = 'http://localhost:3001'
 const props = { icon, route: '/home' }
 export default UserUpdate => {
+
+    
     const alert = useAlert()
+    
     
     const [theme, setTheme] = useState('light')
     const [border, setBorder] = useState('border-light')
@@ -29,6 +32,15 @@ export default UserUpdate => {
    
     const history = useHistory()
 
+    useEffect(() => {
+
+        if (window.localStorage.getItem('id') == 0) {
+            history.push('/login')
+            alert.show('Necessário fazer login')
+        }
+        
+
+    }, 1)
     function switchTheme(e){
         e.preventDefault()
 

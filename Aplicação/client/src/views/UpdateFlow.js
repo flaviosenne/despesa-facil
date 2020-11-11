@@ -31,6 +31,11 @@ export default User => {
     
     const list = []
     const get = async(e) => {
+        if (window.localStorage.getItem('id') == 0) {
+            this.props.history.push('/login')
+            alert('Necessário fazer login')
+        }
+        
         axios.get(baseURL+'/category/'+window.localStorage.getItem('id'))
         .then(cat => {
             setCategories(cat.data)

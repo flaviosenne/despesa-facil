@@ -154,10 +154,18 @@ module.exports = {
 
         const { description, status, date, value, category } = req.body
 
-        var id_category = await connection('category')
+        if(category > 0){
+
+            var id_category = await connection('category')
+            .select()
+            .where('id', category)
+            .first()
+        }else{
+            var id_category = await connection('category')
             .select()
             .where('category', category.toUpperCase().trim())
             .first()
+        }
 
         if (!id_category) {
 

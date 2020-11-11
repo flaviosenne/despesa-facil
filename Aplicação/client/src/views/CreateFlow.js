@@ -27,6 +27,11 @@ export default User => {
 
     useEffect(() => {
 
+        if (window.localStorage.getItem('id') == 0) {
+            this.props.history.push('/login')
+            alert('Necessário fazer login')
+        }
+        
         axios.get(baseURL + '/category/'+window.localStorage.getItem('id'))
         .then(cat => {
             setCategories(cat)

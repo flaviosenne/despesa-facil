@@ -45,10 +45,10 @@ export default class Cash extends Component {
     type
 
     async UNSAFE_componentWillMount() {
-        // if (window.localStorage.getItem('id') == 0) {
-        //     this.props.history.push('/login')
-        //     alert('Necessário fazer login')
-        // }
+        if (window.localStorage.getItem('id') == 0) {
+            this.props.history.push('/login')
+            alert('Necessário fazer login')
+        }
 
         await axios.get(baseUrl + '/flow',
             {
