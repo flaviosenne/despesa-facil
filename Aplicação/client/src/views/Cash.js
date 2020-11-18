@@ -34,7 +34,8 @@ const initialState = {
     categories: [],
 }
 
-const baseUrl = 'http://localhost:3001'
+// const baseUrl = 'http://localhost:3001'
+const baseUrl = 'http://52.67.74.131:3001'
 
 export default class Cash extends Component {
     state = { ...initialState }

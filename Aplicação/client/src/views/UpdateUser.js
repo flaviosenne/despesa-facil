@@ -14,8 +14,8 @@ import '../CSS/CreateUser.css';
 import icon from '../icons/user+.png'
 import finger from '../icons/finger.webp'
 
-// const baseURL = 'http://104.248.130.44:3001'
-const baseURL = 'http://localhost:3001'
+const baseURL = 'http://52.67.74.131:3001'
+// const baseURL = 'http://localhost:3001'
 const props = { icon, route: '/home' }
 export default UserUpdate => {
 

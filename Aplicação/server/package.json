@@ -19,8 +19,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "pm2": "pm2 start index.js"
+    "test": "nodemon index.js",
+    "product": "pm2 start index.js"
   },
   "keywords": [],
   "author": "",

@@ -69,13 +69,15 @@ module.exports = {
             .andWhere('id_user', id_user)
             .andWhere('type', 'expense')
             .orderBy('date', 'asc')
-            .select()
+            .join('category', 'category.id', 'flow.category')
+            .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
         }
         return await connection('flow')
             .where('id_user', id_user)
             .andWhere('type', 'expense')
             .orderBy(order, 'asc')
-            .select()
+            .join('category', 'category.id', 'flow.category')
+            .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
 
     },
    
@@ -91,13 +93,15 @@ module.exports = {
             .andWhere('id_user', id_user)
             .andWhere('type', 'recep')
             .orderBy('date', 'asc')
-            .select()
+            .join('category', 'category.id', 'flow.category')
+            .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
         }
         return await connection('flow')
             .where('id_user', id_user)
             .andWhere('type', 'recep')
             .orderBy(order, 'asc')
-            .select()
+            .join('category', 'category.id', 'flow.category')
+            .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
 
     },
 

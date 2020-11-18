@@ -9,7 +9,8 @@ import icon from '../icons/msg.png'
 
 import axios from 'axios'
 
-const baseUrl = "http://localhost:3001"
+// const baseUrl = "http://localhost:3001"
+const baseUrl = 'http://52.67.74.131:3001'
 const props = { icon, route: '/login' }
 export default Email => {
     const history = useHistory()

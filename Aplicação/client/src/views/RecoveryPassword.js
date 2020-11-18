@@ -9,8 +9,8 @@ import icon from '../icons/password.png'
 
 import axios from 'axios'
 
-// const baseUrl = "http://104.248.130.44:3001/sessions"
-const baseUrl = "http://localhost:3001"
+const baseUrl = 'http://52.67.74.131:3001'
+// const baseUrl = "http://localhost:3001"
 const props = { icon, route: '/email' }
 export default Recovery => {
     const alert = useAlert()
