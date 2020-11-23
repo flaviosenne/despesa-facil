@@ -10,7 +10,8 @@ import {
     listDataPendent,
     listDataFinalized
 } from '../services/Methods'
-const baseUrl = 'http://52.67.74.131:3001'
+import baseUrl from '../services/URL'
+// const baseUrl = 'http://52.67.74.131:3001'
 // const baseUrl = 'http://localhost:3001'
 
 const props = {

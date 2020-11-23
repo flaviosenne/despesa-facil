@@ -8,9 +8,9 @@ import icon from '../icons/user+.png'
 
 import axios from 'axios'
 import { UserTheme } from '../services/Theme';
-
+import baseURL from '../services/URL'
 // const baseURL = 'http://localhost:3001'
-const baseURL = 'http://52.67.74.131:3001'
+// const baseURL = 'http://52.67.74.131:3001'
 const props = { icon, route: '/login' }
 export default User => {
 

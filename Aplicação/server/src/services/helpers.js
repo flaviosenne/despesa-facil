@@ -66,18 +66,18 @@ module.exports = {
         if(order == 'pendente' || order == 'finalizado'){
             return await connection('flow')
             .where('status', order)
-            .andWhere('id_user', id_user)
+            .andWhere('flow.id_user', id_user)
             .andWhere('type', 'expense')
-            .orderBy('date', 'asc')
-            .join('category', 'category.id', 'flow.category')
+            .join('category', 'category.id','=', 'flow.category')
             .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
+            .orderBy('date', 'asc')
         }
         return await connection('flow')
-            .where('id_user', id_user)
+            .where('flow.id_user', id_user)
             .andWhere('type', 'expense')
-            .orderBy(order, 'asc')
-            .join('category', 'category.id', 'flow.category')
+            .join('category', 'category.id','=', 'flow.category')
             .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
+            .orderBy(order, 'asc')
 
     },
    
@@ -90,18 +90,18 @@ module.exports = {
         if(order == 'pendente' || order == 'finalizado'){
             return await connection('flow')
             .where('status', order)
-            .andWhere('id_user', id_user)
+            .andWhere('flow.id_user', id_user)
             .andWhere('type', 'recep')
-            .orderBy('date', 'asc')
-            .join('category', 'category.id', 'flow.category')
+            .join('category', 'category.id','=', 'flow.category')
             .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
+            .orderBy('date', 'asc')
         }
         return await connection('flow')
-            .where('id_user', id_user)
+            .where('flow.id_user', id_user)
             .andWhere('type', 'recep')
-            .orderBy(order, 'asc')
-            .join('category', 'category.id', 'flow.category')
+            .join('category', 'category.id','=', 'flow.category')
             .select(['flow.id', 'flow.type', 'flow.status', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
+            .orderBy(order, 'asc')
 
     },
 

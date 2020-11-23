@@ -6,10 +6,10 @@ import '../CSS/Login.css';
 
 import Header from '../components/Header'
 import icon from '../icons/user.png'
-
+import baseUrl from '../services/URL'
 import axios from 'axios'
 
-const baseUrl = 'http://52.67.74.131:3001/sessions'
+// const baseUrl = 'http://52.67.74.131:3001/sessions'
 // const baseUrl = "http://localhost:3001/sessions"
 const props = { icon, route: '/' }
 const secret = 'r45g5-l-v5kv50fk254g503;/vtv5-2c2'
@@ -29,7 +29,7 @@ export default Login => {
 
         e.preventDefault()
         try{
-            axios.post(baseUrl, {
+            axios.post(baseUrl+'/sessions', {
                 user, password
             }).then(data => {
                 if (data.status == 200) {

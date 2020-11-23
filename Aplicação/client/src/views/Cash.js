@@ -12,6 +12,7 @@ import {
     listRecepData
 } from '../services/Methods'
 
+import baseUrl from '../services/URL'
 import Header from '../components/Header'
 
 import relatorio from '../icons/relatorio.png'
@@ -35,7 +36,7 @@ const initialState = {
 }
 
 // const baseUrl = 'http://localhost:3001'
-const baseUrl = 'http://52.67.74.131:3001'
+// const baseUrl = 'http://52.67.74.131:3001'
 
 export default class Cash extends Component {
     state = { ...initialState }

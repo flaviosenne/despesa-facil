@@ -8,11 +8,12 @@ import dinheiro from '../icons/dinheiro.png'
 import icon from '../icons/cash+.png'
 import axios from 'axios'
 import { UserTheme } from '../services/Theme';
+import baseURL from '../services/URL'
 
 const props = { icon, route: '/fluxo-caixa' }
 
 // const baseURL = 'http://localhost:3001'
-const baseURL = 'http://52.67.74.131:3001'
+// const baseURL = 'http://52.67.74.131:3001'
 export default User => {
     const [date, setDate] = useState()
     const [type, setType] = useState('')

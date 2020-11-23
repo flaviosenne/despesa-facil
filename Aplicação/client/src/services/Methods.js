@@ -1,6 +1,5 @@
 import axios from 'axios'
-// const baseUrl = 'http://104.248.130.44:3001/profile'
-const baseUrl = 'http://localhost:3001'
+import baseUrl from './URL'
 
 export const  remove = async (e, id)=> {
     e.preventDefault()
@@ -33,7 +32,7 @@ export const listExpenseData =(cash) =>{
 
 export const listRecepData =(cash) =>{
     var recep = 0
-    console.log(cash)
+    
     if(cash != undefined){
 
         cash.forEach(data => {

@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 import Header from '../components/Header'
 
 import {UserTheme} from '../services/Theme'
-
+import baseURL from '../services/URL'
 import axios from 'axios'
 
 import '../CSS/CreateUser.css';
@@ -14,7 +14,7 @@ import '../CSS/CreateUser.css';
 import icon from '../icons/user+.png'
 import finger from '../icons/finger.webp'
 
-const baseURL = 'http://52.67.74.131:3001'
+// const baseURL = 'http://52.67.74.131:3001'
 // const baseURL = 'http://localhost:3001'
 const props = { icon, route: '/home' }
 export default UserUpdate => {
