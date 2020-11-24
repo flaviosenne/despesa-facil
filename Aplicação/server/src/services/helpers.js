@@ -75,7 +75,7 @@ module.exports = {
         if(order == 'category'){
             return await connection('flow')
             .where('flow.id_user', id_user)
-            .andWhere('type', 'recep')
+            .andWhere('type', 'expense')
             .join('category', 'category.id','=', 'flow.category')
             .select(['flow.id', 'flow.type', 'flow.status', 'flow.description','flow.date', 'flow.value', 'flow.id_user', 'category.category'])
             .orderBy('category.category', 'asc')
