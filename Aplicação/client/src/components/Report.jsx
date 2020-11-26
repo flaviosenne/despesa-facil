@@ -11,8 +11,6 @@ import {
     listDataFinalized
 } from '../services/Methods'
 import baseUrl from '../services/URL'
-// const baseUrl = 'http://52.67.74.131:3001'
-// const baseUrl = 'http://localhost:3001'
 
 const props = {
     icon, route: '/fluxo-caixa',
@@ -43,24 +41,24 @@ export default class Report extends Component {
             {
                 token: 'bearer ' + window.localStorage.getItem('token'),
                 authorization: window.localStorage.getItem('id'),
-                order: !this.category ? 'date': this.category
+                order: !this.category ? 'date' : this.category
             }
         })
             .then(resp => {
                 this.setState({ expenseAPI: resp.data })
             })
 
-            await axios.get(baseUrl + '/flow-recep', {
-                headers:
-                {
-                    token: 'bearer ' + window.localStorage.getItem('token'),
-                    authorization: window.localStorage.getItem('id'),
-                    order: !this.category ? 'date': this.category
-                }
+        await axios.get(baseUrl + '/flow-recep', {
+            headers:
+            {
+                token: 'bearer ' + window.localStorage.getItem('token'),
+                authorization: window.localStorage.getItem('id'),
+                order: !this.category ? 'date' : this.category
+            }
+        })
+            .then(resp => {
+                this.setState({ recepAPI: resp.data })
             })
-                .then(resp => {
-                    this.setState({ recepAPI: resp.data })
-                })
     }
 
     day = new Date().getDate() < 10
@@ -117,14 +115,26 @@ export default class Report extends Component {
                         <div className='dois'>
 
                             <span><strong>Valor Disponível:</strong><br /> R$ {
-                                (listRecepData(this.state.recepAPI) -
+                                (listDataFinalized(this.state.recepAPI) -
 
                                     listExpenseData(this.state.expenseAPI)).toFixed(2)}</span>
-                            <span>Foi pago {((listDataFinalized(this.state.expenseAPI) /
-                                listRecepData(this.state.recepAPI)) * 100).toFixed(0)}% <br />do valor da sua receita</span>
 
-                            <span>{((listDataPendent(this.state.expenseAPI) /
-                                listRecepData(this.state.recepAPI)) * 100).toFixed(0)}% <br />da sua receita já está comprometido</span>
+
+                            <span>Foi pago {isNaN(
+                                (
+                                    (listDataFinalized(this.state.expenseAPI) /
+                                        listRecepData(this.state.recepAPI))
+                                    * 100).toFixed(0)) ? 0 :
+                                ((listDataFinalized(this.state.expenseAPI) /
+                                    listRecepData(this.state.recepAPI)) * 100).toFixed(0)}% <br />do valor da sua receita</span>
+
+                            <span>{isNaN((
+                                (listDataPendent(this.state.expenseAPI) /
+                                    listRecepData(this.state.recepAPI)) * 100).toFixed(0)) ? 0 :
+                                (
+                                    (listDataPendent(this.state.expenseAPI) /
+                                        listRecepData(this.state.recepAPI)) * 100).toFixed(0)
+                            }% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>
                     <hr />
@@ -143,6 +153,7 @@ export default class Report extends Component {
                         <tr>
                             <td>Pendente:</td>
                             <td>R$ {listDataPendent(this.state.expenseAPI)}</td>
+                            <td>R$ {listDataPendent(this.state.recepAPI)}</td>
                             <td></td>
                         </tr>
                         <tr>
