@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import '../index.css';
 
-import cifrao from '../icons/cifrao.png'
 import Header from '../components/Header'
+
+import cifrao from '../icons/cifrao.png'
+import cifrao_black from '../icons/cash-black.png'
+
 import relatorio from '../icons/relatorio.png'
-import icon from '../icons/home.png'
+import relatorio_black from '../icons/report.png'
+
+import icon from '../icons/tras.png'
 import icon_user from '../icons/config.png'
+
 const props = {
   icon, route: '/home',
   user: `/usuario/${window.localStorage.getItem('user')}`,
@@ -32,7 +38,8 @@ export default Home => {
 
         <div>
           <Link to='fluxo-caixa'>
-            <img src={cifrao} alt="icone cifrão" />
+          <img src={window.localStorage.getItem('theme') == 'dark'?
+            cifrao_black : cifrao} alt="icone cifrão" />
           </Link>
           <p>
             O sistema possui um fluxo de caixa
@@ -45,7 +52,8 @@ export default Home => {
         <div>
         <Link to='relatorio'>
 
-          <img src={relatorio} alt="icone relatorio" />
+          <img src={window.localStorage.getItem('theme') == 'dark'
+          ?relatorio_black:relatorio} alt="icone relatorio" />
         </Link>
 
           <p>

@@ -16,10 +16,18 @@ import baseUrl from '../services/URL'
 import Header from '../components/Header'
 
 import relatorio from '../icons/relatorio.png'
+import relatorio_black from '../icons/report.png'
+
 import incluir from '../icons/incluir.png'
+import incluir_black from '../icons/plus.png'
+
 import alterar from '../icons/alterar.png'
+import alterar_black from '../icons/edit.jpg'
+
 import remover from '../icons/remover.png'
-import icon from '../icons/cash.png'
+import remover_black from '../icons/delete.jpg'
+
+import icon from '../icons/tras.png'
 import icon_user from '../icons/config.png'
 
 import '../CSS/Cash.css';
@@ -35,8 +43,6 @@ const initialState = {
     categories: [],
 }
 
-// const baseUrl = 'http://localhost:3001'
-// const baseUrl = 'http://52.67.74.131:3001'
 
 export default class Cash extends Component {
     state = { ...initialState }
@@ -61,7 +67,6 @@ export default class Cash extends Component {
                         dateStart: this.dataInicio,
                         dateEnd: this.dataFim, 
                         category: this.category == '...'? undefined: this.category,
-                        // type: this.type
                 }
 
             }).then(cash => {
@@ -124,7 +129,9 @@ export default class Cash extends Component {
                         </select>
                     </div>
                     <div className="filtro">
-                        <Link to="/despesa"><img className="icon" src={incluir} alt="icone incluir" /></Link>
+                        <Link to="/despesa"><img className="icon" src={
+                        window.localStorage.getItem('theme') == 'dark'?
+                        incluir_black: incluir} alt="icone incluir" /></Link>
                         <div className='button'>
 
                             <button className='btn' onClick={() => this.get()}>
@@ -133,7 +140,9 @@ export default class Cash extends Component {
                         </div>
                         <Link to='relatorio'>
 
-                            <img className="icon" src={relatorio} alt="icone incluir" />
+                            <img className="icon" src={
+                                 window.localStorage.getItem('theme') == 'dark'?
+                                 relatorio_black : relatorio} alt="icone incluir" />
                         </Link>
                     </div>
 
@@ -184,7 +193,9 @@ export default class Cash extends Component {
                                         <Link to={ViewUpdateExpense(cash.id)}>
                                             <img
                                                 className="icon"
-                                                src={alterar}
+                                                src={ 
+                                                window.localStorage.getItem('theme') == 'dark'?
+                                                alterar_black: alterar}
                                                 alt="aletar"
                                             />
                                         </Link>
@@ -196,7 +207,8 @@ export default class Cash extends Component {
                                                 this.UNSAFE_componentWillMount()
                                             }}
                                             className="icon"
-                                            src={remover}
+                                            src={ window.localStorage.getItem('theme') == 'dark'?
+                                            remover_black: remover}
                                             alt="remover"
                                         />
                                     </td>

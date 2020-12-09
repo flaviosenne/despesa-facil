@@ -45,7 +45,7 @@ a, Link{
     justify-content: space-around;
 }
 .dark, .light{
-    background: rgb(26, 28, 32);
+    background: rgb(0, 0, 0);
     margin: 0 auto;
     width: 100%;
     color: rgb(255, 255, 255);

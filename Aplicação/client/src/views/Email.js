@@ -5,13 +5,14 @@ import {useHistory, Link} from 'react-router-dom'
 import '../CSS/Login.css';
 
 import Header from '../components/Header'
-import icon from '../icons/msg.png'
+
+import icon from '../icons/msg-2.png'
+import icon_black from '../icons/msg.png'
+import icon_m from '../icons/tras.png'
 import baseUrl from '../services/URL'
 import axios from 'axios'
 
-// const baseUrl = "http://localhost:3001"
-// const baseUrl = 'http://52.67.74.131:3001'
-const props = { icon, route: '/login' }
+const props = { icon: icon_m, route: '/login' }
 export default Email => {
     const history = useHistory()
     const alert = useAlert()
@@ -34,7 +35,8 @@ export default Email => {
         <>
             <Header {...props} />
             <div className='login'>
-                <img src={icon} alt="icone usuario" />
+                <img src={window.localStorage.getItem('theme') == 'dark'?
+                icon_black: icon} alt="icone usuario" />
                 <p className = 'email'> Insira seu email já cadastradado na base de dados para enviarmos
                     um código de validação para que você possa atualizar sua senha </p>
                 <input

@@ -6,12 +6,13 @@ import '../CSS/Login.css';
 
 import Header from '../components/Header'
 import icon from '../icons/user.png'
+import icon_black from '../icons/user-black.png'
+import icon_u from '../icons/tras.png'
 import baseUrl from '../services/URL'
 import axios from 'axios'
 
-// const baseUrl = 'http://52.67.74.131:3001/sessions'
-// const baseUrl = "http://localhost:3001/sessions"
-const props = { icon, route: '/' }
+
+const props = { icon: icon_u, route: '/' }
 const secret = 'r45g5-l-v5kv50fk254g503;/vtv5-2c2'
 
 export default Login => {
@@ -65,7 +66,8 @@ export default Login => {
         <>
             <Header {...props} />
             <div className='login'>
-                <img src={icon} alt="icone usuario" />
+                <img src={window.localStorage.getItem('theme') == 'dark'?
+                icon_black: icon} alt="icone usuario" />
                 <label> Usuario </label>
                 <input
                     onChange={e => setUser(e.target.value)}
@@ -82,7 +84,8 @@ export default Login => {
                     className={window.localStorage.getItem('theme')}
                     id="pass"
                     name="password"
-                    type="password" />
+                    type="password" 
+                    onKeyDown={e => e.keyCode === 13 ? login(e): ''}/>
 
                 <Link className={window.localStorage.getItem('theme')} to="/usuario" > Criar Conta</Link>
                 <Link to="/email" className={window.localStorage.getItem('theme')}> Esqueci minha senha</Link>

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import bcrypt from 'bcryptjs'
+
 import { useAlert } from 'react-alert'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import '../CSS/Login.css';
 
 import Header from '../components/Header'
+
 import icon from '../icons/password.png'
+import icon_black from '../icons/lock.jpg'
+import icon_r from '../icons/tras.png'
+
 import baseUrl from '../services/URL'
 import axios from 'axios'
 
-// const baseUrl = 'http://52.67.74.131:3001'
-// const baseUrl = "http://localhost:3001"
-const props = { icon, route: '/email' }
+const props = { icon: icon_r, route: '/email' }
 export default Recovery => {
     const alert = useAlert()
 
@@ -37,7 +39,8 @@ export default Recovery => {
         <>
             <Header {...props} />
             <div className='login'>
-                <img src={icon} alt="icone usuario" />
+                <img src={window.localStorage.getItem('theme') == 'dark'?
+                icon_black: icon} alt="icone usuario" />
                 <label> Código </label>
                 <input
                     onChange={e => setToken(e.target.value)}

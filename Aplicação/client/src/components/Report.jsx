@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Header from './Header'
-import icon from '../icons/relatorio.png'
+import icon from '../icons/tras.png'
 import '../CSS/Paper.css'
 import axios from 'axios'
 import {
@@ -114,26 +114,26 @@ export default class Report extends Component {
                         </div>
                         <div className='dois'>
 
-                            <span><strong>Valor Disponível:</strong><br /> R$ {
+                            <span><strong>Situação Finalizada:</strong><br /> R$ {
                                 (listDataFinalized(this.state.recepAPI) -
 
-                                    listExpenseData(this.state.expenseAPI)).toFixed(2)}</span>
+                                listDataFinalized(this.state.expenseAPI)).toFixed(2)}</span>
 
 
                             <span>Foi pago {isNaN(
                                 (
                                     (listDataFinalized(this.state.expenseAPI) /
                                         listRecepData(this.state.recepAPI))
-                                    * 100).toFixed(0)) ? 0 :
+                                    * 100).toFixed(2)) ? 0 :
                                 ((listDataFinalized(this.state.expenseAPI) /
-                                    listRecepData(this.state.recepAPI)) * 100).toFixed(0)}% <br />do valor da sua receita</span>
+                                    listRecepData(this.state.recepAPI)) * 100).toFixed(2)}% <br />do valor da sua receita</span>
 
                             <span>{isNaN((
                                 (listDataPendent(this.state.expenseAPI) /
-                                    listRecepData(this.state.recepAPI)) * 100).toFixed(0)) ? 0 :
+                                    listRecepData(this.state.recepAPI)) * 100).toFixed(2)) ? 0 :
                                 (
                                     (listDataPendent(this.state.expenseAPI) /
-                                        listRecepData(this.state.recepAPI)) * 100).toFixed(0)
+                                        listRecepData(this.state.recepAPI)) * 100).toFixed(2)
                             }% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>
@@ -146,20 +146,21 @@ export default class Report extends Component {
                             <td className='underline'>Receita</td>
                         </thead>
                         <tr>
-                            <td>Pago:</td>
-                            <td>R$ {listDataFinalized(this.state.expenseAPI)}</td>
+                            <td>Finalizado:</td>
+                            <td>R$ {listDataFinalized(this.state.expenseAPI).toFixed(2)}</td>
+                            <td>R$ {listDataFinalized(this.state.recepAPI).toFixed(2)}</td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Pendente:</td>
-                            <td>R$ {listDataPendent(this.state.expenseAPI)}</td>
-                            <td>R$ {listDataPendent(this.state.recepAPI)}</td>
+                            <td>R$ {listDataPendent(this.state.expenseAPI).toFixed(2)}</td>
+                            <td>R$ {listDataPendent(this.state.recepAPI).toFixed(2)}</td>
                             <td></td>
                         </tr>
                         <tr>
                             <td><strong>Total:</strong></td>
-                            <td>R$ {listExpenseData(this.state.expenseAPI)}</td>
-                            <td>R$ {listRecepData(this.state.recepAPI)} </td>
+                            <td><strong>R$ {listExpenseData(this.state.expenseAPI).toFixed(2)}</strong></td>
+                            <td><strong>R$ {listRecepData(this.state.recepAPI).toFixed(2)}</strong></td>
                         </tr>
                         <tr>
                             <td><strong>Disponível:</strong></td>
@@ -191,7 +192,7 @@ export default class Report extends Component {
                                         <td>{recep.description}</td>
                                         <td>{recep.category}</td>
                                         <td>{recep.status}</td>
-                                        <td>R${recep.value}</td>
+                                        <td>R${recep.value.toFixed(2)}</td>
                                     </tr>
                                 )
                             })}
@@ -219,7 +220,7 @@ export default class Report extends Component {
                                         <td>{expense.description}</td>
                                         <td>{expense.category}</td>
                                         <td>{expense.status}</td>
-                                        <td>R${expense.value}</td>
+                                        <td>R${expense.value.toFixed(2)}</td>
                                     </tr>
                                 )
                             })}
