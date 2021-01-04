@@ -71,6 +71,7 @@ export default class Cash extends Component {
 
             }).then(cash => {
                 this.setState({ cash: cash.data })
+            
             })
             .catch(err => {
                 console.log(err)

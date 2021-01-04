@@ -47,17 +47,18 @@ module.exports = {
             dateStart = aux
         }
 
-        if ((!category && !dateStart && !dateEnd) ||
-            (category == 'undefined' && dateStart
-                == 'undefined' && dateEnd == 'undefined')) {
+        // if ((!category && !dateStart && !dateEnd) ||
+        if(category == 'undefined' && dateStart
+        == 'undefined' && dateEnd == 'undefined') {
             const flow = await queryDatabaseDateDefault(id_user)
-
+            
+            console.log('entrei')
             return res.json(flow)
         }
 
-        if ((dateStart && dateEnd && category) &&
-            (dateStart != 'undefined' && dateEnd
-                != 'undefined' && category != 'undefined')) {
+        // if ((dateStart && dateEnd && category) &&
+            if(dateStart != 'undefined' && dateEnd
+                != 'undefined' && category != 'undefined') {
             const flow = await queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
             return res.json(flow)
@@ -70,8 +71,8 @@ module.exports = {
             return res.json(flow)
         }
 
-        if ((dateStart && dateEnd) &&
-            (dateStart != 'undefined' && dateEnd != 'undefined')) {
+        // if ((dateStart && dateEnd) &&
+            if(dateStart != 'undefined' && dateEnd != 'undefined') {
             const flow = await queryDatabaseDate(id_user, dateStart, dateEnd)
 
             return res.json(flow)
