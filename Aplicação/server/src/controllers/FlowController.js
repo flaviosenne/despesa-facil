@@ -52,7 +52,6 @@ module.exports = {
         == 'undefined' && dateEnd == 'undefined') {
             const flow = await queryDatabaseDateDefault(id_user)
             
-            console.log('entrei')
             return res.json(flow)
         }
 
@@ -110,7 +109,7 @@ module.exports = {
 
         const year = new Date().getFullYear()
 
-        const { description, status, type, value, date, category } = req.body
+        const { description, status, type, value, date, category, quantity = 1 } = req.body
         const id_user = req.body.authorization
 
         const user = await existUserDatabase(id_user)
@@ -132,18 +131,51 @@ module.exports = {
                 })
         }
 
+        // var quantity = 12
 
-        const [id] = await connection('flow').insert({
+        const dateValidated = !date ? (year + '-' + month + '-' + day) : date
+        
+        await connection('flow').insert({
             category: id_category.id,
             type,
             description: description.trim(),
             status: !status ? 'pendente' : status,
             value,
-            date: !date ? (year + '-' + month + '-' + day) : date,
+            date: dateValidated,
             id_user
         })
 
-        return res.json({ id })
+        var cont = 1
+        for(let i = 1; i< quantity; i++){
+            let year = dateValidated.split('-')[0]
+            
+            let mounth = (Number(dateValidated.split('-')[1]) + i) < 10 ?
+            '0'+(Number(dateValidated.split('-')[1]) + i):
+            (Number(dateValidated.split('-')[1]) + i)
+            
+            let day = dateValidated.split('-')[2]
+            if(Number(mounth) > 12){
+                if(cont > 12){
+                    cont = 1
+                }
+                year ++
+                // outro ano
+                mounth = cont < 10 ? '0'+cont : cont
+                cont ++
+            }
+            
+            await connection('flow').insert({
+                category: id_category.id,
+                type,
+                description: description.trim(),
+                status: !status ? 'pendente' : status,
+                value,
+                date: year + '-'+ mounth + '-'+ day,
+                id_user
+            })
+        }
+
+        return res.json({ msg: 'ok' })
 
 
     },
