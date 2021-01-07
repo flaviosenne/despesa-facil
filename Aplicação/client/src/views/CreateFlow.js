@@ -53,6 +53,8 @@ export default User => {
                 type: 'recep',
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
+                status,
+                quantity: quantity < 0 ? 1 : quantity,
                 category: newCategory ? newCategory : category
             })
             alert.show('Receita cadastrada com sucesso')
@@ -68,7 +70,7 @@ export default User => {
                     value: Number(value) < 0 ? 0 : Number(value),
                     description,
                     status,
-                    quantity: quantity > 12 ? 12 : quantity,
+                    quantity: quantity < 0 ? 1 : quantity,
                     category: newCategory ? newCategory : category
 
                 }
@@ -126,7 +128,7 @@ export default User => {
                 <div className='categoria1'>
                     <select name='category'
                         onChange={e => setCategory(e.target.value)}>
-                        <option selected value='não definido'>
+                        <option selected value={undefined}>
                             ....
                         </option>
                         {!categories.data ? '' : categories.data.map(cat => {
