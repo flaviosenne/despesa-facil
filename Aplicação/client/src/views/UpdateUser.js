@@ -12,11 +12,10 @@ import axios from 'axios'
 import '../CSS/CreateUser.css';
 
 import icon from '../icons/user+.png'
+import icon_u from '../icons/tras.png'
 import finger from '../icons/finger.webp'
 
-// const baseURL = 'http://52.67.74.131:3001'
-// const baseURL = 'http://localhost:3001'
-const props = { icon, route: '/home' }
+const props = { icon: icon_u, route: '/home' }
 export default UserUpdate => {
 
     

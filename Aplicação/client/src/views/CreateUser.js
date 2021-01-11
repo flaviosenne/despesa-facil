@@ -5,13 +5,13 @@ import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 
 import icon from '../icons/user+.png'
+import icon_u from '../icons/tras.png'
 
 import axios from 'axios'
 import { UserTheme } from '../services/Theme';
 import baseURL from '../services/URL'
-// const baseURL = 'http://localhost:3001'
-// const baseURL = 'http://52.67.74.131:3001'
-const props = { icon, route: '/login' }
+
+const props = { icon: icon_u, route: '/login' }
 export default User => {
 
     const alert = useAlert()

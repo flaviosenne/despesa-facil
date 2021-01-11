@@ -2,7 +2,7 @@ import React from 'react';
 import '../CSS/About.css';
 import download from '../icons/download.png'
 import Header from '../components/Header'
-import icon from '../icons/about.png'
+import icon from '../icons/tras.png'
 const props = {icon, route: '/home'}
 
 export default About => {

@@ -3,7 +3,7 @@ const day = '01'
 
 const month =
     (new Date().getMonth() + 1) < 10 ?
-        +'0' + (new Date().getMonth() + 1) :
+        '0' + (new Date().getMonth() + 1) :
         (new Date().getMonth() + 1)
 
 const year = new Date().getFullYear()
