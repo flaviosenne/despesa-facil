@@ -46,12 +46,13 @@ module.exports = {
             dateEnd = dateStart
             dateStart = aux
         }
+     
 
         // if ((!category && !dateStart && !dateEnd) ||
         if(category == 'undefined' && dateStart
         == 'undefined' && dateEnd == 'undefined') {
             const flow = await queryDatabaseDateDefault(id_user)
-            
+           
             return res.json(flow)
         }
 
@@ -136,14 +137,23 @@ module.exports = {
  
             var yearr = dateValidated.split('-')[0]
             
-            var mounth = (dateValidated.split('-')[1])  < 10 ?
-            '0'+(dateValidated.split('-')[1]):
+            var mounth = Number(dateValidated.split('-')[1])  < 10 ?
+            '0'+Number(dateValidated.split('-')[1]):
             (dateValidated.split('-')[1])
             
             var days = dateValidated.split('-')[2]
           
-            for(let i = 0; i< quantity; i++){
-                           
+            await connection('flow').insert({
+                category: id_category.id,
+                type,
+                description: description.trim(),
+                status: !status ? 'pendente' : status,
+                value,
+                date: yearr + '-'+ mounth + '-'+ days,
+                id_user
+            })
+            for(let i = 1; i< quantity; i++){
+                        
                         if(Number(mounth) < 12){
                             mounth ++
                             mounth = (mounth < 10 ? '0'+mounth: mounth)

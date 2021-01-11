@@ -79,6 +79,7 @@ export default class Report extends Component {
         if (this.category == 'receita') throw this.category = 'recep'
         this.UNSAFE_componentWillMount()
     }
+    
     render() {
         return (
             <>
@@ -100,6 +101,7 @@ export default class Report extends Component {
                         <button className='btn' onClick={() => this.get()}>
                             Filtrar
                         </button>
+                        
                     </div>
                     <hr className='borda' />
                     <h1>Relatório Financeiro</h1>
@@ -134,6 +136,7 @@ export default class Report extends Component {
                                 (
                                     (listDataPendent(this.state.expenseAPI) /
                                         listRecepData(this.state.recepAPI)) * 100).toFixed(2)
+                                        
                             }% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>

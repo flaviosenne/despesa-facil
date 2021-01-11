@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAlert } from 'react-alert'
 import {useHistory, Link} from 'react-router-dom'
@@ -30,7 +30,7 @@ export default Email => {
         history.push('/senha') 
         
     }
-
+    
     return (
         <>
             <Header {...props} />
@@ -40,13 +40,15 @@ export default Email => {
                 <p className = 'email'> Insira seu email já cadastradado na base de dados para enviarmos
                     um código de validação para que você possa atualizar sua senha </p>
                 <input
+                   autoFocus
                     onChange={e => setEmail(e.target.value)}
                     type='text'
                     className = {window.localStorage.getItem('theme')}
                     value={email}
                     id="user"
                     name="user"
-                    placeholder = 'Insira seu Email' />
+                    placeholder = 'Insira seu Email'
+                    onKeyDown={e => e.keyCode === 13 ? sendEmail(e): ''} />
                          <Link className = {window.localStorage.getItem('theme') }to="/senha" > Já tenho o código</Link>
                 <button className = 'btn' onClick={e => sendEmail(e)}> Enviar </button>
             </div>

@@ -52,7 +52,7 @@ export default User => {
             <div  className={UserTheme()}>
                 <img src={icon} alt="icone usuario" />
                 <label > Nome </label>
-                <input value = {name} onChange = {e => setName(e.target.value)}/>
+                <input autoFocus value = {name} onChange = {e => setName(e.target.value)}/>
 
                 <label > Email </label>
                 <input value = {email} onChange = {e => setEmail(e.target.value)}/>
@@ -64,7 +64,8 @@ export default User => {
                 <input value = {password} onChange = {e => setPassword(e.target.value)} type="password" />
 
                 <label> Confirmar Senha </label>
-                <input value = {pass} onChange = {e => setPass(e.target.value)}type="password" />
+                <input value = {pass} onChange = {e => setPass(e.target.value)}type="password" 
+                onKeyDown={e => e.keyCode === 13 ? post(e): ''}/>
 
                 <div className = 'button'>
 

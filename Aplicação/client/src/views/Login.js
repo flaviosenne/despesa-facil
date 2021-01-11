@@ -70,6 +70,7 @@ export default Login => {
                 icon_black: icon} alt="icone usuario" />
                 <label> Usuario </label>
                 <input
+                autoFocus
                     onChange={e => setUser(e.target.value)}
                     type='text'
                     className={window.localStorage.getItem('theme')}

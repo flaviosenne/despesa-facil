@@ -94,6 +94,7 @@ export default User => {
 
                 <label> Data </label>
                 <input
+                    autoFocus
                     required
                     value={date}
                     type="date"
