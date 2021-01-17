@@ -35,14 +35,23 @@ export default User => {
                     name, password,
                     email, user
                 })
-                alert.show(user + ' cadastrado com sucesso')
-                history.push('/login')
-                return
+                .then(data => {
+                    alert.show(user + ' cadastrado com sucesso')
+                    history.push('/login')
+
+                    return
+                })
+                .catch(err => {
+                    
+                    alert.show('algo deu errado')
+                })
+            }else{                
+                alert.show('usuario não é valido, observe as credenciais')           
             }
-            alert.show('usuario não é valido, observe as credenciais')           
             
         }catch(err){
             console.log(err)
+            alert.show('algo deu errado')
         }
     }
 

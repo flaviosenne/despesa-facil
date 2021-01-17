@@ -33,6 +33,7 @@ export default Login => {
             axios.post(baseUrl+'/sessions', {
                 user, password
             }).then(data => {
+                
                 if (data.status == 200) {
                     
                     window.localStorage.setItem('token', data.data.token)
@@ -44,17 +45,19 @@ export default Login => {
                         }
                         window.localStorage.setItem('id', result.id)
                         window.localStorage.setItem('name', result.name)
-                        alert.show('Seja Bem Vindo ' + user)
+                        alert.show('Seja Bem Vindo(a) ' + user)
                         
-                    })
-                    
+                    })                    
                     history.push('/fluxo-caixa')
     
                     return
+                }else if(data.status !== 200){
+                    alert.show('usuário ou senha incorreto')
+
                 }
 
             }).catch((err) =>{
-                alert.show('usuario ou senha incorreta')
+                alert.show('algo deu errado')
             })
         }catch(err){
             console.log(err)

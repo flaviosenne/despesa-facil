@@ -20,14 +20,19 @@ export default Email => {
     const [email, setEmail] = useState('')
 
 
-    function sendEmail(e) {
+    async function sendEmail(e) {
         e.preventDefault()
 
-        axios.post(baseUrl+'/send-email', {email})
+        const EMAIL = await axios.post(baseUrl+'/send-email', {email})
+        .then(data => {
+            alert.show('email enviado')
 
-        alert.show('email enviado')
+        })
+        .catch(err => {
+
+            alert.show('ops! algo deu errado')
+        })   
         
-        history.push('/senha') 
         
     }
     

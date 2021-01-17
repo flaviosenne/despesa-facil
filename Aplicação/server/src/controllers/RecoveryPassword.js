@@ -3,6 +3,9 @@ const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
 const smtp = require('../config/smtp')
+
+const transporter = nodemailer.createTransport(smtp)
+
 const salt = bcrypt.genSaltSync(10)
 
 const { existEmailDatabase, codeIsValid } = require('../services/helpers')
@@ -12,9 +15,9 @@ module.exports = {
     async sendEmail(req, res) {
 
         const { email } = req.body
-
+        
         const existEmail = await existEmailDatabase(email)
-
+        
         if (!existEmail) return res.status(404).json({ msg: 'not found' })
         
         const code = crypto.randomBytes(3).toString('HEX')
@@ -22,21 +25,18 @@ module.exports = {
         await connection('codeRecoveryPassword')
         .insert({code, id_user: existEmail.id})
         
-        let transporter = nodemailer.createTransport(smtp)
-
-        transporter.sendMail({
-            from: 'joao dev <joaodev3@gmail.com>',
-            to: `${email}`,
+        await transporter.sendMail({
+            from: 'Despesa Facil <despesa@facil.com>',
+            to: `${existEmail.name} <${existEmail.email}>`,
             subject: "Código de Validação",
             html: `Olá, este código tem apenas uma validade
             <h1><strong> ${code} </strong></h1>`
         }).then(msg => {
-            
-                       
-            return res.status(200).json({msg: 'Email enviado'})
-
+            // console.log(msg)
+            return res.json(msg.accepted)
         }).catch(err => {
-            return res.status(404).json({ msg: 'erro server' })
+            console.log(err)
+            return res.json('error')
         })
     },
 

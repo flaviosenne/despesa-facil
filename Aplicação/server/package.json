@@ -21,7 +21,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "product": "pm2 start index.js"
+    "production": "pm2 start index.js"
   },
   "keywords": [],
   "author": "",
