@@ -21,6 +21,7 @@ export default User => {
     const [categories, setCategories] = useState([''])
     const [category, setCategory] = useState(undefined)
     const [newCategory, setNewCategory] = useState()
+    const [quantity, setQuantity] = useState()
 
     const history = useHistory()
 
@@ -30,11 +31,11 @@ export default User => {
             this.props.history.push('/login')
             alert('Necessário fazer login')
         }
-        
-        axios.get(baseURL + '/category/'+window.localStorage.getItem('id'))
-        .then(cat => {
-            setCategories(cat)
-        })
+
+        axios.get(baseURL + '/category/' + window.localStorage.getItem('id'))
+            .then(cat => {
+                setCategories(cat)
+            })
 
     }, 1)
 
@@ -52,6 +53,8 @@ export default User => {
                 type: 'recep',
                 value: Number(value) < 0 ? 0 : Number(value),
                 description,
+                status,
+                quantity: quantity < 0 ? 1 : quantity,
                 category: newCategory ? newCategory : category
             })
             alert.show('Receita cadastrada com sucesso')
@@ -67,6 +70,7 @@ export default User => {
                     value: Number(value) < 0 ? 0 : Number(value),
                     description,
                     status,
+                    quantity: quantity < 0 ? 1 : quantity,
                     category: newCategory ? newCategory : category
 
                 }
@@ -90,6 +94,7 @@ export default User => {
 
                 <label> Data </label>
                 <input
+                    autoFocus
                     required
                     value={date}
                     type="date"
@@ -124,7 +129,7 @@ export default User => {
                 <div className='categoria1'>
                     <select name='category'
                         onChange={e => setCategory(e.target.value)}>
-                        <option selected value='não definido'>
+                        <option selected value={undefined}>
                             ....
                         </option>
                         {!categories.data ? '' : categories.data.map(cat => {
@@ -143,6 +148,7 @@ export default User => {
                 <input
                     value={newCategory}
                     onChange={e => setNewCategory(e.target.value)} />
+
                 <label> Status </label>
                 <div className="tipo">
 
@@ -163,11 +169,19 @@ export default User => {
                     <label >Finalizado </label>
                 </div>
 
-                <label> Valor </label>
-                <input
-                    value={value}
-                    type="number"
-                    onChange={e => setValue(e.target.value)} />
+                <div>
+
+                    <label> Quantidade de vezes </label>
+                    <input
+                        value={quantity}
+                        onChange={e => setQuantity(e.target.value)}
+                        type='number' />
+                    <label> Valor </label>
+                    <input
+                        value={value}
+                        type="number"
+                        onChange={e => setValue(e.target.value)} />
+                </div>
                 <div className='button'>
 
                     <Link><button className='btn' onClick={e => post(e)} > Cadastrar </button></Link>

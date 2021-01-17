@@ -17,10 +17,10 @@
     "nodemon": "^2.0.4"
   },
   "name": "backend",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js",
+    "start": "nodemon index.js",
     "product": "pm2 start index.js"
   },
   "keywords": [],

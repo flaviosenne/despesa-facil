@@ -43,6 +43,7 @@ export default Recovery => {
                 icon_black: icon} alt="icone usuario" />
                 <label> Código </label>
                 <input
+                    autoFocus
                     onChange={e => setToken(e.target.value)}
                     type='text'
                     className = {window.localStorage.getItem('theme')}
@@ -57,7 +58,9 @@ export default Recovery => {
                     className = {window.localStorage.getItem('theme')}
                     id="pass"
                     name="password"
-                    type="password" />
+                    type="password"
+                    onKeyDown={e => e.keyCode === 13 ? recovery(e): ''}
+                     />
 
                 
                 <button className = 'btn' onClick={e => recovery(e)}> Enviar </button>
