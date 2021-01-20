@@ -27,6 +27,8 @@ export default Email => {
         .then(data => {
             alert.show('email enviado')
 
+            history.push('/senha')
+
         })
         .catch(err => {
 
