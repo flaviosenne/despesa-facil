@@ -1,5 +1,5 @@
 ## Sistema de Fluxo de Caixa para WEB
-======================================================
+======================================================================
 
 ### Este documento tem por finalidade auxiliar no entendimento da API
 
@@ -85,7 +85,7 @@ Saida: 404
 ```
 
 
-=======================================================
+=========================================================================
 
 - /flow
 ##### o recurso "flow" é responsável pelo cadastro, listagem, atualização e exclusão dos lançamentos(despesas e receitas) do sistema.
@@ -229,7 +229,7 @@ Saída: 404
 }
 ```
 
-==============================================================
+=====================================================================================
 
 - /flow-expense
 - / flow-recep
@@ -274,7 +274,7 @@ Saída: 200
 ]
 ```
 
-==============================================================
+==============================================================================
 
 - /send-email
 
@@ -317,7 +317,7 @@ Saida: 500
 ```
 
 
-====================================================
+=============================================================================
 
 - /update-password
 
@@ -338,7 +338,7 @@ axios.post('/update-password', {
 
 Saida: 403
 
-````
+```
 {
   "msg":"code invalid"
 }
@@ -347,7 +347,7 @@ Saida: 403
 
 Saida: 200
 
-````
+```
 {
   "id":"id do usuário",
   "name":"nome do usuário",
@@ -356,7 +356,7 @@ Saida: 200
 }
 ```
 
-=======================================================
+================================================================================
 
 
 - /category/:id
@@ -368,7 +368,7 @@ Saida: 200
 Entrada: é necessário mandar qual a o 'id_user'(id do usuário), pois cada usuáro tem seu conjunto de categorias especificas, além disso é necessário informar . Abaixo tem o exemplo de requisição.
 
 
-````
+```
 axios.get(`/category/${id_user}`).then(res => {
   console.log(res)
 })
@@ -377,7 +377,7 @@ axios.get(`/category/${id_user}`).then(res => {
 
 Saida: 200
 
-````
+```
 [
   {
     "id":"id da categoria",
@@ -393,7 +393,7 @@ Saida: 200
 Entrada: é necessário mandar qual a o 'id_user'(id do usuário), pois cada usuáro tem seu conjunto de categorias especificas, além disso é necessário informar . Abaixo tem o exemplo de requisição.
 
 
-````
+```
 axios.get(`/category/${id_user}`).then(res => {
   console.log(res)
 })
@@ -402,7 +402,7 @@ axios.get(`/category/${id_user}`).then(res => {
 
 Saida: 204
 
-````
+```
   {
     "msg":"deleted",
   }
@@ -411,7 +411,7 @@ Saida: 204
 
 Saida: 404
 
-````
+```
   {
     "msg":"not found",
   }
