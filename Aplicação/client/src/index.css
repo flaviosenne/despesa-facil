@@ -224,3 +224,9 @@ table.table img {
     margin: auto;
     bottom: 0;
 }
+
+.chart{
+    width: 90%;
+    margin: 20px auto;
+
+}

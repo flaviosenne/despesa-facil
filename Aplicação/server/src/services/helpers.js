@@ -168,6 +168,21 @@ module.exports = {
             .orderBy('date', 'asc')
             .select()
 
+    },
+
+
+    async queryCategoryInFlowToChart(id_user, initial, end){
+       
+        
+        return  await connection('flow')
+                .whereBetween('date', [initial, end])
+                .andWhere('flow.id_user', id_user)
+                .andWhere('type', 'expense')
+                .join('category', 'category.id', '=', 'flow.category')
+                .select(['flow.id', 'flow.type', 'flow.status', 'flow.description', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
+                .orderBy('date', 'asc')
+
+
     }
 
 

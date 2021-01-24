@@ -2,19 +2,20 @@ const { Router } = require('express')
 
 const route = Router()
 
-const controllerUser = require('./controllers/UserControllers')
+const UserControler = require('./controllers/UserControllers')
 const FlowController = require('./controllers/FlowController')
 const SessionController = require('./controllers/SessionController')
 const CategoryController = require('./controllers/Category')
 const RecoveryPassword = require('./controllers/RecoveryPassword')
+const ChartController = require('./controllers/Chart')
 
 const {logged} = require('./middlewares/Logged')
 
 // todos usuarios
-route.post('/user', controllerUser.createUser)
-route.get('/user', controllerUser.listUser)
-route.get('/user/:id', controllerUser.getOneUser)
-route.put('/user/:id', controllerUser.updateUser)
+route.post('/user', UserControler.createUser)
+route.get('/user', UserControler.listUser)
+route.get('/user/:id', UserControler.getOneUser)
+route.put('/user/:id', UserControler.updateUser)
 
 
 
@@ -44,5 +45,8 @@ route.post('/logged', logged)
 // todas categorias
 route.get('/category/:id', CategoryController.listCategory)
 route.delete('/category/:id', CategoryController.removeCategory)
+
+// despesas e receitas para o gráfico
+route.get('/chart', logged, ChartController.getDataToChart)
 
 module.exports = route

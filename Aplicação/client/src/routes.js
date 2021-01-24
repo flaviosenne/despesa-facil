@@ -14,6 +14,7 @@ import UserUpdate from './views/UpdateUser'
 import Report from './components/Report'
 import Cash from './views/Cash'
 import NotFound from './components/NotFound'
+import Chart from './components/Chart'
 
 export default Views => {
     return (
@@ -33,6 +34,7 @@ export default Views => {
                 <Route path = "/despesa-update/:id" exact component ={UpdateFlow}/>
                 <Route path = "/fluxo-caixa" exact component ={Cash}/>
                 <Route path = "/relatorio" exact component ={Report}/>
+                <Route path = "/grafico" exact component ={Chart}/>
                 <Route component ={NotFound}/>
             </Switch>
         </BrowserRouter>
