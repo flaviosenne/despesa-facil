@@ -28,7 +28,7 @@ SEND EMAIL:
 
 
 UPDATE PASSWORD:
-- [POST /update-password](https://github.com/flaviosenne/DespesaFacil#post-update-password)
+- [PUT /update-password](https://github.com/flaviosenne/DespesaFacil#put-update-password)
 
 
 CATEGORY:
@@ -356,12 +356,12 @@ Saida: 500
 
 ##### o recurso "update-password" é responsável pela eatualização de senha do usuário. É necessário que o usuário ja tenha feito o cadastro na base de dados e ter solocitado o código com o envio de email conforme o recurso anterior ('send-email').
 
-### POST /update-passowrd
+### PUT /update-passoword
 
 Entrada: é necessário mandar no corpo da requisição o código enviado por email e a nova senha. Abaixo tem um exemplo do código.
 
 ```
-axios.post('/update-password', {
+axios.put('/update-password', {
   code: 'código que chegoy por email',
   password: 'nova senha'
   }).then(res => {
