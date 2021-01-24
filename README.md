@@ -32,7 +32,7 @@ UPDATE PASSWORD:
 
 
 CATEGORY:
-- [POST /category](https://github.com/flaviosenne/DespesaFacil#post-categoryid)
+- [GET /category](https://github.com/flaviosenne/DespesaFacil#get-categoryid)
 - [DELETE /category/:id](https://github.com/flaviosenne/DespesaFacil#delete-categoryid)
 
 
