@@ -356,7 +356,7 @@ Saida: 500
 
 ##### o recurso "update-password" é responsável pela eatualização de senha do usuário. É necessário que o usuário ja tenha feito o cadastro na base de dados e ter solocitado o código com o envio de email conforme o recurso anterior ('send-email').
 
-### PUT /update-passoword
+### PUT /update-password
 
 Entrada: é necessário mandar no corpo da requisição o código enviado por email e a nova senha. Abaixo tem um exemplo do código.
 
