@@ -86,7 +86,7 @@ Saida: 404
 
 =======================================================
 
-- /
+- /flow
 ##### o recurso "flow" é responsável pelo cadastr, listagem, atualização e exclusão dos lançamentos(despesas e receitas) do sistema.
 
 ### GET /flow
