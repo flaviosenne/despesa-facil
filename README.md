@@ -36,7 +36,7 @@ CATEGORY:
 - [DELETE /category/:id](https://github.com/flaviosenne/DespesaFacil#post-ucategoryid)
 
 
-
+======================================================================================
 - /user
 ##### o recurso "user" é responsável pela criação, ediição e atualização do usuário dentro do banco de dados.
 
