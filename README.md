@@ -1,5 +1,5 @@
 ## Sistema de Fluxo de Caixa para WEB
-======================================================================
+==================================================================
 
 ### Este documento tem por finalidade auxiliar no entendimento da API
 
@@ -85,7 +85,7 @@ Saida: 404
 ```
 
 
-=========================================================================
+==================================================================
 
 - /flow
 ##### o recurso "flow" é responsável pelo cadastro, listagem, atualização e exclusão dos lançamentos(despesas e receitas) do sistema.
@@ -229,7 +229,7 @@ Saída: 404
 }
 ```
 
-=====================================================================================
+==================================================================
 
 - /flow-expense
 - / flow-recep
@@ -274,7 +274,7 @@ Saída: 200
 ]
 ```
 
-==============================================================================
+==================================================================
 
 - /send-email
 
@@ -317,8 +317,7 @@ Saida: 500
 ```
 
 
-=============================================================================
-
+==================================================================
 - /update-password
 
 ##### o recurso "update-password" é responsável pela eatualização de senha do usuário. É necessário que o usuário ja tenha feito o cadastro na base de dados e ter solocitado o código com o envio de email conforme o recurso anterior ('send-email').
@@ -355,8 +354,7 @@ Saida: 200
   "password":"senha encryptada do usuário",
 }
 ```
-
-================================================================================
+==================================================================
 
 
 - /category/:id
