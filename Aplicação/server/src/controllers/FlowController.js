@@ -53,7 +53,7 @@ module.exports = {
         == 'undefined' && dateEnd == 'undefined') {
             const flow = await queryDatabaseDateDefault(id_user)
            
-            return res.json(flow)
+            return res.status(200).json(flow)
         }
 
         // if ((dateStart && dateEnd && category) &&
@@ -61,21 +61,21 @@ module.exports = {
                 != 'undefined' && category != 'undefined') {
             const flow = await queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
-            return res.json(flow)
+            return res.status(200).json(flow)
         }
 
         if ((category) && (category != 'undefined')) {
 
             const flow = await queryDatabaseCategory(id_user, category)
 
-            return res.json(flow)
+            return res.status(200).json(flow)
         }
 
         // if ((dateStart && dateEnd) &&
             if(dateStart != 'undefined' && dateEnd != 'undefined') {
             const flow = await queryDatabaseDate(id_user, dateStart, dateEnd)
 
-            return res.json(flow)
+            return res.status(200).json(flow)
         }
     },
 
@@ -176,7 +176,7 @@ module.exports = {
                       
         }
 
-        return res.json({ msg: 'ok' })
+        return res.status(201).json({ msg: 'created' })
 
 
     },
@@ -228,7 +228,7 @@ module.exports = {
             return res.status(404).json({ msg: 'not found' })
         }
 
-        return res.json({ msg: "updated success" })
+        return res.status(204).json({ msg: "updated success" })
     },
 
     async getOneFlow(req, res) {
@@ -242,7 +242,7 @@ module.exports = {
             return res.status(404).json({ msg: 'not found' })
         }
 
-        return res.json(flow)
+        return res.status(200).json(flow)
     }
 
 }

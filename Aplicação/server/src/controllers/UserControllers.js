@@ -42,14 +42,18 @@ module.exports = {
     async listUser(req, res) {
         const users = await connection('users').select()
 
-        return res.json(users)
+        return res.status(200).json(users)
     },
 
     async getOneUser(req, res) {
         const { id } = req.params
         const user = await connection('users').where('id', id).select()
 
-        return res.json(user)
+        if(user.length == 0){
+            return res.status(404).json({msg:'not found'})
+
+        }
+        return res.status(200).json(user)
     },
 
     async updateUser(req, res) {
@@ -72,7 +76,7 @@ module.exports = {
             return res.status(404).json({ msg: 'not found' })
         }
 
-        return res.json({ msg: "updated success" })
+        return res.status(200).json({ msg: "updated success" })
     }
 
 
