@@ -33,7 +33,6 @@ axios.get(`/user/${id}`).then(res => {
 Saída: 200
 ```
 {
-  "status":200,
   "id":"id do usuário"
 }
 ```
@@ -83,3 +82,149 @@ Saida: 404
   "msg":"not found"
 }
 ```
+
+
+=======================================================
+
+- /
+##### o recurso "flow" é responsável pelo cadastr, listagem, atualização e exclusão dos lançamentos(despesas e receitas) do sistema.
+
+### GET /flow
+
+Entrada: é necessário mandar o token, autorização(id de usuário), data inicial, data final e categoria.  Porém só é obrigatório o token.
+```
+axios.get('/flow', {
+  headers:
+  {token: 'bearer ' + window.localStorage.getItem('token'),
+   authorization,
+   dateStart,
+   dateEnd, 
+   category,
+   }).then(res => {
+  console.log(res)
+})
+```
+Saída: 200
+```
+[
+{
+    "id":"id do lançamento",
+    "date":"data da operação",
+    "description":"descrição do lançamento",
+    "category":"código da categoria",
+    "status":"status do lançamento",
+    "valor":"valor do lançamento",
+}
+]
+```
+
+
+### GET /flow/:id
+
+Entrada: é necessário mandar o token.
+```
+axios.get('/flow', {
+  headers:
+  {token: 'bearer ' + window.localStorage.getItem('token'),
+   }).then(res => {
+  console.log(res)
+})
+```
+Saída: 200
+```
+{
+    "id":"id do lançamento",
+    "date":"data da operação",
+    "description":"descrição do lançamento",
+    "category":"código da categoria",
+    "status":"status do lançamento",
+    "valor":"valor do lançamento",
+}
+```
+Saída: 404
+```
+{
+    "msg":"not found"
+}
+```
+
+
+### PUT /flow/:id
+
+Entrada: é necessário mandar a autorização, token id, valor, descrição, status e categoria como o código abaixo.
+```
+axios.put(`/flow/${id}`, {
+  authorization: window.localStorage.getItem('id'),
+  token: 'bearer '+window.localStorage.getItem('token'),
+  id, date,
+  value
+  description, status, 
+  category
+  }).then(res => {
+  console.log(res)
+})
+```
+Saída: 200
+```
+{
+    "msg":"updated success"
+}
+```
+Saída: 404
+```
+{
+    "msg":"not found"
+}
+```
+
+
+
+### POST /flow
+
+Entrada: é necessário mandar a autorização, token, valor, descrição, status e categoria como o código abaixo.
+```
+axios.post(`/flow`, {
+  authorization: window.localStorage.getItem('id'),
+  token: 'bearer '+window.localStorage.getItem('token'),
+  date,
+  type: 'expense'
+  value,
+  quantity,
+  description, status, 
+  category
+  }).then(res => {
+  console.log(res)
+})
+```
+Saída: 201
+```
+{
+    "msg":"created"
+}
+```
+
+
+### DELETE /flow/:id
+
+Entrada: é necessário mandar a autorização, token id como o código abaixo.
+```
+axios.delete(`/flow/${id}`, {
+  authorization: window.localStorage.getItem('id'),
+  token: 'bearer '+window.localStorage.getItem('token'),
+  }).then(res => {
+  console.log(res)
+})
+```
+Saída: 204
+```
+{
+    "msg":"flow deleted"
+}
+```
+Saída: 404
+```
+{
+    "msg":"not found"
+}
+```
+
