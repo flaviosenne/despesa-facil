@@ -7,7 +7,7 @@ module.exports = {
         .orderBy('category', 'asc')
         .select()
  
-        return res.json(category)
+        return res.status(200).json(category)
     },
 
     async removeCategory(req, res){
@@ -17,11 +17,11 @@ module.exports = {
         .first()
 
         if(!category)  
-        return res.json({msg: 'not found'})
+        return res.status(404).json({msg: 'not found'})
 
         await connection('category').where('id', category.id)
         .delete()
 
-        return res.json({msg: 'deleted'})
+        return res.status(204).json({msg: 'deleted'})
     }
 }

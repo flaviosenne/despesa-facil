@@ -33,10 +33,10 @@ module.exports = {
             <h1><strong> ${code} </strong></h1>`
         }).then(msg => {
             // console.log(msg)
-            return res.json(msg.accepted)
+            return res.status(200).json(msg.accepted)
         }).catch(err => {
             console.log(err)
-            return res.json('error')
+            return res.status(500).json('error')
         })
     },
 

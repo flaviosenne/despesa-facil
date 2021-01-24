@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 ## Sistema de Fluxo de Caixa para WEB
-=======
-## __Sistema de Fluxo de Caixa para WEB__
+======================================================
 
 ### Este documento tem por finalidade auxiliar no entendimento da API
 
@@ -212,8 +210,8 @@ Saída: 201
 Entrada: é necessário mandar a autorização, token id como o código abaixo.
 ```
 axios.delete(`/flow/${id}`, {
-  authorization: window.localStorage.getItem('id'),
-  token: 'bearer '+window.localStorage.getItem('token'),
+  authorization: 'id do usuário',
+  token,
   }).then(res => {
   console.log(res)
 })
@@ -230,5 +228,192 @@ Saída: 404
     "msg":"not found"
 }
 ```
->>>>>>> f7e8611712bbfe12587d045f8ab24d08eb3b2479
 
+==============================================================
+
+- /flow-expense
+- / flow-recep
+
+##### o recurso "flow-expense" é responsável pela listagem das despesas dentro da base de dados. O recurso "flow-recep" é responsável pela listagem das receitas dentro da base de dados.
+
+### GET /flow-expense
+### GET /flow-recep
+
+Entrada: é necessário, mandar a authorização e a order para que o sistema filtre as despesas.
+o atributo order aceita os seguintes valores: 'finalized', 'pendent', 'date', 'category'.
+por padrão ele seta o valor 'date'.
+Segue o exemplo abaixo
+
+```
+const expense = '/flow-expense
+const reecp = '/flow-recep
+
+axios.get((o recurso que precisar: 'expense' ou 'recep'), {
+  headers:
+            {
+                token,
+                authorization: 'id do usuário',
+                order:'pendent'
+            }
+}).then(res => {
+  console.log(res)
+})
+```
+
+Saída: 200
+```
+[
+{
+    "id":"id do lançamento",
+    "date":"data da operação",
+    "description":"descrição do lançamento",
+    "category":"código da categoria",
+    "status":"status do lançamento",
+    "valor":"valor do lançamento",
+}
+]
+```
+
+==============================================================
+
+- /send-email
+
+##### o recurso "send-email" é responsável pelo envio de email com o código de validação para usuários que ja tenham feito cadastro na base de dados.
+
+### POST /send-email
+
+Entrada: é necessário mandar no corpo da requisição o email já cadastrado anteriormente. Por esse motivo é necessário que o usuário tenha inserido um email válido. Abaixo tem um exemplo do código.
+
+```
+axios.post('/send-email', {
+  email: 'email que será enviado o código'
+  }).then(res => {
+  console.log(res)
+})
+```
+
+Saida: 200
+
+```
+{
+  msg:'accepted'
+}
+```
+
+Saida: 404
+
+```
+{
+  msg:'not found'
+}
+```
+
+Saida: 500
+
+```
+{
+  msg:'error'
+}
+```
+
+
+====================================================
+
+- /update-password
+
+##### o recurso "update-password" é responsável pela eatualização de senha do usuário. É necessário que o usuário ja tenha feito o cadastro na base de dados e ter solocitado o código com o envio de email conforme o recurso anterior ('send-email').
+
+### POST /send-email
+
+Entrada: é necessário mandar no corpo da requisição o código enviado por email e a nova senha. Abaixo tem um exemplo do código.
+
+```
+axios.post('/update-password', {
+  code: 'código que chegoy por email',
+  password: 'nova senha'
+  }).then(res => {
+  console.log(res)
+})
+```
+
+Saida: 403
+
+````
+{
+  "msg":"code invalid"
+}
+```
+
+
+Saida: 200
+
+````
+{
+  "id":"id do usuário",
+  "name":"nome do usuário",
+  "email":"email do usuário",
+  "password":"senha encryptada do usuário",
+}
+```
+
+=======================================================
+
+
+- /category/:id
+
+##### o recurso "/category" é responsável pela listagem e a exclusão da categoria.
+
+### GET /category/:id
+
+Entrada: é necessário mandar qual a o 'id_user'(id do usuário), pois cada usuáro tem seu conjunto de categorias especificas, além disso é necessário informar . Abaixo tem o exemplo de requisição.
+
+
+````
+axios.get(`/category/${id_user}`).then(res => {
+  console.log(res)
+})
+
+```
+
+Saida: 200
+
+````
+[
+  {
+    "id":"id da categoria",
+    "id_user":"id do usuário",
+    "category":"descrição da categoria",
+  }
+]
+
+```
+
+### DELETE /category/:id
+
+Entrada: é necessário mandar qual a o 'id_user'(id do usuário), pois cada usuáro tem seu conjunto de categorias especificas, além disso é necessário informar . Abaixo tem o exemplo de requisição.
+
+
+````
+axios.get(`/category/${id_user}`).then(res => {
+  console.log(res)
+})
+
+```
+
+Saida: 204
+
+````
+  {
+    "msg":"deleted",
+  }
+
+```
+
+Saida: 404
+
+````
+  {
+    "msg":"not found",
+  }
+
+```
