@@ -3,6 +3,40 @@
 
 ### Este documento tem por finalidade auxiliar no entendimento da API
 
+
+#### Sumário:
+USER:
+- [Get user](https://github.com/flaviosenne/DespesaFacil#get-user)
+- [Get user/:id](https://github.com/flaviosenne/DespesaFacil#get-userid)
+- [PUT user/:id](https://github.com/flaviosenne/DespesaFacil#put-userid)
+- [POST user](https://github.com/flaviosenne/DespesaFacil#post-user)
+
+
+FLOW:
+- [GET flow](https://github.com/flaviosenne/DespesaFacil#get-flow)
+- [GET flow/:id](https://github.com/flaviosenne/DespesaFacil#get-flowid)
+- [PUT flow/:id](https://github.com/flaviosenne/DespesaFacil#put-flowid)
+- [POST flow](https://github.com/flaviosenne/DespesaFacil#post-flow)
+- [DELETE flow](https://github.com/flaviosenne/DespesaFacil#delete-flowid)
+
+EXPENSE or RECEP:
+- [GET ](https://github.com/flaviosenne/DespesaFacil#get-flow-expense)
+
+
+SEND EMAIL:
+- [POST /send-email](https://github.com/flaviosenne/DespesaFacil#post-send-email)
+
+
+UPDATE PASSWORD:
+- [POST /update-password](https://github.com/flaviosenne/DespesaFacil#post-update-password)
+
+
+CATEGORY:
+- [POST /category](https://github.com/flaviosenne/DespesaFacil#post-category)
+- [DELETE /category/:id](https://github.com/flaviosenne/DespesaFacil#post-ucategoryid)
+
+
+
 - /user
 ##### o recurso "user" é responsável pela criação, ediição e atualização do usuário dentro do banco de dados.
 
@@ -322,7 +356,7 @@ Saida: 500
 
 ##### o recurso "update-password" é responsável pela eatualização de senha do usuário. É necessário que o usuário ja tenha feito o cadastro na base de dados e ter solocitado o código com o envio de email conforme o recurso anterior ('send-email').
 
-### POST /send-email
+### POST /update-passowrd
 
 Entrada: é necessário mandar no corpo da requisição o código enviado por email e a nova senha. Abaixo tem um exemplo do código.
 
