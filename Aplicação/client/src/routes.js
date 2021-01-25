@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import App from './views/App'
+// import App from './views/App'
 import Home from './views/Home'
 import Login from './views/Login'
 import Recovery from './views/RecoveryPassword'
@@ -21,9 +21,8 @@ export default Views => {
         <>
         <BrowserRouter>
             <Switch>
-                <Route path = "/" exact component ={App}/>
-                <Route path = "/home" exact component =
-                {window.localStorage.getItem('user') != 0? Home: App}/>
+                <Route path = "/" exact component ={Home}/>
+                <Route path = "/home" exact component ={Home}/>
                 <Route path = "/login" exact component ={Login}/>
                 <Route path = "/senha" exact component ={Recovery}/>
                 <Route path = "/email" exact component ={Email}/>

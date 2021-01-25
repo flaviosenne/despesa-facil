@@ -9,6 +9,9 @@ a, Link{
     color: black;
     text-decoration: none;
 }
+a:hover, Link:hover{
+    color: black;
+}
 
 .teste{
     width:50%;
@@ -45,7 +48,7 @@ a, Link{
     justify-content: space-around;
 }
 .dark, .light{
-    background: rgb(0, 0, 0);
+    background: rgb(59, 57, 57);
     margin: 0 auto;
     width: 100%;
     color: rgb(255, 255, 255);
@@ -154,8 +157,8 @@ a, Link{
 
 /* Layout Table List Expense */
 /* ----------------------- */
-table {
-    width: 70%;
+.table {
+    /* max-width: 50%; */
     margin: 20px auto;
     text-align: center;
 }   
@@ -169,14 +172,14 @@ table {
     color: rgb(10, 112, 107);
     
 }
-table img.icon{
+.table img.icon{
     display: inline-block;
     justify-items: space-between;
     max-width: 30px;
     margin: 10px;
     padding: 0;
 }
-table img.icon:hover{
+.table img.icon:hover{
     padding: 1px;
 }
 /* ----------------------- */
@@ -191,12 +194,12 @@ table img.icon:hover{
 }
 }
 @media(max-width: 500px){
-table.table {
+.table.table {
     max-width: 100%;
     font-size: 10pt;
     margin: 10px auto;
 }   
-table.table img {
+.table.table img {
     width: 20px;
     display: inline-block;
 }
@@ -225,8 +228,3 @@ table.table img {
     bottom: 0;
 }
 
-.chart{
-    width: 90%;
-    margin: 20px auto;
-
-}

@@ -25,8 +25,8 @@ module.exports = {
         await connection('codeRecoveryPassword')
         .insert({code, id_user: existEmail.id})
         
-        await transporter.sendMail({
-            from: 'Despesa Facil <despesa@facil.com>',
+        transporter.sendMail({
+            from: 'Despesa Facil <flaviodev3@gmail.com>',
             to: `${existEmail.name} <${existEmail.email}>`,
             subject: "Código de Validação",
             html: `Olá, este código tem apenas uma validade

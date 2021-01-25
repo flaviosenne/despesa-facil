@@ -8,8 +8,8 @@
 .Fluxo > span{
     position: static;
     font-family: 'Montserrat Subrayada', 'sans-serif';
-    margin-top: 30px;
-    padding: 40px;
+    /* margin-top: 10px; */
+    padding: 20px;
     display: flex;
     font-size: 20pt;
     justify-content: center;

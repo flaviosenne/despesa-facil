@@ -46,10 +46,10 @@ const initialState = {
 
 export default class Cash extends Component {
     state = { ...initialState }
-    dataInicio 
-    dataFim 
+    dataInicio
+    dataFim
     cont = 0
-    category 
+    category
     type
 
     async UNSAFE_componentWillMount() {
@@ -64,14 +64,14 @@ export default class Cash extends Component {
                 {
                     token: 'bearer ' + window.localStorage.getItem('token'),
                     authorization: window.localStorage.getItem('id'),
-                        dateStart: this.dataInicio,
-                        dateEnd: this.dataFim, 
-                        category: this.category == '...'? undefined: this.category,
+                    dateStart: this.dataInicio,
+                    dateEnd: this.dataFim,
+                    category: this.category == '...' ? undefined : this.category,
                 }
 
             }).then(cash => {
                 this.setState({ cash: cash.data })
-            
+
             })
             .catch(err => {
                 console.log(err)
@@ -79,17 +79,16 @@ export default class Cash extends Component {
                 // this.props.history.push("/login");
             })
 
-        await axios.get(baseUrl + '/category/'+window.localStorage.getItem('id'))
-        .then(cat => {
-            this.setState({ categories: cat.data })
-        })
+        await axios.get(baseUrl + '/category/' + window.localStorage.getItem('id'))
+            .then(cat => {
+                this.setState({ categories: cat.data })
+            })
 
     }
 
     get() {
         this.UNSAFE_componentWillMount()
     }
-
 
     render() {
         return (
@@ -131,8 +130,8 @@ export default class Cash extends Component {
                     </div>
                     <div className="filtro">
                         <Link to="/despesa"><img className="icon" src={
-                        window.localStorage.getItem('theme') == 'dark'?
-                        incluir_black: incluir} alt="icone incluir" /></Link>
+                            window.localStorage.getItem('theme') == 'dark' ?
+                                incluir_black : incluir} alt="icone incluir" /></Link>
                         <div className='button'>
 
                             <button className='btn' onClick={() => this.get()}>
@@ -142,20 +141,20 @@ export default class Cash extends Component {
                         <Link to='relatorio'>
 
                             <img className="icon" src={
-                                 window.localStorage.getItem('theme') == 'dark'?
-                                 relatorio_black : relatorio} alt="icone incluir" />
+                                window.localStorage.getItem('theme') == 'dark' ?
+                                    relatorio_black : relatorio} alt="icone incluir" />
                         </Link>
                     </div>
 
                     <div className='titulo'>
 
-                        <label className={(listRecepData(this.state.cash) 
-                            - listExpenseData(this.state.cash)).toFixed(2) < 0? "negativo" : 'positivo'}>
+                        <label className={(listRecepData(this.state.cash)
+                            - listExpenseData(this.state.cash)).toFixed(2) < 0 ? "negativo" : 'positivo'}>
                             <p>
                                 Total: R$
                         </p>
-                            {(listRecepData(this.state.cash) 
-                            - listExpenseData(this.state.cash)).toFixed(2)}</label>
+                            {(listRecepData(this.state.cash)
+                                - listExpenseData(this.state.cash)).toFixed(2)}</label>
 
                         <label className="receita">
                             <p>
@@ -194,9 +193,9 @@ export default class Cash extends Component {
                                         <Link to={ViewUpdateExpense(cash.id)}>
                                             <img
                                                 className="icon"
-                                                src={ 
-                                                window.localStorage.getItem('theme') == 'dark'?
-                                                alterar_black: alterar}
+                                                src={
+                                                    window.localStorage.getItem('theme') == 'dark' ?
+                                                        alterar_black : alterar}
                                                 alt="aletar"
                                             />
                                         </Link>
@@ -208,8 +207,8 @@ export default class Cash extends Component {
                                                 this.UNSAFE_componentWillMount()
                                             }}
                                             className="icon"
-                                            src={ window.localStorage.getItem('theme') == 'dark'?
-                                            remover_black: remover}
+                                            src={window.localStorage.getItem('theme') == 'dark' ?
+                                                remover_black : remover}
                                             alt="remover"
                                         />
                                     </td>

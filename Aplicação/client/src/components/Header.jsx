@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import power from '../icons/power.png'
 import info from '../icons/about.png'
@@ -18,8 +18,9 @@ export default Header => {
 
         window.localStorage.setItem('id', 0)
         window.localStorage.setItem('name', '')
-        history.push('/')
+        history.push('/home')
     }
+
     function menu() {
         const theme = window.localStorage.getItem('userTheme')==undefined?
         'usuario-light':
@@ -27,6 +28,10 @@ export default Header => {
         
         return `menu ${theme}`
     }
+
+    useEffect(() => {
+        displayOptions()
+    })
     function displayOptions(e) {
         if (e != undefined) {
             e.preventDefault()
@@ -42,7 +47,7 @@ export default Header => {
                     </p>
 
                     <div>
-                        <Link to='/sobre'>
+                        <Link to='/sobre' className=''>
                             <img className="icon-user"
                                 src={info} alt="icone sobre" /> Sobre
                         </Link>
@@ -64,7 +69,7 @@ export default Header => {
 
     return (
         <>
-            <div className="header">
+            <div className="header navbar navbar-light bg-light">
                 <h1 className="logo">Despesa Facil</h1>
 
                 <Link to={Header.route}>
@@ -72,6 +77,9 @@ export default Header => {
                 </Link>
                 {Header.icon_user != undefined ?
                     <>
+                        {window.localStorage.getItem('id') == '' 
+                        || 
+                        !window.localStorage.getItem('id')}
                         <label className="icon-user" onClick={e => displayOptions(e)}>
                             {window.localStorage.getItem('name')}
                         </label>
@@ -83,7 +91,7 @@ export default Header => {
 
 
             </div>
-            <hr className={window.localStorage.getItem('border')} />
+            {/* <hr className={window.localStorage.getItem('border')} /> */}
         </>
     )
 }

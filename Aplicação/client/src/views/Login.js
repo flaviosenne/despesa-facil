@@ -12,7 +12,7 @@ import baseUrl from '../services/URL'
 import axios from 'axios'
 
 
-const props = { icon: icon_u, route: '/' }
+const props = { icon: icon_u, route: '/home' }
 const secret = 'r45g5-l-v5kv50fk254g503;/vtv5-2c2'
 
 export default Login => {

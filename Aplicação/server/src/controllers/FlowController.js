@@ -1,16 +1,14 @@
 const connection = require("../database/connection")
 
-const {
+const {existUserDatabase } = require('../services/helpers')
+const { 
     queryExpenseDatabase,
-
     queryRecepDatabase,
 
     queryDatabaseCategory,
     queryDatabaseDateDefault,
     queryDatabaseDateAndCategory,
-    queryDatabaseDate,
-
-    existUserDatabase } = require('../services/helpers')
+    queryDatabaseDate, } = require('../services/queries')
 
 module.exports = {
 

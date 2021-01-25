@@ -12,7 +12,8 @@ import axios from 'axios'
 
 
 import { UserTheme } from '../services/Theme';
-const props = { icon, route: '/fluxo-caixa' }
+const props = { icon, route: '/fluxo-caixa',user: `/usuario/${window.localStorage.getItem('user')}`,
+icon_user: '', }
 
 
 export default User => {

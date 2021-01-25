@@ -1,40 +1,41 @@
 .footer{
     width: 50%;
     display: flex;
-    justify-content: center;
     margin: 0 auto;
+    justify-content: space-evenly;
    
 }
 
 .footer a{
-  text-decoration: none;  
+  text-decoration: none;
+  margin: 0 15px;  
 }
 
 .footer a:hover{
     text-decoration: underline;  
 
 }
-ul li{
+/* ul li{
     list-style: none;
     text-align: start;
     margin: 15px 0;
 }
-
+ */
 
 .icon-footer{
-    margin: 10px;
+    /* margin: 10px; */
     display: flex;
-    padding: 10px;
+    /* padding: 10px; */
 }
 .icon-footer img{
     margin: 40px 2px;
     border-radius: 100%;
     width: 60px;
-    height: 60px;
+    /* height: 60px; */
 }
 
 .icon-footer img:hover{
-    height: 62px;
+    /* height: 62px; */
     width: 62px;
     cursor: pointer;
 }

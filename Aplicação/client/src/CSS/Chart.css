@@ -1,0 +1,14 @@
+.chart{
+    width: 90%;
+    margin: 20px auto;
+
+}
+.type{
+   width: 50%;
+}
+
+.type select{
+    font-size: 18pt;
+    width: 45%;
+    text-align: center;
+}

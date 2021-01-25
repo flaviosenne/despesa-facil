@@ -13,7 +13,7 @@ import {
 import baseUrl from '../services/URL'
 
 const props = {
-    icon, route: '/fluxo-caixa',
+    icon, route: '/home', icon_user:'',
     user: `/usuario/${window.localStorage.getItem('user')}`
 }
 export default class Report extends Component {
@@ -103,9 +103,9 @@ export default class Report extends Component {
                         </button>
                         
                     </div>
-                    <hr className='borda' />
+                    {/* <hr className='borda' /> */}
                     <h1>Relatório Financeiro</h1>
-                    <hr className='borda' />
+                    {/* <hr className='borda' /> */}
 
 
                     <div className='cabecalho'>
@@ -140,8 +140,9 @@ export default class Report extends Component {
                             }% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>
-                    <hr />
-                    <hr />
+                    {/* <hr />
+                    <hr /> */}
+                     
                     <table className='table table-bordered'>
                         <thead>
                             <td></td>
@@ -173,9 +174,10 @@ export default class Report extends Component {
                                 listExpenseData(this.state.expenseAPI)).toFixed(2)} </td>
                         </tr>
                     </table>
-
+{/* 
                     <hr />
-                    <hr />
+                    <hr /> */}
+                    <h1>Receitas</h1>
                     <table className='table table-hover'>
                         <thead>
                             <tr>
@@ -202,8 +204,9 @@ export default class Report extends Component {
                         </tbody>
                     </table>
 
-                    <hr />
-                    <hr />
+                    {/* <hr />
+                    <hr /> */}
+                    <h1>Despesas</h1>
                     <table className='table table-hover'>
                         <thead>
                             <tr>

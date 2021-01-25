@@ -10,12 +10,14 @@ import cifrao_black from '../icons/cash-black.png'
 import relatorio from '../icons/relatorio.png'
 import relatorio_black from '../icons/report.png'
 
+import grafico from '../icons/graficos.png'
 import icon from '../icons/tras.png'
 import icon_user from '../icons/config.png'
-
+const user = `/usuario/${window.localStorage.getItem('user')}`
+const userLogged = window.localStorage.getItem('user')
 const props = {
-  icon, route: '/home',
-  user: `/usuario/${window.localStorage.getItem('user')}`,
+  icon, route: user == '' || !user ? '/': '/home',
+  user,
   icon_user,
 }
 
@@ -32,7 +34,7 @@ export default Home => {
             irá te dar uma mãozinha.
           </p>
           
-          <Link to="/fluxo-caixa" className='button btn'> COMECE AGORA</Link>
+          <Link to={userLogged == '' || !userLogged ? '/login': '/fluxo-caixa'} className='button btn'> COMECE AGORA</Link>
         </div>
 
 
@@ -62,7 +64,17 @@ export default Home => {
             tomar melhores decisões
         </p>
         </div>
-
+        <div>
+          <Link to='grafico'>
+          <img src={window.localStorage.getItem('theme') == 'dark'
+            ? relatorio_black : grafico} alt="icone relatorio" />
+            </Link>
+          <p>
+            Com o gráficos a sua disposição, a compreensão
+            fica mais legível no entendimento dos lançamentos,
+            em quais catgorias teve mais ou menos gastos.
+        </p>
+        </div>
 
       </div>
     </>
