@@ -16,10 +16,9 @@ module.exports = {
         if(datestart && dateend){
             const flow = await queryCategoryInFlowToChart(authorization, datestart, dateend)      
             
+            const data = await frequency(flow)
             
-            frequency(flow)
-            
-            return res.status(200).json(flow)
+            return res.status(200).json(data)
 
         }
         return res.status(404).json({msg:'not found'})

@@ -133,7 +133,7 @@ module.exports = {
                 .andWhere('type', 'expense')
                 .join('category', 'category.id', '=', 'flow.category')
                 .select(['flow.id', 'flow.type', 'flow.status', 'flow.description', 'flow.date', 'flow.value', 'flow.id_user', 'category.category'])
-                .orderBy('date', 'asc')
+                .orderBy('category.category', 'asc')
 
 
     }

@@ -45,44 +45,39 @@ module.exports = {
         return data
 
     },
-    async frequency(datas){
-        
-        var values = []
-        var categories = []
-        
-        datas.map(data => {
-            categories.push(data.category)
-            values.push(data.values)
-        })
-        console.log('incio', categories)
+    async frequency(datas) {
 
-        var quantidade = []
-
-        var cont = 0
-        // Eletronico, Eletronico, Roupa, Roupa, Eletronico, Padaria
-        // 200, 100, 30, 45, 50, 12
-        for (let i = 0; i < categories.length; i++) {
-            cont = 1
-            for (let j = i+1; j < (categories.length); j++) {
-                if (categories[i] == categories[j] || categories[i] == categories[j-1]) {
-                    // while (categories[i] == categories[j+1]) {
-                        cont++
-                        categories.splice(j, 1);
-                        console.log('Removi ', categories[i], ' na posição ', j)
-                        
-                    // }
-
-                }
+        return new Promise((resolve, reject) => {
+            const values = []
+            const categories = []
+            var cont = 0;
+            const frequency = []
+            const colors = []
+            datas.map(data => {
+                categories.push(data.category)
+                values.push(data.value)
+            })
+            
+            for (let i = 0; i < categories.length; i++) {
+                cont = values[i]
+                for (let j = i; j < categories.length; j++) {
+                    if (categories[i] == categories[j]) {
+                        while (categories[i] == categories[j + 1]) {
+                            cont+= values[i]
+                            categories.splice(j, 1);
+                            // console.log('Numero ', categories[j], ' na posição ', i)
+                        }
+                    }
     
+                }
+                var red = 0 + Math.floor((255 - 0) * Math.random());
+                var green = 0 + Math.floor((255 - 0) * Math.random());
+                var blue = 0 + Math.floor((255 - 0) * Math.random());
+                frequency[i] = cont
+                colors.push(`rgb(${red}, ${green}, ${blue})`)
             }
-            quantidade.push(cont)
-
-        }
-        console.log(categories)
-        console.log(quantidade)
+            resolve({categories, frequency, colors})
+        })
+       
     }
-
-
-   
-
 }
