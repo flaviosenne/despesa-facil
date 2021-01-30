@@ -13,8 +13,8 @@ import relatorio_black from '../icons/report.png'
 import grafico from '../icons/graficos.png'
 import icon from '../icons/tras.png'
 import icon_user from '../icons/config.png'
-const user = `/usuario/${window.localStorage.getItem('user')}`
-const userLogged = window.localStorage.getItem('user')
+const user = `/usuario/${window.localStorage.getItem('id')}`
+const userLogged = window.localStorage.getItem('name')
 const props = {
   icon, route: user == '' || !user ? '/': '/home',
   user,
@@ -34,7 +34,7 @@ export default Home => {
             irá te dar uma mãozinha.
           </p>
           
-          <Link to={userLogged == '' || !userLogged ? '/login': '/fluxo-caixa'} className='button btn'> COMECE AGORA</Link>
+          <Link to={userLogged == ' ' || !userLogged ? '/login': '/fluxo-caixa'} className='button btn'> COMECE AGORA</Link>
         </div>
 
 

@@ -15,53 +15,58 @@ export default class Chart extends Component {
     dateStart
     dateEnd
     datas
-    chartData = {}
     categories = []
     values = []
-    type
+    colors = []
+    type = 'bar'
 
     async UNSAFE_componentWillMount() {
+        this.categories = []
+        this.values = []
+        this.colors = []
+        console.log(this.type)
         if (window.localStorage.getItem('id') == 0) {
             this.props.history.push('/login')
             alert('Necessário fazer login')
         }
-        this.type = 'bar'
+        
         await axios.get(baseUrl + '/chart', {
             headers:
             {
                 token: 'bearer ' + window.localStorage.getItem('token'),
                 authorization: window.localStorage.getItem('id'),
-                dateStart: !this.dateStart ?
-                    new Date().getFullYear() + '-'
-                    + new Date().getMonth() + '-'
-                    + new Date().getDate() : this.dateStart,
-                dateEnd: !this.dateEnd ?
-                    new Date().getFullYear() + '-'
-                    + (new Date().getMonth() + 1) + '-'
-                    + new Date().getDate() : this.dateEnd,
+                dateStart: this.dateStart,
+                dateEnd: this.dateEnd,
             }
         })
             .then(resp => {
                 this.datas = (resp.data)
-                // console.log(resp.data)
+                console.log(this.datas)
 
             })
-        this.filterCategories(this.datas)
-        this.filterValues(this.datas)
+        this.filterCategories(this.datas.categories)
+        this.filterValues(this.datas.frequency)
+        this.filterColors(this.datas.colors)
     }
     getDatas() {
         this.UNSAFE_componentWillMount()
+        this.chart()
     }
 
-    filterCategories(data) {
-        data.forEach(cat => {
-            this.categories.push(cat.category)
+    filterCategories(categories) {
+        categories.forEach(category => {
+            this.categories.push(category)
         })
     }
 
-    filterValues(data) {
-        data.forEach(value => {
-            this.values.push(value.value)
+    filterColors(colors) {
+        colors.forEach(color => {
+            this.colors.push(color)
+        })
+    }
+    filterValues(values) {
+        values.forEach(value => {
+            this.values.push(value)
         })
     }
     getDataToChart() {
@@ -71,19 +76,20 @@ export default class Chart extends Component {
                 {
                     label: 'Categorias',
                     data: this.values,
-                    borderWidth: 4
+                    borderWidth: 4,
+                    backgroundColor: this.colors
                 }
             ]
         }
     }
 
     chart(){
-        console.log(this.type)
-        if(this.type == 'bar'){
+        console.log(this.type === 'pie')
+        if(this.type === 'bar'){
             return (
                 <Bar data={this.getDataToChart()} />
             )
-        }if(this.type == 'pie'){
+        }if(this.type === 'pie'){
             return (
                 <Pie data={this.getDataToChart()} />
             )

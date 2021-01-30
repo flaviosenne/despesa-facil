@@ -1,20 +1,5 @@
 const connection = require('../database/connection')
-const day = '01'
-
-const month =
-    (new Date().getMonth() + 1) < 10 ?
-        '0' + (new Date().getMonth() + 1) :
-        (new Date().getMonth() + 1)
-
-const monthEnd =
-    (new Date().getMonth() + 2) < 10 ?
-        '0' + (new Date().getMonth() + 2) :
-        (new Date().getMonth() + 2)
-
-const year = new Date().getFullYear()
-
-const dateStart = year + '-' + month + '-' + day
-const dateEnd = year + '-' + monthEnd  + '-' + day
+const {getDateNow} = require('./helpers')
 
 module.exports = {
      // --------------------------------//
@@ -86,7 +71,7 @@ module.exports = {
     async queryDatabaseCategory(id_user, category) {
 
         return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
+            .whereBetween('date', [(await getDateNow()).dateStart, (await getDateNow()).dateEnd])
             .andWhere('category', category)
             .andWhere('id_user', id_user)
             .orderBy('date', 'asc')
@@ -105,7 +90,7 @@ module.exports = {
     async queryDatabaseDateDefault(id_user) {
 
         return await connection('flow')
-            .whereBetween('date', [dateStart, dateEnd])
+            .whereBetween('date',  [(await getDateNow()).dateStart, (await getDateNow()).dateEnd])
             .andWhere('id_user', id_user)
             .orderBy('date', 'asc')
             .select()

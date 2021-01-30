@@ -1,27 +1,31 @@
 
 const { queryCategoryInFlowToChart } = require('../services/queries')
-const { frequency} = require('../services/helpers')
+const { frequency, getDateNow } = require('../services/helpers')
 module.exports = {
-    async getDataToChart(req, res){
+    async getDataToChart(req, res) {
 
-        const {authorization, token, datestart, dateend} = req.headers
-
-        // console.log(authorization)
-        // console.log(token)
-        // console.log(datestart, dateend)
-        if(!authorization || !token){
-            return res.status(403).json({msg: 'unathorization'})
+        console.log((await getDateNow()).dateStart)
+        const { authorization, token, datestart, dateend } = req.headers
+        
+        if (!authorization || !token) {
+            return res.status(403).json({ msg: 'unathorization' })
         }
         // intervalo de tempo
-        if(datestart && dateend){
-            const flow = await queryCategoryInFlowToChart(authorization, datestart, dateend)      
+        if (datestart !== 'undefined' && dateend !== 'undefined') {
+            const expense = await queryCategoryInFlowToChart(authorization, datestart, dateend)
             
-            const data = await frequency(flow)
+            const data = await frequency(expense)
             
             return res.status(200).json(data)
-
+            
         }
-        return res.status(404).json({msg:'not found'})
+        const expense = await queryCategoryInFlowToChart(authorization,  (await getDateNow()).dateStart, (await getDateNow()).dateEnd)
+        
+        console.log(expense)
+        const data = await frequency(expense)
+
+        return res.status(200).json(data)
+        // return res.status(404).json({ msg: 'not found' })
 
 
     }

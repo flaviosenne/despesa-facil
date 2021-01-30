@@ -57,18 +57,18 @@ module.exports = {
                 categories.push(data.category)
                 values.push(data.value)
             })
-            
+
             for (let i = 0; i < categories.length; i++) {
                 cont = values[i]
                 for (let j = i; j < categories.length; j++) {
                     if (categories[i] == categories[j]) {
                         while (categories[i] == categories[j + 1]) {
-                            cont+= values[i]
+                            cont += values[j]
                             categories.splice(j, 1);
                             // console.log('Numero ', categories[j], ' na posição ', i)
                         }
                     }
-    
+
                 }
                 var red = 0 + Math.floor((255 - 0) * Math.random());
                 var green = 0 + Math.floor((255 - 0) * Math.random());
@@ -76,8 +76,28 @@ module.exports = {
                 frequency[i] = cont
                 colors.push(`rgb(${red}, ${green}, ${blue})`)
             }
-            resolve({categories, frequency, colors})
+            resolve({ categories, frequency, colors })
         })
-       
+
+    },
+    async getDateNow() {
+        const day = '01'
+
+        const month =
+            (new Date().getMonth() + 1) < 10 ?
+                '0' + (new Date().getMonth() + 1) :
+                (new Date().getMonth() + 1)
+
+        const monthEnd =
+            (new Date().getMonth() + 2) < 10 ?
+                '0' + (new Date().getMonth() + 2) :
+                (new Date().getMonth() + 2)
+
+        const year = new Date().getFullYear()
+
+        const dateStart = year + '-' + month + '-' + day
+        const dateEnd = year + '-' + monthEnd + '-' + day
+
+        return { dateStart, dateEnd}
     }
 }
