@@ -1,7 +1,7 @@
 const connection = require("../database/connection")
 
-const {existUserDatabase } = require('../services/helpers')
-const { 
+const { existUserDatabase } = require('../services/helpers')
+const {
     queryExpenseDatabase,
     queryRecepDatabase,
 
@@ -39,24 +39,24 @@ module.exports = {
 
         const id_user = req.headers.authorization
 
-        if(dateStart > dateEnd){
+        if (dateStart > dateEnd) {
             var aux = dateEnd
             dateEnd = dateStart
             dateStart = aux
         }
-     
+
 
         // if ((!category && !dateStart && !dateEnd) ||
-        if(category == 'undefined' && dateStart
-        == 'undefined' && dateEnd == 'undefined') {
+        if (category == 'undefined' && dateStart
+            == 'undefined' && dateEnd == 'undefined') {
             const flow = await queryDatabaseDateDefault(id_user)
-           
+
             return res.status(200).json(flow)
         }
 
         // if ((dateStart && dateEnd && category) &&
-            if(dateStart != 'undefined' && dateEnd
-                != 'undefined' && category != 'undefined') {
+        if (dateStart != 'undefined' && dateEnd
+            != 'undefined' && category != 'undefined') {
             const flow = await queryDatabaseDateAndCategory(id_user, dateStart, dateEnd, category)
 
             return res.status(200).json(flow)
@@ -70,7 +70,7 @@ module.exports = {
         }
 
         // if ((dateStart && dateEnd) &&
-            if(dateStart != 'undefined' && dateEnd != 'undefined') {
+        if (dateStart != 'undefined' && dateEnd != 'undefined') {
             const flow = await queryDatabaseDate(id_user, dateStart, dateEnd)
 
             return res.status(200).json(flow)
@@ -119,59 +119,57 @@ module.exports = {
         var id_category = await connection('category')
             .select()
             .where('category', category.toUpperCase().trim())
+            .andWhere('id_user', id_user)
             .first()
 
         if (!id_category) {
-
             id_category = await connection('category').insert(
                 {
                     category: category.toUpperCase().trim(),
                     id_user
                 })
         }
-
         const dateValidated = !date ? (year + '-' + month + '-' + day) : date
-        
- 
-            var yearr = dateValidated.split('-')[0]
-            
-            var mounth = Number(dateValidated.split('-')[1])  < 10 ?
-            '0'+Number(dateValidated.split('-')[1]):
+
+        var yearr = dateValidated.split('-')[0]
+
+        var mounth = Number(dateValidated.split('-')[1]) < 10 ?
+            '0' + Number(dateValidated.split('-')[1]) :
             (dateValidated.split('-')[1])
-            
-            var days = dateValidated.split('-')[2]
-          
+
+        var days = dateValidated.split('-')[2]
+
+        await connection('flow').insert({
+            category: id_category[0] || id_category.id,
+            type,
+            description: description.trim(),
+            status: !status ? 'pendente' : status,
+            value,
+            date: yearr + '-' + mounth + '-' + days,
+            id_user
+        })
+        for (let i = 1; i < quantity; i++) {
+
+            if (Number(mounth) < 12) {
+                mounth++
+                mounth = (mounth < 10 ? '0' + mounth : mounth)
+
+            } else {
+                yearr++
+                mounth = '01'
+
+            }
+
             await connection('flow').insert({
                 category: id_category.id,
                 type,
                 description: description.trim(),
                 status: !status ? 'pendente' : status,
                 value,
-                date: yearr + '-'+ mounth + '-'+ days,
+                date: yearr + '-' + mounth + '-' + days,
                 id_user
             })
-            for(let i = 1; i< quantity; i++){
-                        
-                        if(Number(mounth) < 12){
-                            mounth ++
-                            mounth = (mounth < 10 ? '0'+mounth: mounth)
-                         
-                        }else{
-                            yearr++
-                            mounth = '01'
-                            
-                        }
-                        
-                        await connection('flow').insert({
-                            category: id_category.id,
-                            type,
-                            description: description.trim(),
-                            status: !status ? 'pendente' : status,
-                            value,
-                            date: yearr + '-'+ mounth + '-'+ days,
-                            id_user
-                        })
-                      
+
         }
 
         return res.status(201).json({ msg: 'created' })
@@ -186,17 +184,17 @@ module.exports = {
 
         const { description, status, date, value, category } = req.body
 
-        if(category > 0){
+        if (category > 0) {
 
             var id_category = await connection('category')
-            .select()
-            .where('id', category)
-            .first()
-        }else{
+                .select()
+                .where('id', category)
+                .first()
+        } else {
             var id_category = await connection('category')
-            .select()
-            .where('category', category.toUpperCase().trim())
-            .first()
+                .select()
+                .where('category', category.toUpperCase().trim())
+                .first()
         }
 
         if (!id_category) {
@@ -216,7 +214,7 @@ module.exports = {
         const flow = await connection('flow')
             .update({
                 description, status, date, value,
-                category: id_category.id
+                category: id_category[0] || id_category.id
             })
             .where('id', id)
             .andWhere('id_user', id_user)

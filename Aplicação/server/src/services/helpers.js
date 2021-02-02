@@ -35,7 +35,6 @@ module.exports = {
     },
 
     async codeIsValid(code) {
-
         const data = await connection('codeRecoveryPassword')
             .select()
             .where({ code: code })
@@ -51,29 +50,27 @@ module.exports = {
             const values = []
             const categories = []
             var cont = 0;
-            const frequency = []
+            let frequency = []
             const colors = []
             datas.map(data => {
                 categories.push(data.category)
                 values.push(data.value)
             })
 
+            var aux = 0
             for (let i = 0; i < categories.length; i++) {
-                cont = values[i]
+                cont = values[i+ aux]
                 for (let j = i; j < categories.length; j++) {
-                    if (categories[i] == categories[j]) {
-                        while (categories[i] == categories[j + 1]) {
-                            cont += values[j]
-                            categories.splice(j, 1);
-                            // console.log('Numero ', categories[j], ' na posição ', i)
-                        }
+                    while (categories[i] === categories[j + 1]) {
+                        cont = (parseFloat(cont) + parseFloat(values[j + aux+1]))
+                        categories.splice(j, 1);
+                        aux++    
                     }
-
                 }
+                frequency[i] = cont
                 var red = 0 + Math.floor((255 - 0) * Math.random());
                 var green = 0 + Math.floor((255 - 0) * Math.random());
                 var blue = 0 + Math.floor((255 - 0) * Math.random());
-                frequency[i] = cont
                 colors.push(`rgb(${red}, ${green}, ${blue})`)
             }
             resolve({ categories, frequency, colors })
@@ -98,6 +95,6 @@ module.exports = {
         const dateStart = year + '-' + month + '-' + day
         const dateEnd = year + '-' + monthEnd + '-' + day
 
-        return { dateStart, dateEnd}
+        return { dateStart, dateEnd }
     }
 }
