@@ -10,13 +10,13 @@ import cifrao_black from '../icons/cash-black.png'
 import relatorio from '../icons/relatorio.png'
 import relatorio_black from '../icons/report.png'
 
-import grafico from '../icons/graficos.png'
+import grafico from '../icons/grafico.webp'
 import icon from '../icons/tras.png'
 import icon_user from '../icons/config.png'
 const user = `/usuario/${window.localStorage.getItem('id')}`
 const userLogged = window.localStorage.getItem('name')
 const props = {
-  icon, route: user == '' || !user ? '/': '/home',
+  icon, route: user == ' ' || !user ? '/': '/home',
   user,
   icon_user,
 }
@@ -34,7 +34,7 @@ export default Home => {
             irá te dar uma mãozinha.
           </p>
           
-          <Link to={userLogged == ' ' || !userLogged ? '/login': '/fluxo-caixa'} className='button btn'> COMECE AGORA</Link>
+          <Link to={userLogged == ' ' || userLogged == undefined ? '/login': '/fluxo-caixa'} className='button btn'> COMECE AGORA</Link>
         </div>
 
 
@@ -66,8 +66,7 @@ export default Home => {
         </div>
         <div>
           <Link to='grafico'>
-          <img src={window.localStorage.getItem('theme') == 'dark'
-            ? relatorio_black : grafico} alt="icone relatorio" />
+          <img src={grafico} alt="icone relatorio" />
             </Link>
           <p>
             Com o gráficos a sua disposição, a compreensão

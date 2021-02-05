@@ -140,9 +140,7 @@ export default class Report extends Component {
                             }% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>
-                    {/* <hr />
-                    <hr /> */}
-                     
+
                     <table className='table table-bordered'>
                         <thead>
                             <td></td>
@@ -174,11 +172,11 @@ export default class Report extends Component {
                                 listExpenseData(this.state.expenseAPI)).toFixed(2)} </td>
                         </tr>
                     </table>
-{/* 
-                    <hr />
-                    <hr /> */}
+
                     <h1>Receitas</h1>
-                    <table className='table table-hover'>
+                    <table className={window.localStorage.getItem('theme') == 'dark'
+                    ? 'table table-dark table-hover':'table table-hover'
+                    }>
                         <thead>
                             <tr>
                                 <td>data</td>
@@ -207,7 +205,9 @@ export default class Report extends Component {
                     {/* <hr />
                     <hr /> */}
                     <h1>Despesas</h1>
-                    <table className='table table-hover'>
+                    <table className={window.localStorage.getItem('theme') == 'dark'
+                    ? 'table table-dark table-hover':'table table-hover'
+                    }>
                         <thead>
                             <tr>
                                 <td>data</td>

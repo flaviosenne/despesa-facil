@@ -7,7 +7,7 @@ import '../CSS/Login.css';
 import Header from '../components/Header'
 
 import icon from '../icons/password.png'
-import icon_black from '../icons/lock.jpg'
+import icon_black from '../icons/password.png'
 import icon_r from '../icons/tras.png'
 
 import baseUrl from '../services/URL'

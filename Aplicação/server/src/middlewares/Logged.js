@@ -9,11 +9,8 @@ module.exports ={
         
         jwt.verify(token[1], process.env.SECRET, (err)=>{
             
-            if(err != null){
-                
-                return res.status(401).json({msg: 'Unauthorization'})
-            }
-            // console.log('passei')
+            if(err != null) return res.status(401).json({msg: 'Unauthorization'})
+            
             next()
         })    
     

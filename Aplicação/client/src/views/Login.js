@@ -6,7 +6,7 @@ import '../CSS/Login.css';
 
 import Header from '../components/Header'
 import icon from '../icons/user.png'
-import icon_black from '../icons/user-black.png'
+import icon_black from '../icons/user.png'
 import icon_u from '../icons/tras.png'
 import baseUrl from '../services/URL'
 import axios from 'axios'

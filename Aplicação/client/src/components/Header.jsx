@@ -17,8 +17,9 @@ export default Header => {
         alert.show('Tchau ' + window.localStorage.getItem('name'))
 
         window.localStorage.setItem('id', 0)
-        window.localStorage.setItem('name', '')
+        window.localStorage.setItem('name', ' ')
         history.push('/home')
+        setCont('')
     }
 
     function menu() {
@@ -69,7 +70,7 @@ export default Header => {
 
     return (
         <>
-            <div className="header navbar navbar-light bg-light">
+            <div className="header">
                 <h1 className="logo">Despesa Facil</h1>
 
                 <Link to={Header.route}>
@@ -91,7 +92,7 @@ export default Header => {
 
 
             </div>
-            {/* <hr className={window.localStorage.getItem('border')} /> */}
+            <hr className={window.localStorage.getItem('border')} />
         </>
     )
 }

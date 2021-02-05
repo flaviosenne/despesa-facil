@@ -22,10 +22,10 @@ import incluir from '../icons/incluir.png'
 import incluir_black from '../icons/plus.png'
 
 import alterar from '../icons/alterar.png'
-import alterar_black from '../icons/edit.jpg'
+import alterar_black from '../icons/edit.webp'
 
 import remover from '../icons/remover.png'
-import remover_black from '../icons/delete.jpg'
+import remover_black from '../icons/delete.png'
 
 import icon from '../icons/tras.png'
 import icon_user from '../icons/config.png'

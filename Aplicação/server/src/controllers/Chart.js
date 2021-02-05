@@ -10,7 +10,7 @@ module.exports = {
         if (!authorization || !token) {
             return res.status(403).json({ msg: 'unathorization' })
         }
-        // intervalo de tempo
+    
         if (datestart !== 'undefined' && dateend !== 'undefined') {
             const expense = await queryCategoryInFlowToChart(authorization, datestart, dateend)
             
@@ -20,12 +20,8 @@ module.exports = {
             
         }
         const expense = await queryCategoryInFlowToChart(authorization,  (await getDateNow()).dateStart, (await getDateNow()).dateEnd)
-        
-        console.log(expense)
         const data = await frequency(expense)
-
         return res.status(200).json(data)
-        // return res.status(404).json({ msg: 'not found' })
 
 
     }
