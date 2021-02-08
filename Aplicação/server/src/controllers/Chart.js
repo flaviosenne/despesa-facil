@@ -3,8 +3,6 @@ const { queryCategoryInFlowToChart } = require('../services/queries')
 const { frequency, getDateNow } = require('../services/helpers')
 module.exports = {
     async getDataToChart(req, res) {
-
-        console.log((await getDateNow()).dateStart)
         const { authorization, token, datestart, dateend } = req.headers
         
         if (!authorization || !token) {

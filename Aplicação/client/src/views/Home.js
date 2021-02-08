@@ -34,7 +34,7 @@ export default Home => {
             irá te dar uma mãozinha.
           </p>
           
-          <Link to={userLogged == ' ' || userLogged == undefined ? '/login': '/fluxo-caixa'} className='button btn'> COMECE AGORA</Link>
+          <Link to={userLogged !== ' ' && userLogged? '/fluxo-caixa': 'login'} className='button btn'> COMECE AGORA</Link>
         </div>
 
 

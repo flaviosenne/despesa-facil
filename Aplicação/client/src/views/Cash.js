@@ -75,8 +75,6 @@ export default class Cash extends Component {
             })
             .catch(err => {
                 console.log(err)
-                // alert('necessário fazer login')
-                // this.props.history.push("/login");
             })
 
         await axios.get(baseUrl + '/category/' + window.localStorage.getItem('id'))

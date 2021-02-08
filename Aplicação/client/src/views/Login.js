@@ -12,17 +12,19 @@ import baseUrl from '../services/URL'
 import axios from 'axios'
 
 
+const theme = window.localStorage.getItem('theme')
 const props = { icon: icon_u, route: '/home' }
 const secret = 'r45g5-l-v5kv50fk254g503;/vtv5-2c2'
 
 export default Login => {
+
     const alert = useAlert()
 
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
 
     const history = useHistory()
-
+   
     // validar os campos digitados pelo usuario com os já cadastrados na api
     // usuario da API
 
@@ -69,14 +71,14 @@ export default Login => {
         <>
             <Header {...props} />
             <div className='login'>
-                <img src={window.localStorage.getItem('theme') == 'dark'?
+                <img src={theme == 'dark'?
                 icon_black: icon} alt="icone usuario" />
                 <label> Usuario </label>
                 <input
                 autoFocus
                     onChange={e => setUser(e.target.value)}
                     type='text'
-                    className={window.localStorage.getItem('theme')}
+                    className={theme}
                     value={user}
                     id="user"
                     name="user" />
@@ -85,14 +87,14 @@ export default Login => {
                 <input
                     onChange={e => setPassword(e.target.value)}
                     value={password}
-                    className={window.localStorage.getItem('theme')}
+                    className={theme}
                     id="pass"
                     name="password"
                     type="password" 
                     onKeyDown={e => e.keyCode === 13 ? login(e): ''}/>
 
-                <Link className={window.localStorage.getItem('theme')} to="/usuario" > Criar Conta</Link>
-                <Link to="/email" className={window.localStorage.getItem('theme')}> Esqueci minha senha</Link>
+                <Link className={theme} to="/usuario" > Criar Conta</Link>
+                <Link to="/email" className={theme}> Esqueci minha senha</Link>
                 <button className='btn' onClick={e => login(e)}> Enviar </button>
             </div>
         </>

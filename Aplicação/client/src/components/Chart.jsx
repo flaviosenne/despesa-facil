@@ -24,7 +24,7 @@ export default class Chart extends Component {
         this.categories = []
         this.values = []
         this.colors = []
-        console.log(this.type)
+     
         if (window.localStorage.getItem('id') == 0) {
             this.props.history.push('/login')
             alert('Necessário fazer login')
@@ -41,16 +41,14 @@ export default class Chart extends Component {
         })
             .then(resp => {
                 this.datas = (resp.data)
-                console.log(this.datas)
-
             })
+
         this.filterCategories(this.datas.categories)
         this.filterValues(this.datas.frequency)
         this.filterColors(this.datas.colors)
     }
     getDatas() {
         this.UNSAFE_componentWillMount()
-        this.chart()
     }
 
     filterCategories(categories) {
@@ -69,45 +67,19 @@ export default class Chart extends Component {
             this.values.push(value)
         })
     }
-    getDataToChart() {
-        return {
-            labels: this.categories,
-            datasets: [
-                {
-                    label: 'Categorias',
-                    data: this.values,
-                    borderWidth: 4,
-                    backgroundColor: this.colors
-                }
-            ]
-        }
-    }
-
-    chart(){
-        console.log(this.type === 'pie')
-        if(this.type === 'bar'){
-            return (
-                <Bar data={this.getDataToChart()} />
-            )
-        }if(this.type === 'pie'){
-            return (
-                <Pie data={this.getDataToChart()} />
-            )
-        }
-    }
 
     render() {
         return (
             <>
                 <Header {...props} />
                 <div className='chart'>
-                    <div className='type'>
+                    {/* <div className='type'>
                         <select name="tipo" id="type"
                             onChange={e => this.type = e.target.value}>
                             <option selected value='bar'>Barra</option>
                             <option value="pie">Pizza</option>
                         </select>
-                    </div>
+                    </div> */}
                     <div className="Fluxo">
 
                         <div className="data">
@@ -126,7 +98,17 @@ export default class Chart extends Component {
 
                     </div>
                     <hr />
-                    {this.chart()}
+                    <Pie data={{
+                        labels: this.categories,
+                        datasets: [
+                            {
+                                label: 'Categorias',
+                                data: this.values,
+                                borderWidth: 4,
+                                backgroundColor: this.colors
+                            }
+                        ]
+                    }} />
                 </div>
             </>
         )
