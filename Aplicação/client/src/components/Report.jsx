@@ -73,10 +73,10 @@ export default class Report extends Component {
 
 
     get() {
-        if (this.category == 'data') throw this.category = 'date'
-        if (this.category == 'categoria') throw this.category = 'category'
-        if (this.category == 'despesa') throw this.category = 'expense'
-        if (this.category == 'receita') throw this.category = 'recep'
+        if (this.category == 'data') return this.category = 'date'
+        if (this.category == 'categoria') return this.category = 'category'
+        if (this.category == 'despesa') return this.category = 'expense'
+        if (this.category == 'receita') return this.category = 'recep'
         this.UNSAFE_componentWillMount()
     }
     
