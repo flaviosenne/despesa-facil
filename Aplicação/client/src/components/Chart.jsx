@@ -98,7 +98,7 @@ export default class Chart extends Component {
 
                     </div>
                     <hr />
-                    <Pie data={{
+                    <Bar data={{
                         labels: this.categories,
                         datasets: [
                             {

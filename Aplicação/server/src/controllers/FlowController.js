@@ -16,7 +16,6 @@ module.exports = {
         const { order } = req.headers
         const id_user = req.headers.authorization
 
-        console.log("exepense: ", order)
         const expense = await queryExpenseDatabase(id_user, order)
         
         return res.status(200).json(expense)
@@ -24,7 +23,7 @@ module.exports = {
     
     async indexRecep(req, res) {
         const { order } = req.headers
-        console.log("recep: ", order)
+     
 
         const id_user = req.headers.authorization
 

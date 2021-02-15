@@ -36,6 +36,23 @@
     min-width: 90%;
     font-size:16pt;
 }
+
+.categoria_relatorio{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+    
+}
+.categoria_relatorio select{
+    font-size: 18pt;
+    width: 80%;
+    
+}
+
+.categoria_relatorio button{
+    width: 20%;
+}
     
 
 @media(max-width: 500px){

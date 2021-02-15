@@ -13,7 +13,7 @@ import {
 import baseUrl from '../services/URL'
 
 const props = {
-    icon, route: '/home', icon_user:'',
+    icon, route: '/home', icon_user: '',
     user: `/usuario/${window.localStorage.getItem('user')}`
 }
 export default class Report extends Component {
@@ -79,15 +79,15 @@ export default class Report extends Component {
         if (this.category == 'receita') return this.category = 'recep'
         this.UNSAFE_componentWillMount()
     }
-    
+
     render() {
         return (
             <>
                 <Header {...props} />
-
+                
                 <div className='paper'>
-                    <div className='categoria'>
-                        <select onChange={e => this.category = e.target.value}>
+                    <div className='categoria_relatorio'>
+                        <select className="form-control" onChange={e => this.category = e.target.value}>
 
                             {this.state.categories.map(result => {
                                 return (
@@ -98,10 +98,11 @@ export default class Report extends Component {
                                 )
                             })}
                         </select>
+                        
                         <button className='btn' onClick={() => this.get()}>
                             Filtrar
                         </button>
-                        
+
                     </div>
                     {/* <hr className='borda' /> */}
                     <h1>Relatório Financeiro</h1>
@@ -119,7 +120,7 @@ export default class Report extends Component {
                             <span><strong>Situação Finalizada:</strong><br /> R$ {
                                 (listDataFinalized(this.state.recepAPI) -
 
-                                listDataFinalized(this.state.expenseAPI)).toFixed(2)}</span>
+                                    listDataFinalized(this.state.expenseAPI)).toFixed(2)}</span>
 
 
                             <span>Foi pago {isNaN(
@@ -136,7 +137,7 @@ export default class Report extends Component {
                                 (
                                     (listDataPendent(this.state.expenseAPI) /
                                         listRecepData(this.state.recepAPI)) * 100).toFixed(2)
-                                        
+
                             }% <br />da sua receita já está comprometido</span>
                         </div>
                     </div>
@@ -175,7 +176,7 @@ export default class Report extends Component {
 
                     <h1>Receitas</h1>
                     <table className={window.localStorage.getItem('theme') == 'dark'
-                    ? 'table table-dark table-hover':'table table-hover'
+                        ? 'table table-dark table-hover' : 'table table-hover'
                     }>
                         <thead>
                             <tr>
@@ -206,7 +207,7 @@ export default class Report extends Component {
                     <hr /> */}
                     <h1>Despesas</h1>
                     <table className={window.localStorage.getItem('theme') == 'dark'
-                    ? 'table table-dark table-hover':'table table-hover'
+                        ? 'table table-dark table-hover' : 'table table-hover'
                     }>
                         <thead>
                             <tr>
