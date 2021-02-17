@@ -104,11 +104,9 @@ export default class Report extends Component {
                         </button>
 
                     </div>
-                    {/* <hr className='borda' /> */}
+               
                     <h1>Relatório Financeiro</h1>
-                    {/* <hr className='borda' /> */}
-
-
+           
                     <div className='cabecalho'>
                         <div className='um'>
 
@@ -142,7 +140,7 @@ export default class Report extends Component {
                         </div>
                     </div>
 
-                    <table className='table table-bordered'>
+                    <table className='table'>
                         <thead>
                             <td></td>
                             <td className='underline'>Despesa</td>
@@ -203,8 +201,6 @@ export default class Report extends Component {
                         </tbody>
                     </table>
 
-                    {/* <hr />
-                    <hr /> */}
                     <h1>Despesas</h1>
                     <table className={window.localStorage.getItem('theme') == 'dark'
                         ? 'table table-dark table-hover' : 'table table-hover'

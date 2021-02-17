@@ -50,7 +50,7 @@ a:hover, Link:hover{
 .dark, .light{
     background: rgb(59, 57, 57);
     margin: 0 auto;
-    width: 100%;
+    min-width: 100%;
     color: rgb(255, 255, 255);
 }
 .light{
@@ -206,25 +206,4 @@ a:hover, Link:hover{
 
 }
 
-/* Carousel */
-.image{
-    margin: 10px auto;
-    width: 80%;
-    height:400px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 4px grey;
-}
-
-.carousel-btn{
-    width: 90%;
-    display: flex;
-    justify-content: space-around;
-    margin: 10px auto;
-}
-
-.msg{
-    position: absolute;
-    margin: auto;
-    bottom: 0;
-}
 
