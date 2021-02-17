@@ -49,6 +49,7 @@ export default class Chart extends Component {
     }
     getDatas() {
         this.UNSAFE_componentWillMount()
+        this.chart()
     }
 
     filterCategories(categories) {
@@ -67,19 +68,51 @@ export default class Chart extends Component {
             this.values.push(value)
         })
     }
+    chart(){
+        console.log(this.type)
+        if(this.type == 'bar'){
+            return(
+                <Bar data={{
+                    labels: this.categories,
+                    datasets: [
+                        {
+                            label: 'Categorias',
+                            data: this.values,
+                            borderWidth: 4,
+                            backgroundColor: this.colors
+                        }
+                    ]
+                }} />
+            )
+        }
+        if(this.type == 'pie'){
+            return(
+            <Bar data={{
+                labels: this.categories,
+                datasets: [
+                    {
+                        label: 'Categorias',
+                        data: this.values,
+                        borderWidth: 4,
+                        backgroundColor: this.colors
+                    }
+                ]
+            }} />)
+        }
+    }
 
     render() {
         return (
             <>
                 <Header {...props} />
                 <div className='chart'>
-                    {/* <div className='type'>
+                    <div className='type'>
                         <select name="tipo" id="type"
-                            onChange={e => this.type = e.target.value}>
+                            onChange={e => this.type = (e.target.value)}>
                             <option selected value='bar'>Barra</option>
                             <option value="pie">Pizza</option>
                         </select>
-                    </div> */}
+                    </div>
                     <div className="Fluxo">
 
                         <div className="data">
@@ -98,17 +131,7 @@ export default class Chart extends Component {
 
                     </div>
                     <hr />
-                    <Bar data={{
-                        labels: this.categories,
-                        datasets: [
-                            {
-                                label: 'Categorias',
-                                data: this.values,
-                                borderWidth: 4,
-                                backgroundColor: this.colors
-                            }
-                        ]
-                    }} />
+                   {this.chart()}
                 </div>
             </>
         )

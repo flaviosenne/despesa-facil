@@ -24,7 +24,6 @@ module.exports = {
     async indexRecep(req, res) {
         const { order } = req.headers
      
-
         const id_user = req.headers.authorization
 
         const expense = await queryRecepDatabase(id_user, order)

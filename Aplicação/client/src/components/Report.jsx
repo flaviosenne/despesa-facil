@@ -32,6 +32,7 @@ export default class Report extends Component {
 
     async UNSAFE_componentWillMount() {
 
+        console.log('oi')
         if (window.localStorage.getItem('id') == 0) {
             this.props.history.push('/login')
             alert('Necessário fazer login')
@@ -58,6 +59,7 @@ export default class Report extends Component {
         })
             .then(resp => {
                 this.setState({ recepAPI: resp.data })
+                console.log(resp.data)
             })
     }
 
@@ -73,10 +75,11 @@ export default class Report extends Component {
 
 
     get() {
-        if (this.category == 'data') return this.category = 'date'
-        if (this.category == 'categoria') return this.category = 'category'
-        if (this.category == 'despesa') return this.category = 'expense'
-        if (this.category == 'receita') return this.category = 'recep'
+        
+        if (this.category == 'data')  this.category = 'date'
+        else if (this.category == 'categoria')  this.category = 'category'
+        else if (this.category == 'despesa')  this.category = 'expense'
+        else if (this.category == 'receita')  this.category = 'recep'
         this.UNSAFE_componentWillMount()
     }
 
