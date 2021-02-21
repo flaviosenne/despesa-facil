@@ -21,7 +21,7 @@ export default User => {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [categories, setCategories] = useState([''])
-    const [category, setCategory] = useState(undefined)
+    const [category, setCategory] = useState("não definido")
     const [newCategory, setNewCategory] = useState()
     const [quantity, setQuantity] = useState()
 
@@ -131,7 +131,7 @@ export default User => {
                 <div className='categoria1'>
                     <select name='category'
                         onChange={e => setCategory(e.target.value)}>
-                        <option selected value={undefined}>
+                        <option selected value={"não definido"}>
                             ....
                         </option>
                         {!categories.data ? '' : categories.data.map(cat => {
