@@ -18,7 +18,7 @@ export default class Chart extends Component {
     categories = []
     values = []
     colors = []
-    type = 'bar'
+    type = 'pie'
 
     async UNSAFE_componentWillMount() {
         this.categories = []
@@ -70,24 +70,24 @@ export default class Chart extends Component {
     }
     chart(){
         console.log(this.type)
-        if(this.type == 'bar'){
-            return(
-                <Bar data={{
-                    labels: this.categories,
-                    datasets: [
-                        {
-                            label: 'Categorias',
-                            data: this.values,
-                            borderWidth: 4,
-                            backgroundColor: this.colors
-                        }
-                    ]
-                }} />
-            )
-        }
+        // if(this.type == 'bar'){
+        //     return(
+        //         <Bar data={{
+        //             labels: this.categories,
+        //             datasets: [
+        //                 {
+        //                     label: 'Categorias',
+        //                     data: this.values,
+        //                     borderWidth: 4,
+        //                     backgroundColor: this.colors
+        //                 }
+        //             ]
+        //         }} />
+        //     )
+        // }
         if(this.type == 'pie'){
             return(
-            <Bar data={{
+            <Pie data={{
                 labels: this.categories,
                 datasets: [
                     {
