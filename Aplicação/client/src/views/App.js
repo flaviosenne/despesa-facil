@@ -21,13 +21,22 @@ const props = {
   icon_user,
 }
 
-export default Home => {
+export default App => {
 
   return (
     <>
       <Header {...props} />
       <div className='landingPage'>
-        
+        <div>
+          <p>
+            Voce esta com muita divida e não sabe
+            mais o que fazer? O Despesa Facil
+            irá te dar uma mãozinha.
+          </p>
+          
+          <Link to={userLogged !== ' ' && userLogged? '/fluxo-caixa': 'login'} className='button btn'> COMECE AGORA</Link>
+        </div>
+
 
         <div>
           <Link to='fluxo-caixa'>

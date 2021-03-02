@@ -18,7 +18,7 @@ export default Header => {
 
         window.localStorage.setItem('id', 0)
         window.localStorage.setItem('name', ' ')
-        history.push('/home')
+        history.push('/')
         setCont('')
     }
 

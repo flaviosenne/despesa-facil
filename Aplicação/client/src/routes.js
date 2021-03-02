@@ -15,6 +15,7 @@ import Report from './components/Report'
 import Cash from './views/Cash'
 import NotFound from './components/NotFound'
 import Chart from './components/Chart'
+import App from './views/App';
 
 
 export default Views => {
@@ -22,7 +23,7 @@ export default Views => {
         <>
         <BrowserRouter>
             <Switch>
-                <Route path = "/" exact component ={Home}/>
+                <Route path = "/" exact component ={App}/>
                 <Route path = "/home" exact component ={Home}/>
                 <Route path = "/login" exact component ={Login}/>
                 <Route path = "/senha" exact component ={Recovery}/>
