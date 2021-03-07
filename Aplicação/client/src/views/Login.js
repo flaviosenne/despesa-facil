@@ -13,7 +13,7 @@ import axios from 'axios'
 
 
 const theme = window.localStorage.getItem('theme')
-const props = { icon: icon_u, route: '/home' }
+const props = { icon: icon_u, route: '/' }
 const secret = 'r45g5-l-v5kv50fk254g503;/vtv5-2c2'
 
 export default Login => {

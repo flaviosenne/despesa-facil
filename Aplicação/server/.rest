@@ -146,7 +146,8 @@ Content-Type: application/json
 }
 
 
-
+### Delete Category 
+DELETE  http://localhost:3001/category/25
 
 
 

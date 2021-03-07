@@ -118,7 +118,7 @@ export default class Report extends Component {
                         </div>
                         <div className='dois'>
 
-                            <span><strong>Situação Finalizada:</strong><br /> R$ {
+                            <span><strong>Total Pago:</strong><br /> R$ {
                                 (listDataFinalized(this.state.recepAPI) -
 
                                     listDataFinalized(this.state.expenseAPI)).toFixed(2)}</span>
@@ -130,7 +130,7 @@ export default class Report extends Component {
                                         listRecepData(this.state.recepAPI))
                                     * 100).toFixed(2)) ? 0 :
                                 ((listDataFinalized(this.state.expenseAPI) /
-                                    listRecepData(this.state.recepAPI)) * 100).toFixed(2)}% <br />do valor da sua receita</span>
+                                    listRecepData(this.state.recepAPI)) * 100).toFixed(2)}% <br />do valor da sua receita total</span>
 
                             <span>{isNaN((
                                 (listDataPendent(this.state.expenseAPI) /
@@ -139,7 +139,7 @@ export default class Report extends Component {
                                     (listDataPendent(this.state.expenseAPI) /
                                         listRecepData(this.state.recepAPI)) * 100).toFixed(2)
 
-                            }% <br />da sua receita já está comprometido</span>
+                            }% <br />da receita total <br/>já está comprometido</span>
                         </div>
                     </div>
 
