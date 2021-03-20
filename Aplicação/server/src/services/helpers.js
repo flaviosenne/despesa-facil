@@ -62,7 +62,7 @@ module.exports = {
                 cont = values[i+ aux]
                 for (let j = i; j < categories.length; j++) {
                     while (categories[i] === categories[j + 1]) {
-                        cont = (parseFloat(cont) + parseFloat(values[j + aux+1]))
+                        cont = (parseFloat(cont) + parseFloat(values[j + aux+1])).toFixed(2)
                         categories.splice(j, 1);
                         aux++    
                     }
