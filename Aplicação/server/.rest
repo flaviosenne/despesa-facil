@@ -112,7 +112,7 @@ Content-Type: application/json
 
 
 
-### Post expense
+### Post recep
 
 POST http://localhost:3001/recep
 Content-Type: application/json
@@ -125,7 +125,7 @@ Authorization: f85a62e2
     }
 }
 
-### Get expense
+### Get recep
 
 GET http://localhost:3001/recep
 
@@ -146,14 +146,12 @@ Content-Type: application/json
 }
 
 
-### Delete Category 
-DELETE  http://localhost:3001/category/25
-
-
-
-
-### Post recep
+### delete recep
 
 DELETE  http://localhost:3001/recep/2
 Content-Type: application/json
 Authorization: 1381a095
+
+### delete recep
+
+DELETE  http://localhost:3001/category/40

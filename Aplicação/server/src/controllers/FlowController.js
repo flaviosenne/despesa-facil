@@ -17,13 +17,13 @@ module.exports = {
         const id_user = req.headers.authorization
 
         const expense = await queryExpenseDatabase(id_user, order)
-        
+
         return res.status(200).json(expense)
     },
-    
+
     async indexRecep(req, res) {
         const { order } = req.headers
-     
+
         const id_user = req.headers.authorization
 
         const expense = await queryRecepDatabase(id_user, order)
@@ -128,6 +128,12 @@ module.exports = {
                     category: category.toUpperCase().trim(),
                     id_user
                 })
+
+            id_category = await connection('category')
+                .select()
+                .where('category', category.toUpperCase().trim())
+                .andWhere('id_user', id_user)
+                .first()
         }
         const dateValidated = !date ? (year + '-' + month + '-' + day) : date
 
