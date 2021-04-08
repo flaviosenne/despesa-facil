@@ -13,13 +13,11 @@ const props = {
 export default class Chart extends Component {
 
     state = {
-
         dateStart: undefined,
         dateEnd: undefined,
         categories: [],
         values: [],
         colors: [],
-        type: '',
         chart:  () => {
             return (
                 <Bar data={{
@@ -38,10 +36,8 @@ export default class Chart extends Component {
     }
 
     setType(e) {
-        this.setState({ type: e.target.value })
-        console.log("state type: ", this.state.type)
-
-        if (this.state.type == 'bar') {
+        
+        if (e.target.value == 'bar') {
             this.setState({
                 chart: () => {
                     return (
@@ -60,7 +56,7 @@ export default class Chart extends Component {
                 }
             })
         }
-        else if(this.state.type == 'pie') {
+        else if(e.target.value == 'pie') {
             this.setState({
                 chart: () => {
                     return (
@@ -75,8 +71,8 @@ export default class Chart extends Component {
                                 }
                             ]
                         }} />
-                    )
-                }
+                        )
+                    }
             })
         }
     }

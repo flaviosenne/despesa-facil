@@ -54,6 +54,12 @@ module.exports = {
             return res.status(200).json(flow)
         }
 
+        if (category == 'undefined' && (dateStart
+            == 'undefined' || dateEnd == 'undefined')) {
+            const flow = await queryDatabaseDateDefault(id_user)
+
+            return res.status(200).json(flow)
+        }
         // if ((dateStart && dateEnd && category) &&
         if (dateStart != 'undefined' && dateEnd
             != 'undefined' && category != 'undefined') {
