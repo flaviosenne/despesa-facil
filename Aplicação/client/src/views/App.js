@@ -34,7 +34,7 @@ export default App => {
             irá te dar uma mãozinha.
           </p>
           
-          <Link to={userLogged !== ' ' && userLogged? '/fluxo-caixa': 'login'} className='button btn'> COMECE AGORA</Link>
+          <Link to='login' className='button btn'> COMECE AGORA</Link>
         </div>
 
 

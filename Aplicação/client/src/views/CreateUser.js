@@ -28,9 +28,9 @@ export default User => {
 
         e.preventDefault()
         try{
-            
-            if(pass === password  &&  user.length > 3){
-
+            if(pass === password  &&  user.length > 3  
+                && (email.split('@').length > 1 && email.split('@')[1] != '')){
+             
                 await axios.post(baseURL+'/user', { 
                     name, password,
                     email, user

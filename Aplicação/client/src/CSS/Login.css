@@ -8,6 +8,9 @@
     display: grid;
     justify-content: center;
 }
+.login button{
+    width: 100%;
+}
 .login img {
     width: 80px;
     margin: 0 auto;
@@ -22,6 +25,7 @@
     margin-bottom: 20px;
     background: none;
     border-bottom: solid black;
+    outline: none;
 }
 
 .login a {
@@ -51,11 +55,11 @@
 
 @media(max-width: 900px){
     .login{
-        width: 50%;
+        width: 80%;
     }
 }
 @media(max-width: 400px){
     .login{
-        width: 80%;
+        width: 100%;
     }
 }

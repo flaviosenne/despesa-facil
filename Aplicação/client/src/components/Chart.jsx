@@ -111,7 +111,7 @@ export default class Chart extends Component {
                 <Header {...props} />
                 <div className='chart'>
                     <div className='type'>
-                        <select name="tipo" id="type"
+                        <select className="form-control" name="tipo" id="type"
                             onChange={e => this.setType(e)}>
                             <option selected value='bar'>Barra</option>
                             <option value="pie">Pizza</option>
@@ -130,7 +130,7 @@ export default class Chart extends Component {
                         </div>
                         <div className="button">
 
-                            <button className='btn' onClick={e => this.getDatas()}>Filtrar</button>
+                            <button className='btn btn-chart' onClick={e => this.getDatas()}>Filtrar</button>
                         </div>
 
                     </div>

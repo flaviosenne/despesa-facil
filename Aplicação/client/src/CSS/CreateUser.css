@@ -32,11 +32,6 @@
 
 
 
-@media(max-width: 600px){
-    .usuario{
-        width: 95%;
-    }
-}
 .tema{
     display: flex;
     align-items: center;
@@ -59,4 +54,17 @@
     border: solid;
     border-radius: 4px;
     border-color: none;
+}
+
+
+@media(max-width: 600px){
+    .usuario{
+        width: 95%;
+    }
+    .button{
+        width: 100%;
+    }
+    Link button.btn{
+        width:90%;
+    }
 }

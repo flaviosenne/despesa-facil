@@ -1,5 +1,5 @@
 const connection = require('../database/connection')
-const { existEmailDatabase } = require('../services/helpers')
+const { existEmailDatabase, existUserDatabase } = require('../services/helpers')
 
 const crypto = require('crypto')
 
@@ -12,9 +12,13 @@ module.exports = {
         const { name, user, email, password } = req.body
 
         const isEmail = await existEmailDatabase(email)
+        const isUser = await existUserDatabase(email)
 
         if (isEmail)
             return res.json({ msg: 'Email already exist' })
+        
+        if (isUser)
+            return res.json({ msg: 'User already exist' })
 
 
         const id = crypto.randomBytes(4).toString('HEX')

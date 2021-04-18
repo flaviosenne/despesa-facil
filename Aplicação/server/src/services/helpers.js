@@ -24,6 +24,15 @@ module.exports = {
 
         return result
     },
+    async existUserDatabase(user) {
+
+        const result = await connection('users')
+            .where('user', email)
+            .select('id', 'email', 'name')
+            .first()
+
+        return result
+    },
 
     async existUserDatabase(id) {
 
