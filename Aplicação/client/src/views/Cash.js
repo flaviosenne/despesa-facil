@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-
+import ModalRemove from '../components/Remove'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 
@@ -41,6 +40,8 @@ const props = {
 const initialState = {
     cash: [],
     categories: [],
+    modal: null,
+    cont: 0
 }
 
 
@@ -84,6 +85,11 @@ export default class Cash extends Component {
 
     }
 
+    showModal(e, id){
+        e.preventDefault()
+        this.get() 
+        this.setState({modal:<ModalRemove id={id} cont={this.state.cont++} />})
+    }
     get() {
         this.UNSAFE_componentWillMount()
     }
@@ -91,6 +97,7 @@ export default class Cash extends Component {
     render() {
         return (
             <>
+                {this.state.modal}
                 <Header {...props} />
                 <div className="Fluxo">
                     <span> Fluxo de Caixa</span>
@@ -199,10 +206,7 @@ export default class Cash extends Component {
                                         </Link>
                                         <img
                                             onClick={async (e) => {
-
-                                                await remove(e, cash.id)
-
-                                                this.UNSAFE_componentWillMount()
+                                                this.showModal(e, cash.id)
                                             }}
                                             className="icon"
                                             src={window.localStorage.getItem('theme') == 'dark' ?

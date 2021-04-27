@@ -1,0 +1,64 @@
+.modal-remove{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: rgb(36, 27, 27, 0.5);
+    display: flex;
+}
+
+.modal-remove-none {
+    display: none;
+}
+
+.content{
+    width: 50%;
+    background: #fff;
+    border: solid;
+    border-radius: 6px;
+    padding: 10px;
+    min-height: 200px;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-header button{
+    border: none;
+    font-size: 10pt;
+    padding: 10px;
+    background: none;
+    border-radius: 2px;
+}
+.content-header button:hover{
+    background: rgb(158, 153, 153, 0.3);
+}
+
+.content-body{
+    display: block;
+}
+h1{
+    font-size: 20pt;
+}
+.content-body-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content-body-button button{
+    margin: 10px;
+    padding: 5px;
+    width: 100px;
+    border: none;
+    background: rgb(3, 95, 80, 0.6);
+    border-radius: 4px;
+    justify-items: end;
+}
+
+.content-body-button button:hover{
+    background: rgb(3, 95, 80, 0.8);
+}
