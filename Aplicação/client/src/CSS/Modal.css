@@ -4,6 +4,7 @@
     position: fixed;
     background: rgb(36, 27, 27, 0.5);
     display: flex;
+    z-index: 1;
 }
 
 .modal-remove-none {

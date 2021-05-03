@@ -70,12 +70,6 @@
         position: static;
         padding: 10px;
     }
-    .titulo p{
-        font-weight: 600;
-        color: gray;
-        display: inline;
-        margin: 5px;
-    }
     .titulo{
         width: 50%;
         display: flex;
@@ -86,6 +80,12 @@
         margin: 0 auto;
         padding: 5px;
         justify-content:space-around;
+    }
+    .titulo p{
+        font-weight: 600;
+        color: gray;
+        display: inline;
+        margin: 5px;
     }
     .receita, .positivo{
         color: rgb(23, 187, 23);

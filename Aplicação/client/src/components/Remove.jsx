@@ -11,6 +11,7 @@ export default Remove => {
     async function deleteFlow(e){
        await remove(e, Remove.id)
        setModal('modal-remove-none')
+       window.location.reload()
     }
     return (
         <div className={modal} tabindex="-1">

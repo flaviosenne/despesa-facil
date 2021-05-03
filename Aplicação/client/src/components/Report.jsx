@@ -119,9 +119,7 @@ export default class Report extends Component {
                         <div className='dois'>
 
                             <span><strong>Total Pago:</strong><br /> R$ {
-                                (listDataFinalized(this.state.recepAPI) -
-
-                                    listDataFinalized(this.state.expenseAPI)).toFixed(2)}</span>
+                                (listDataFinalized(this.state.expenseAPI)).toFixed(2)}</span>
 
 
                             <span>Foi pago {isNaN(
