@@ -74,7 +74,8 @@ export default Header => {
                 <h1 className="logo">Despesa Facil</h1>
 
                 <Link to={Header.route}>
-                    <img className="icon-menu" src={Header.icon} alt="icone home" />
+                    {Header.icon ?
+                    <img className="icon-menu" src={Header.icon} alt="icone home" />: ''}
                 </Link>
                 {Header.icon_user != undefined ?
                     <>

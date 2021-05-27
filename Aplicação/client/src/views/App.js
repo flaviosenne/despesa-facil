@@ -16,7 +16,7 @@ import icon_user from '../icons/config.png'
 const user = `/usuario/${window.localStorage.getItem('id')}`
 const userLogged = window.localStorage.getItem('name')
 const props = {
-  icon, route: user == ' ' || !user ? '/': '/home',
+  route: user == ' ' || !user ? '/': '/home',
   user,
   icon_user,
 }

@@ -13,7 +13,7 @@ import {
 import baseUrl from '../services/URL'
 
 const props = {
-    icon, route: '/home', icon_user: '',
+    icon, route: '/fluxo-caixa', icon_user: '',
     user: `/usuario/${window.localStorage.getItem('user')}`
 }
 export default class Report extends Component {
