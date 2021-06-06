@@ -6,9 +6,7 @@
     "password": "joao",
     "database": "despesa_facil",
     "logging": true,
-    "syncronize":false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true, 
+    "syncronize":true,
     "entities":["./src/models/*.ts"],
     "cli": {
         "entitiesDir": "./src/models"
