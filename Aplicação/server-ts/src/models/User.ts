@@ -21,8 +21,8 @@ export class User{
     @Column({name:'is_active'})
     isActive: boolean
 
-    @Column({name:'last_login'})
-    lastLogin: string
+    @CreateDateColumn({name:'last_login'})
+    lastLogin: Date
 
     @Column({name:'url_image'})
     urlImage: string

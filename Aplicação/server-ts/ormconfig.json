@@ -5,7 +5,7 @@
     "username": "root",
     "password": "joao",
     "database": "despesa_facil",
-    "logging": true,
+    "logging": false,
     "syncronize":true,
     "entities":["./src/models/*.ts"],
     "cli": {
