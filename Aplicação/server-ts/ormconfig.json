@@ -1,0 +1,16 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "joao",
+    "database": "despesa_facil",
+    "logging": true,
+    "syncronize":false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true, 
+    "entities":["./src/models/*.ts"],
+    "cli": {
+        "entitiesDir": "./src/models"
+    }
+}
