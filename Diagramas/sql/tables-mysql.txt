@@ -1,0 +1,10 @@
+create table user(
+	id int primary key auto_increment,
+    name mediumtext,
+    email mediumtext,
+    created_at datetime default now(),
+    updated_at datetime,
+    last_login datetime,
+    is_active boolean,
+    url_image mediumtext
+);

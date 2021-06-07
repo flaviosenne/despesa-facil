@@ -1,14 +1,3 @@
-
-    let test = {
-        type: "sqlite",
-        database: "./tests/database/db.sqlite",
-        logging: false,
-        syncronize:true,
-        entities:["./src/models/*.ts"],
-        cli: {
-            "entitiesDir": "./src/models"
-        }
-    }
     let development ={
         type: "mysql",
         host: "localhost",
@@ -24,4 +13,4 @@
         }
     }
 
-    export { development, test}
+    export { development}
