@@ -3,7 +3,7 @@ import request from 'supertest'
 import { app } from "../src/app";
 
 beforeAll(async () => {
-    createConnection({
+    await createConnection({
         type: "mysql",
         host: "localhost",
         port: 3306,
