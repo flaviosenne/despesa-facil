@@ -14,5 +14,6 @@ routes.get('/',(req: Request, res: Response) => {
     }
 })
 routes.get('/users', userController.listAll)
+routes.post('/users', userController.save)
 
 export {routes}
