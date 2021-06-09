@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
-import { getCustomRepository } from "typeorm";
-import { User } from "../models/User";
-import { UserRepository } from "../repositories/UserRepository";
+import { UserService } from "../services/UserService";
 
 export class UserController {
+    private userService: UserService
+    
     async listAll(req: Request, res: Response){
-        const userRepository: UserRepository = getCustomRepository(UserRepository)
 
-        const users: User[] = await userRepository.find()
+        const users = await this.userService.listAll()
         
-        return res.status(200).json(users)
+        return res.status(201).json(users)
     }
 }

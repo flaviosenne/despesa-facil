@@ -1,19 +1,3 @@
-export const ok = (msg: string) => {
-    return {
-        message: msg,
-        status: 200,
-        timestamp: Date.now()
-    } 
-}
-
-export const created = (msg: string) => {
-    return {
-        message: msg,
-        status: 201,
-        timestamp: Date.now()
-    } 
-}
-
 export const notFound = (msg: string) => {
     return {
         message: msg,

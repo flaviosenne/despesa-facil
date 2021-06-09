@@ -1,6 +1,6 @@
 import { UserController } from './controllers/UserController';
 import { Request, Response, Router} from 'express'
-import { ok, serverError } from './helpers/responses';
+import { serverError } from './helpers/responses';
 
 const routes = Router()
 
@@ -8,7 +8,7 @@ const userController = new UserController()
 
 routes.get('/',(req: Request, res: Response) => {
     try{
-        return res.status(200).json(ok('rotas ativas'))
+        return res.status(200).json()
     }catch(err) {
         throw serverError("houve um erro no servidor") 
     }
