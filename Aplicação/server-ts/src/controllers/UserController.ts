@@ -1,26 +1,25 @@
+import { UserDto } from './../dtos/UserDto';
 import { User } from './../models/User';
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
 
 export class UserController {
-    private userService: UserService
-
-    constructor(){
-        this.userService = new UserService()
-    }
     
     async listAll(req: Request, res: Response){
 
-        const users = await this.userService.listAll()
+        const userService = new UserService()
+
+        const users = await userService.listAll()
         
         return res.status(200).json(users)
     }
 
     async save(req: Request, res: Response){
-
-        const user = req.body as User
+        const userService = new UserService()
         
-        const userSaved = await this.userService.save(user)
+        const user = req.body as UserDto
+        
+        const userSaved = await userService.save(user)
         
         return res.status(201).json(userSaved)
     }

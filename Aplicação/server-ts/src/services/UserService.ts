@@ -1,3 +1,4 @@
+import { UserDto } from './../dtos/UserDto';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../models/User';
 import { UserRepository } from './../repositories/UserRepository';
@@ -14,7 +15,7 @@ export class UserService {
         return users
     }
 
-    async save(user: User): Promise<User>{
+    async save(user: UserDto): Promise<User>{
 
         const userSaved: User = await this.userRepository.save(user)
         
