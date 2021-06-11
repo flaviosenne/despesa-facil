@@ -1,3 +1,4 @@
+import { notFound } from './../helpers/responses';
 import { UserDto } from './../dtos/UserDto';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../models/User';
@@ -16,6 +17,22 @@ export class UserService {
         const users: User[] = await this.userRepository.find()
         
         return users
+    }
+
+    async listAllActive(): Promise<User[]>{
+
+        const users: User[] = await this.userRepository.find({isActive: true})
+        
+        return users
+    }
+
+    async findByIdAndIsActive(id: number): Promise<User | undefined>{
+
+        const user: User | undefined = await this.userRepository.findOne({id, isActive: true})
+        
+        if(!user) throw notFound('usuário não encontrado')
+
+        return user
     }
 
     async save(user: UserDto): Promise<User>{
