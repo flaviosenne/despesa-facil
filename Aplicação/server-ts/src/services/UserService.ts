@@ -12,6 +12,7 @@ export class UserService {
     constructor(){
         this.userRepository = getCustomRepository(UserRepository)
     }
+
     async listAll(): Promise<User[]>{
 
         const users: User[] = await this.userRepository.find()
@@ -61,6 +62,19 @@ export class UserService {
             await this.findByIdAndIsActive(id)
 
             await this.userRepository.update(id, {isActive: false})
+        }
+        catch(err){
+            throw err
+        }
+    }
+
+    async update(user: UserDto){
+        try{
+            const { id, name, email, urlImage} = user
+            await this.findByIdAndIsActive(Number(id))
+
+            await this.userRepository.update(Number(id), 
+            {name, email, urlImage, updatedAt: new Date()})
         }
         catch(err){
             throw err

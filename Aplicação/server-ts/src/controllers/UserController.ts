@@ -69,4 +69,19 @@ export class UserController {
             return res.status(err['status']).json(err)
         }
     }
+
+    async update(req: Request, res: Response){
+        try{
+
+            const user = req.body as UserDto
+            
+            const userService = new UserService()
+            
+            await userService.update(user)
+            
+            return res.status(204).json(null)
+        }catch(err) {
+            return res.status(err['status']).json(err)
+        }
+    }
 }

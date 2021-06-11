@@ -19,5 +19,6 @@ routes.get('/users/active', userController.listAllActive)
 routes.get('/users/:id', userController.findById)
 routes.post('/users', userController.save)
 routes.delete('/users/:id', userController.disable)
+routes.put('/users', userController.update)
 
 export {routes}
