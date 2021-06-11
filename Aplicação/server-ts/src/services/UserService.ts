@@ -55,5 +55,16 @@ export class UserService {
         
         return userSaved
     }
+
+    async disable(id: number){
+        try{
+            await this.findByIdAndIsActive(id)
+
+            await this.userRepository.update(id, {isActive: false})
+        }
+        catch(err){
+            throw err
+        }
+    }
 }
 

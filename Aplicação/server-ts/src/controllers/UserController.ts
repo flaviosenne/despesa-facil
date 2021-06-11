@@ -54,4 +54,19 @@ export class UserController {
             throw res.status(err['status']).json(err)
         }
     }
+
+    async disable(req: Request, res: Response){
+        try{
+
+            const { id } = req.params
+            
+            const userService = new UserService()
+            
+            await userService.disable(Number(id))
+            
+            return res.status(204).json(null)
+        }catch(err) {
+            return res.status(err['status']).json(err)
+        }
+    }
 }

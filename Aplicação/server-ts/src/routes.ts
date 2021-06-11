@@ -13,7 +13,11 @@ routes.get('/',(req: Request, res: Response) => {
         throw serverError("houve um erro no servidor") 
     }
 })
+
 routes.get('/users', userController.listAll)
+routes.get('/users/active', userController.listAllActive)
+routes.get('/users/:id', userController.findById)
 routes.post('/users', userController.save)
+routes.delete('/users/:id', userController.disable)
 
 export {routes}
