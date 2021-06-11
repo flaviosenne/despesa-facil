@@ -17,6 +17,7 @@
     "bcrypt": "^5.0.1",
     "bull": "^3.22.7",
     "bull-board": "^2.1.2",
+    "class-transformer": "^0.4.0",
     "concurrently": "^6.2.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

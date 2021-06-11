@@ -1,9 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, PrimaryColumn } from "typeorm";
 
 @Entity("cash")
 export class Cash{
 
     @PrimaryColumn()
+    @Generated()
     id: number;
 
     @Column()

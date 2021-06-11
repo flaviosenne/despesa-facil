@@ -1,5 +1,4 @@
 import { UserDto } from './../dtos/UserDto';
-import { User } from './../models/User';
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
 
@@ -15,12 +14,16 @@ export class UserController {
     }
 
     async save(req: Request, res: Response){
-        const userService = new UserService()
-        
-        const user = req.body as UserDto
-        
-        const userSaved = await userService.save(user)
-        
-        return res.status(201).json(userSaved)
+        try{
+            const userService = new UserService()
+            
+            const user = req.body as UserDto
+            
+            const userSaved = await userService.save(user)
+            
+            return res.status(201).json(userSaved)
+        }catch(err){
+            throw res.status(err['status']).json(err)
+        }
     }
 }
