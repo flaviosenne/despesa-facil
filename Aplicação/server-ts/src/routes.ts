@@ -1,6 +1,7 @@
 import { UserController } from './controllers/UserController';
 import { Request, Response, Router} from 'express'
 import { serverError } from './helpers/responses';
+import { logged } from './middlewares/auth';
 
 const routes = Router()
 
@@ -14,11 +15,11 @@ routes.get('/',(req: Request, res: Response) => {
     }
 })
 
-routes.get('/users', userController.listAll)
-routes.get('/users/active', userController.listAllActive)
-routes.get('/users/:id', userController.findById)
-routes.delete('/users/:id', userController.disable)
-routes.put('/users', userController.update)
+routes.get('/users',logged, userController.listAll)
+routes.get('/users/active', logged, userController.listAllActive)
+routes.get('/users/:id', logged, userController.findById)
+routes.delete('/users/:id', logged, userController.disable)
+routes.put('/users', logged, userController.update)
 
 // resources public
 routes.post('/users', userController.save)

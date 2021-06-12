@@ -6,10 +6,10 @@ export const notFound = (msg: string) => {
     } 
 }
 
-export const unauthorized = (msg: string) => {
+export const forbidden = (msg: string) => {
     return {
         message: msg,
-        status: 401,
+        status: 403,
         timestamp: Date.now()
     } 
 }

@@ -6,6 +6,10 @@ export const generateToken = (payload: any): string => {
     return jwt.sign(payload, secret, {expiresIn: '1d'})
 }
 
-export const tokenValid = (token: string) => {
-    return jwt.verify(token, secret)
+export const tokenValid = async (token: string) => {
+    try{
+        return jwt.verify(token, secret)
+    }catch(err){
+        return null
+    }
 }
