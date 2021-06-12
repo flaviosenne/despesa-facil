@@ -17,8 +17,12 @@ routes.get('/',(req: Request, res: Response) => {
 routes.get('/users', userController.listAll)
 routes.get('/users/active', userController.listAllActive)
 routes.get('/users/:id', userController.findById)
-routes.post('/users', userController.save)
 routes.delete('/users/:id', userController.disable)
 routes.put('/users', userController.update)
+
+// resources public
+routes.post('/users', userController.save)
+routes.post('/login', userController.login)
+
 
 export {routes}

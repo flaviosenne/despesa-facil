@@ -1,9 +1,12 @@
+import { generateToken } from './../helpers/utils/jwt';
 import { notFound } from './../helpers/responses';
 import { UserDto } from './../dtos/UserDto';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../models/User';
 import { UserRepository } from './../repositories/UserRepository';
 import { badRequest, serverError } from '../helpers/responses';
+import { passwordMatchers } from '../helpers/utils/bcrypt';
+
 import bcrypt from 'bcrypt'
 
 export class UserService {
@@ -91,8 +94,31 @@ export class UserService {
         }
     }
 
-    async login({ email, password}: UserDto) {
-       
+    async login(email: string, password: string) {
+        
+            if(!email) throw badRequest("informe o email")
+            if(!password) throw badRequest("informe a senha")
+
+            const existUser = await this.existUser(email)
+    
+            if(!existUser) throw badRequest("usuario ou senha inválidas")
+            
+            const matchers = passwordMatchers(password, existUser.password)
+            
+            if(!matchers) throw badRequest("usuario ou senha inválidas")
+    
+            const payload = {
+                id: existUser.id,
+                name: existUser.name,
+                email: existUser.email
+            }
+
+            this.userRepository.update(existUser.id, {updatedAt: new Date()})
+        try{
+            return generateToken(payload)             
+        }catch(err){
+            throw serverError("Erro na geração do token")
+        }
     }
 }
 
