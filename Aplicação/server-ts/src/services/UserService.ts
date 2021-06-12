@@ -36,6 +36,15 @@ export class UserService {
         return user
     }
 
+    async existUser(email: string): Promise<User | null> {
+
+        const user: User | undefined = await this.userRepository.findByEmail(email)
+        
+        if(!user) return null
+
+        return user
+    }
+
     async save(user: UserDto): Promise<User>{
 
         if(!user.email) throw badRequest('email não informado')
@@ -43,6 +52,7 @@ export class UserService {
         if(!user.password) throw badRequest('senha não informada')
 
         const existEmail = await this.userRepository.findByEmail(user.email)
+        
         if(existEmail) throw badRequest('email já existe na base de dados')
         
         user.createdAt = new Date()
@@ -79,6 +89,10 @@ export class UserService {
         catch(err){
             throw err
         }
+    }
+
+    async login({ email, password}: UserDto) {
+       
     }
 }
 
