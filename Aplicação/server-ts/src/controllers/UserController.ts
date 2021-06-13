@@ -1,5 +1,6 @@
+import { badRequest } from './../helpers/responses';
 import { UserDto } from './../dtos/UserDto';
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
 
 export class UserController {
@@ -98,6 +99,36 @@ export class UserController {
             return res.status(200).json({token})
             
         } catch (err) {
+            return res.status(err['status']).json(err)
+        }
+    }
+
+    async retrievePassword(req: Request, res: Response){
+        const { email } = req.query
+        try{
+            const userService = new UserService()
+
+            if(!email) return res.status(400).json(badRequest('email não informado'))
+
+            userService.retrievePassword(String(email))
+
+            return res.status(200).json()
+        }
+        catch(err){
+            return res.status(err['status']).json(err)
+        }
+    }
+
+    async updatePassword(req: Request, res: Response){
+        const { code, password } = req.body
+        try{
+            const userService = new UserService()
+
+            userService.updatePassword(password, code)
+
+            return res.status(200).json()
+        }
+        catch(err){
             return res.status(err['status']).json(err)
         }
     }

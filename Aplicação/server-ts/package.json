@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \" yarn dev-server \" \"yarn dev-queue\" ",
-    "dev-server": "ts-node-dev ./src/server.ts",
-    "dev-queue": "ts-node-dev ./src/queue.ts",
+    "dev": "ts-node-dev ./src/server.ts",
     "test": "jest",
     "start": "ts-node ./src/server.ts"
   },
@@ -21,6 +19,7 @@
     "class-transformer": "^0.4.0",
     "concurrently": "^6.2.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",

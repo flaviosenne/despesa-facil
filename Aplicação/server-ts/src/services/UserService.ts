@@ -7,14 +7,16 @@ import { User } from '../models/User';
 import { UserRepository } from './../repositories/UserRepository';
 import { badRequest, serverError } from '../helpers/responses';
 import { passwordMatchers } from '../helpers/utils/bcrypt';
-
 import bcrypt from 'bcrypt'
+import { CodPasswordRepository } from '../repositories/CodPasswordRepository';
 
 export class UserService {
     private userRepository: UserRepository
+    private codPasswordRepository: CodPasswordRepository
 
     constructor(){
         this.userRepository = getCustomRepository(UserRepository)
+        this.codPasswordRepository = getCustomRepository(CodPasswordRepository)
     }
 
     async listAll(): Promise<User[]>{
@@ -131,6 +133,39 @@ export class UserService {
         }catch(err){
             throw serverError("Erro na geração do token")
         }
+    }
+
+    async updatePassword(password: string, cod: string){
+
+        const existCode = await this.codPasswordRepository.findOne({name: cod, isUsed: 0}) 
+        
+        if(!existCode) throw badRequest('Código inválido')
+        
+        const user = await this.findByIdAndIsActive(existCode.user.id)
+
+        if(!user) throw notFound('usuário não encontrado')
+      
+        const salt = bcrypt.genSaltSync(10)
+
+        const hash = bcrypt.hashSync(password, salt)
+        
+        password = hash
+       
+        await this.userRepository.update(user.id, {password})
+    }
+
+    async retrievePassword(email: string){
+        const mailService = new MailService()
+
+        const user = await this.userRepository.findByEmail(email)
+
+        if(!user) throw notFound('esse email não consta na base de dados')
+
+        const cod = Math.random().toString(36).substr(7)
+
+        this.codPasswordRepository.save({name: cod, user, isUsed: 0})
+        
+        await mailService.sendEmailCodPassword(user.name, user.email, cod)
     }
 }
 
