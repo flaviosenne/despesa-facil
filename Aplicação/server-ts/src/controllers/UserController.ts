@@ -120,11 +120,11 @@ export class UserController {
     }
 
     async updatePassword(req: Request, res: Response){
-        const { code, password } = req.body
         try{
+            const { code, password } = req.body
             const userService = new UserService()
 
-            userService.updatePassword(password, code)
+            await userService.updatePassword(password, code)
 
             return res.status(200).json()
         }

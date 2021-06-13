@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Generated, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, Generated, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { User } from "./User";
 
 

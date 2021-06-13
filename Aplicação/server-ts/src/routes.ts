@@ -25,5 +25,6 @@ routes.put('/users', logged, userController.update)
 routes.post('/users', userController.save)
 routes.post('/login', userController.login)
 routes.post('/retrieve-password', userController.retrievePassword)
+routes.put('/update-password', userController.updatePassword)
 
 export {routes}
