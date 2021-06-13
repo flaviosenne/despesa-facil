@@ -1,3 +1,4 @@
+import { MailService } from './MailService';
 import { generateToken } from './../helpers/utils/jwt';
 import { notFound } from './../helpers/responses';
 import { UserDto } from './../dtos/UserDto';
@@ -67,6 +68,9 @@ export class UserService {
         user.password = hash
         const userSaved: User = await this.userRepository.save(user)
         
+        const mailService = new MailService()
+
+        await mailService.sendEmailCreatorAccount(userSaved.name, userSaved.email)
         return userSaved
     }
 
@@ -86,6 +90,14 @@ export class UserService {
             const { id, name, email, urlImage} = user
             await this.findByIdAndIsActive(Number(id))
 
+            const existEmail = await this.userRepository
+            .findByEmail(user.email)
+
+            if(existEmail) {
+                if(existEmail.id !== user.id)
+                throw badRequest('email já existe na base de dados')
+            }
+      
             await this.userRepository.update(Number(id), 
             {name, email, urlImage, updatedAt: new Date()})
         }
@@ -113,7 +125,7 @@ export class UserService {
                 email: existUser.email
             }
 
-            this.userRepository.update(existUser.id, {updatedAt: new Date()})
+            this.userRepository.update(existUser.id, {lastLogin: new Date()})
         try{
             return generateToken(payload)             
         }catch(err){
