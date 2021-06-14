@@ -1,26 +1,18 @@
-import { serverError } from './../helpers/responses';
-import firebase from '../config/firebase'
-import fs from 'fs'
+import { Storage } from '@google-cloud/storage'
+import path from 'path'
 export class UploadFileService {
-    uploadImage() {
-        const path = __dirname+'/test.jpg'
-        console.log('path----',path)
-        fs.readFile(path, (err, file) => {
-            if(err) throw serverError('erro no upload da imagem')
-
-            var storageRef = firebase.storage().ref();
-
-            var uploadTask = storageRef.child('images/'+path).put(file);
+    async uploadImage() {
+        const filePath = path.join(__dirname, 'test.jpg')
+        
+        console.log(filePath)
+        const bucketName = String(process.env.FIREBASE_BUCKET_NAME)
     
-            uploadTask.on('state_changed', function (snapshot) {
-    
-            }, function (error) {
-                console.error("Something nasty happened", error);
-            }, function () {
-                var downloadURL = uploadTask.snapshot;
-                console.log("Done. Enjoy.", downloadURL);
-            });
-        })
+        const storage = new Storage();
+
+        storage.bucket(bucketName).upload(filePath, {
+            destination: '/test.png',
+        }).then(() => console.log('deu certo'))
+        .catch(() => console.log('deu erro'))
         
     }
 }
