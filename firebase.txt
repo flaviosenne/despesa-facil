@@ -1,0 +1,3 @@
+firebase
+
+region: us-east1
