@@ -2,10 +2,12 @@ import { UserController } from './controllers/UserController';
 import { Request, Response, Router} from 'express'
 import { serverError } from './helpers/responses';
 import { logged } from './middlewares/auth';
+import { UploadController } from './controllers/UploadController';
 
 const routes = Router()
 
 const userController = new UserController()
+const uploadController = new UploadController()
 
 routes.get('/',(req: Request, res: Response) => {
     try{
@@ -26,5 +28,7 @@ routes.post('/users', userController.save)
 routes.post('/login', userController.login)
 routes.post('/retrieve-password', userController.retrievePassword)
 routes.put('/update-password', userController.updatePassword)
+
+routes.post('/upload-image', uploadController.uploadImage)
 
 export {routes}
