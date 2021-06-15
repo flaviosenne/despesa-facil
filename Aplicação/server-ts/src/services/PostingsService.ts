@@ -21,7 +21,7 @@ export class PostingsService{
     async listAll(): Promise<Postings[]> {
 
         const users: Postings[] = await this.postingsRepository
-        .find({relations: ['user', 'category']})
+        .find({relations: ['user', 'category', 'status', 'type']})
 
         return users
     }
@@ -41,11 +41,12 @@ export class PostingsService{
         const user = decodeToken(token)
         if(!user) throw badRequest('usuário não encontrado')
 
+        const categoryName = postings.category.name?.toUpperCase().trim()        
         let category = await this.categoryRepository.findOne({ id: postings.category.id})
         
         if(!category) {
-            category = await this.categoryRepository.findOne({ name: postings.category.name})
-            if(!category) category = await this.categoryRepository.save(postings.category)
+            category = await this.categoryRepository.findOne({ name: categoryName})
+            if(!category) category = await this.categoryRepository.save({name: categoryName})
         }
 
         postings.user = user
