@@ -8,7 +8,7 @@ export const logged = async (req: Request, res: Response, next: NextFunction) =>
     
     if(!existToken) return res.status(403).json(forbidden("Usuário não autenticado"))
 
-    const tokenIsValid = await tokenValid(existToken)
+    const tokenIsValid = tokenValid(existToken)
     
     if(!tokenIsValid) return res.status(403).json(forbidden("Usuário não autenticado"))
     

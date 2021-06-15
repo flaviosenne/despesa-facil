@@ -1,6 +1,8 @@
 import { User } from './User';
 import { Column, CreateDateColumn, Entity, Generated, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { Category } from './Category';
+import { Status } from './Status';
+import { Type } from './Type';
 
 @Entity("postings")
 export class Postings{
@@ -15,11 +17,13 @@ export class Postings{
     @Column()
     value: number
 
-    @Column()
-    type: string
+    @OneToOne(() => Type, type => type.id, {cascade: false})
+    @JoinColumn({name: 'type_id',referencedColumnName: 'id'})
+    type: Type
 
-    @Column()
-    status: string
+    @OneToOne(() => Status, status => status.id, {cascade: false})
+    @JoinColumn({name: 'status_id',referencedColumnName: 'id'})
+    status: Status
 
     @Column()
     installments: number

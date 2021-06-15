@@ -1,7 +1,8 @@
 import { Column, Entity, Generated, PrimaryColumn } from "typeorm";
 
-@Entity("category")
-export class Category{
+
+@Entity("status")
+export class Status{
 
     @PrimaryColumn()
     @Generated()

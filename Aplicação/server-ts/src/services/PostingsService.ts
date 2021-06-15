@@ -1,6 +1,10 @@
+import { badRequest } from './../helpers/responses';
+import { User } from './../models/User';
+import { UserDto } from './../dtos/UserDto';
 import { getCustomRepository } from "typeorm"
 import { PostingsDto } from "../dtos/PostingsDto"
 import { notFound } from "../helpers/responses"
+import { decodeToken } from "../helpers/utils/jwt"
 import { Postings } from "../models/Postings"
 import { CategoryRepository } from "../repositories/CategoryRepository"
 import { PostingsRepository } from "../repositories/PostingsRepository"
@@ -31,12 +35,20 @@ export class PostingsService{
         return postings
     }
 
-    async save(postings: PostingsDto): Promise<Postings>{
+    async save(postings: PostingsDto, authorization: string): Promise<Postings>{
+
+        const token = authorization.substr(7)
+        const user = decodeToken(token)
+        if(!user) throw badRequest('usuário não encontrado')
 
         let category = await this.categoryRepository.findOne({ id: postings.category.id})
         
-        if(!category) category = await this.categoryRepository.save(postings.category)
-        
+        if(!category) {
+            category = await this.categoryRepository.findOne({ name: postings.category.name})
+            if(!category) category = await this.categoryRepository.save(postings.category)
+        }
+
+        postings.user = user
         postings.category = category
         postings.createdAt = new Date()
         const postingsSaved = await this.postingsRepository.save(postings)

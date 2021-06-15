@@ -1,3 +1,4 @@
+import { PostingsDto } from './../dtos/PostingsDto';
 import { Request, Response } from "express";
 import { PostingsService } from "../services/PostingsService";
 
@@ -29,9 +30,17 @@ export class PostingsController {
 
     async save(req: Request, res: Response) {
         try {
+            const postingsService = new PostingsService()
+
+            const postings = req.body as PostingsDto
             
+            const token = String(req.headers.authorization)
+            
+            const postingsSaved = await postingsService.save(postings, token)
+
+            return res.status(201).json(postingsSaved)
         } catch (err) {
-            throw res.status(err['status']).json(err)
+            throw res.json(err)
         }
     }
 
