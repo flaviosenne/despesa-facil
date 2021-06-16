@@ -28,22 +28,16 @@ export class PostingsService{
         dateStart: string,
         dateEnd: string,
         category: number,
-        status: number) {
+        status: number,
+        authorization: string) {
 
-            console.log('date start', dateStart == '')
-            console.log('date end', dateEnd == '')
-            console.log('status', status == 0)
-            console.log('category', category == 0)
-        
-        // if(dateStart == '' && dateStart == '' && status == 0 && category == 0){
-        //     return  await this.postingsRepository
-        //     .find({relations: ['category', 'status', 'type']})
-        
+        const token = authorization.substr(7)
+        const user = decodeToken(token)
+        if(!user) throw badRequest('usuário não encontrado')
+
         if(dateStart != '' && dateStart != '' && status == 0 && category == 0){
-            console.log('entrei no if')
             const result = await this.postingsRepository
-            .filterByDate(dateStart, dateEnd)
-            console.log(result)
+            .filterByDate(dateStart, dateEnd, user.id)
             return result
         }
 

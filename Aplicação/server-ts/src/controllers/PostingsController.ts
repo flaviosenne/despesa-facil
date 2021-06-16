@@ -18,10 +18,12 @@ export class PostingsController {
         const postingsService = new PostingsService()
 
         const { datestart, dateend, status, category} = req.query
+        const { authorization} = req.headers
 
         console.log('estou aqui')
         const postings = await postingsService
-        .listAllByFilter(String(datestart), String(dateend), Number(category), Number(status))
+        .listAllByFilter(String(datestart), String(dateend), 
+        Number(category), Number(status), String(authorization))
 
         return res.status(200).json(postings)
     }
