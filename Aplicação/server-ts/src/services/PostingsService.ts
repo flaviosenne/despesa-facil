@@ -1,6 +1,4 @@
 import { badRequest } from './../helpers/responses';
-import { User } from './../models/User';
-import { UserDto } from './../dtos/UserDto';
 import { getCustomRepository } from "typeorm"
 import { PostingsDto } from "../dtos/PostingsDto"
 import { notFound } from "../helpers/responses"
@@ -20,10 +18,35 @@ export class PostingsService{
 
     async listAll(): Promise<Postings[]> {
 
-        const users: Postings[] = await this.postingsRepository
+        const postings: Postings[] = await this.postingsRepository
         .find({relations: ['user', 'category', 'status', 'type']})
 
-        return users
+        return postings
+    }
+
+    async listAllByFilter(
+        dateStart: string,
+        dateEnd: string,
+        category: number,
+        status: number) {
+
+            console.log('date start', dateStart == '')
+            console.log('date end', dateEnd == '')
+            console.log('status', status == 0)
+            console.log('category', category == 0)
+        
+        // if(dateStart == '' && dateStart == '' && status == 0 && category == 0){
+        //     return  await this.postingsRepository
+        //     .find({relations: ['category', 'status', 'type']})
+        
+        if(dateStart != '' && dateStart != '' && status == 0 && category == 0){
+            console.log('entrei no if')
+            const result = await this.postingsRepository
+            .filterByDate(dateStart, dateEnd)
+            console.log(result)
+            return result
+        }
+
     }
 
     async findById(id: number): Promise<Postings | undefined> {
@@ -46,7 +69,7 @@ export class PostingsService{
         
         if(!category) {
             category = await this.categoryRepository.findOne({ name: categoryName})
-            if(!category) category = await this.categoryRepository.save({name: categoryName})
+            if(!category) category = await this.categoryRepository.save({name: categoryName, user})
         }
 
         postings.user = user

@@ -13,6 +13,19 @@ export class PostingsController {
         return res.status(200).json(postings)
     }
 
+    async listAllByFilter(req: Request, res: Response) {
+
+        const postingsService = new PostingsService()
+
+        const { datestart, dateend, status, category} = req.query
+
+        console.log('estou aqui')
+        const postings = await postingsService
+        .listAllByFilter(String(datestart), String(dateend), Number(category), Number(status))
+
+        return res.status(200).json(postings)
+    }
+
     async findById(req: Request, res: Response) {
         try {
 

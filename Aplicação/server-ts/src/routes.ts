@@ -25,7 +25,8 @@ routes.delete('/users/:id', logged, userController.disable)
 routes.put('/users', logged, userController.update)
 
 // postings
-routes.get('/postings',logged, postingsController.listAll)
+routes.get('/postings',logged, postingsController.listAllByFilter)
+routes.get('/postings/all',logged, postingsController.listAll)
 routes.post('/postings',logged, postingsController.save)
 routes.get('/postings/:id', logged, postingsController.findById)
 routes.delete('/postings/:id', logged, postingsController.delete)
