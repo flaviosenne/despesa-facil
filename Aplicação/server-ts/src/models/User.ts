@@ -16,7 +16,7 @@ export class User{
     email: string
     
     @Column()
-    @Exclude({toPlainOnly: true})
+    @Exclude()
     password: string
 
     @CreateDateColumn({name:'created_at', default: Date.now()})

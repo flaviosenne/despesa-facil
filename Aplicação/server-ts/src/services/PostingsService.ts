@@ -33,14 +33,27 @@ export class PostingsService{
 
         const token = authorization.substr(7)
         const user = decodeToken(token)
+
         if(!user) throw badRequest('usuário não encontrado')
 
         if(dateStart != '' && dateStart != '' && status == 0 && category == 0){
+            console.log('1')
             const result = await this.postingsRepository
             .filterByDate(dateStart, dateEnd, user.id)
             return result
         }
-
+        if(dateStart == '' && dateStart == '' && status == 0 && category == 0){
+            console.log('2')
+            const result = await this.postingsRepository
+            .filterDefault(user.id)
+            return result
+        }
+        if(dateStart == '' && dateStart == '' && status == 0 && category != 0){
+            console.log('3')
+            const result = await this.postingsRepository
+            .filterByCategory(category, user.id)
+            return result
+        }
     }
 
     async findById(id: number): Promise<Postings | undefined> {
