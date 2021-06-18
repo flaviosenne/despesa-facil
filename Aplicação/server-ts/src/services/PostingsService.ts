@@ -1,4 +1,4 @@
-import { badRequest } from './../helpers/responses';
+import { badRequest, serverError } from './../helpers/responses';
 import { getCustomRepository } from "typeorm"
 import { PostingsDto } from "../dtos/PostingsDto"
 import { notFound } from "../helpers/responses"
@@ -7,7 +7,7 @@ import { Postings } from "../models/Postings"
 import { CategoryRepository } from "../repositories/CategoryRepository"
 import { PostingsRepository } from "../repositories/PostingsRepository"
 
-export class PostingsService{
+export class PostingsService {
     private postingsRepository: PostingsRepository
     private categoryRepository: CategoryRepository
 
@@ -19,7 +19,7 @@ export class PostingsService{
     async listAll(): Promise<Postings[]> {
 
         const postings: Postings[] = await this.postingsRepository
-        .find({relations: ['user', 'category', 'status', 'type']})
+            .find({ relations: ['user', 'category', 'status', 'type'] })
 
         return postings
     }
@@ -31,28 +31,39 @@ export class PostingsService{
         status: number,
         authorization: string) {
 
-        const token = authorization.substr(7)
-        const user = decodeToken(token)
+        try {
 
-        if(!user) throw badRequest('usuário não encontrado')
+            const token = authorization.substr(7)
+            const user = decodeToken(token)
 
-        if(dateStart != '' && dateStart != '' && status == 0 && category == 0){
-            console.log('1')
-            const result = await this.postingsRepository
-            .filterByDate(dateStart, dateEnd, user.id)
-            return result
-        }
-        if(dateStart == '' && dateStart == '' && status == 0 && category == 0){
-            console.log('2')
-            const result = await this.postingsRepository
-            .filterDefault(user.id)
-            return result
-        }
-        if(dateStart == '' && dateStart == '' && status == 0 && category != 0){
-            console.log('3')
-            const result = await this.postingsRepository
-            .filterByCategory(category, user.id)
-            return result
+            if (!user) throw badRequest('usuário não encontrado')
+
+            if (dateStart != '' && dateStart != '' && status == 0 && category == 0) {
+                console.log('1')
+                const result = await this.postingsRepository
+                    .filterByDate(dateStart, dateEnd, user.id)
+                return result
+            }
+            if (dateStart == '' && dateStart == '' && status == 0 && category == 0) {
+                console.log('2')
+                const result = await this.postingsRepository
+                    .filterDefault(user.id)
+                return result
+            }
+            if (dateStart == '' && dateStart == '' && status == 0 && category != 0) {
+                console.log('3')
+                const result = await this.postingsRepository
+                    .filterByCategory(category, user.id)
+                return result
+            }
+            if (dateStart == '' && dateStart == '' && status != 0 && category == 0) {
+                console.log('4')
+                const result = await this.postingsRepository
+                    .filterByStatus(status, user.id)
+                return result
+            }
+        } catch (err) {
+            throw serverError("erro no servidor")
         }
     }
 
@@ -65,18 +76,18 @@ export class PostingsService{
         return postings
     }
 
-    async save(postings: PostingsDto, authorization: string): Promise<Postings>{
+    async save(postings: PostingsDto, authorization: string): Promise<Postings> {
 
         const token = authorization.substr(7)
         const user = decodeToken(token)
-        if(!user) throw badRequest('usuário não encontrado')
+        if (!user) throw badRequest('usuário não encontrado')
 
-        const categoryName = postings.category.name?.toUpperCase().trim()        
-        let category = await this.categoryRepository.findOne({ id: postings.category.id})
-        
-        if(!category) {
-            category = await this.categoryRepository.findOne({ name: categoryName})
-            if(!category) category = await this.categoryRepository.save({name: categoryName, user})
+        const categoryName = postings.category.name?.toUpperCase().trim()
+        let category = await this.categoryRepository.findOne({ id: postings.category.id })
+
+        if (!category) {
+            category = await this.categoryRepository.findOne({ name: categoryName })
+            if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
         }
 
         postings.user = user
@@ -84,7 +95,7 @@ export class PostingsService{
         postings.createdAt = new Date()
         const postingsSaved = await this.postingsRepository.save(postings)
 
-       return postingsSaved
+        return postingsSaved
     }
 
     async delete(id: number) {
@@ -100,7 +111,7 @@ export class PostingsService{
 
     async update(postings: PostingsDto) {
         try {
-            
+
         }
         catch (err) {
             throw err

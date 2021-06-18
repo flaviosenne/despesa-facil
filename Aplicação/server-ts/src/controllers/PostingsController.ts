@@ -28,7 +28,7 @@ export class PostingsController {
             
             return res.status(200).json(postings)
         }catch(err){
-            return res.status(err['status']).json(err)
+            return res.json(err)
         }
     }
 

@@ -30,10 +30,27 @@ export class PostingsRepository extends Repository<Postings>{
         .innerJoinAndSelect('p.type', 't')
         .innerJoinAndSelect('p.user', 'u')
         .innerJoinAndSelect('p.category', 'c')
-        .where('c.id :categoryId')
+        .where('c.id = :categoryId')
         .andWhere('p.user_id = :userId')
         .andWhere('p.postings_date between :dateStart and :dateEnd')
         .setParameters({categoryId, userId, 
+            dateStart:this.dateStartDefault, 
+            dateEnd: this.dateEndDefault})
+        .getMany()
+    }
+
+    filterByStatus = async (statusId: number, userId: number ) =>{
+        return await this.createQueryBuilder()
+        .select('p')
+        .from(Postings, 'p')
+        .innerJoinAndSelect('p.status', 's')
+        .innerJoinAndSelect('p.type', 't')
+        .innerJoinAndSelect('p.user', 'u')
+        .innerJoinAndSelect('p.category', 'c')
+        .where('s.id = :statusId')
+        .andWhere('p.user_id = :userId')
+        .andWhere('p.postings_date between :dateStart and :dateEnd')
+        .setParameters({statusId, userId, 
             dateStart:this.dateStartDefault, 
             dateEnd: this.dateEndDefault})
         .getMany()
