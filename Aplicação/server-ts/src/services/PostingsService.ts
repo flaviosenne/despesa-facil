@@ -39,27 +39,43 @@ export class PostingsService {
             if (!user) throw badRequest('usuário não encontrado')
 
             if (dateStart != '' && dateStart != '' && status == 0 && category == 0) {
-                console.log('1')
                 const result = await this.postingsRepository
-                    .filterByDate(dateStart, dateEnd, user.id)
+                    .filterByDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)
                 return result
             }
             if (dateStart == '' && dateStart == '' && status == 0 && category == 0) {
-                console.log('2')
                 const result = await this.postingsRepository
                     .filterDefault(user.id)
                 return result
             }
             if (dateStart == '' && dateStart == '' && status == 0 && category != 0) {
-                console.log('3')
                 const result = await this.postingsRepository
                     .filterByCategory(category, user.id)
                 return result
             }
             if (dateStart == '' && dateStart == '' && status != 0 && category == 0) {
-                console.log('4')
                 const result = await this.postingsRepository
                     .filterByStatus(status, user.id)
+                return result
+            }
+            if (dateStart == '' && dateStart == '' && status != 0 && category != 0) {
+                const result = await this.postingsRepository
+                    .filterByStatusAndCategory(status,category, user.id)
+                return result
+            }
+            if (dateStart != '' && dateStart != '' && status != 0 && category != 0) {
+                const result = await this.postingsRepository
+                    .filterByStatusAndCategoryAndDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', status,category, user.id)
+                return result
+            }
+            if (dateStart != '' && dateStart != '' && status != 0 && category == 0) {
+                const result = await this.postingsRepository
+                    .filterByStatusAndDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', status, user.id)
+                return result
+            }
+            if (dateStart != '' && dateStart != '' && status == 0 && category != 0) {
+                const result = await this.postingsRepository
+                    .filterByCategoryAndDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', category, user.id)
                 return result
             }
         } catch (err) {
@@ -90,6 +106,7 @@ export class PostingsService {
             if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
         }
 
+        postings.postingsDate = postings.postingsDate ? postings.postingsDate : new Date()
         postings.user = user
         postings.category = category
         postings.createdAt = new Date()
