@@ -29,6 +29,7 @@ export class PostingsService {
         dateEnd: string,
         category: number,
         status: number,
+        type: number,
         authorization: string) {
 
         try {
@@ -38,6 +39,26 @@ export class PostingsService {
 
             if (!user) throw badRequest('usuário não encontrado')
 
+            if (dateStart == '' && dateStart == '' && status == 0 && category == 0 && type != 0) {
+                const result = await this.postingsRepository
+                    .filterByType(type, user.id)
+                return result
+            }
+            if (dateStart == '' && dateStart == '' && status != 0 && category == 0 && type != 0) {
+                const result = await this.postingsRepository
+                    .filterByTypeAndStatus(type, status, user.id)
+                return result
+            }
+            if (dateStart != '' && dateStart != '' && status == 0 && category == 0 && type != 0) {
+                const result = await this.postingsRepository
+                    .filterByTypeAndDate(type, dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)
+                return result
+            }
+            if (dateStart != '' && dateStart != '' && status != 0 && category == 0 && type != 0) {
+                const result = await this.postingsRepository
+                    .filterByTypeAndDateAndStatus(type, status, dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)
+                return result
+            }
             if (dateStart != '' && dateStart != '' && status == 0 && category == 0) {
                 const result = await this.postingsRepository
                     .filterByDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)

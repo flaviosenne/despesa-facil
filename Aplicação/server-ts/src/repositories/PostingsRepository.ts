@@ -126,6 +126,72 @@ export class PostingsRepository extends Repository<Postings>{
         .getMany()
     }
 
+    filterByType = async (typeId: number,userId: number ) =>{
+        return await this.createQueryBuilder()
+        .select('p')
+        .from(Postings, 'p')
+        .innerJoinAndSelect('p.status', 's')
+        .innerJoinAndSelect('p.type', 't')
+        .innerJoinAndSelect('p.user', 'u')
+        .innerJoinAndSelect('p.category', 'c')
+        .where('t.id = :typeId')
+        .andWhere('p.user_id = :userId')
+        .andWhere('p.postings_date between :dateStart and :dateEnd')
+        .setParameters({typeId, userId, 
+            dateStart: this.dateStartDefault, dateEnd: this.dateEndDefault})
+        .getMany()
+    }
+
+    filterByTypeAndStatus = async (typeId: number, statusId: number,userId: number ) =>{
+        return await this.createQueryBuilder()
+        .select('p')
+        .from(Postings, 'p')
+        .innerJoinAndSelect('p.status', 's')
+        .innerJoinAndSelect('p.type', 't')
+        .innerJoinAndSelect('p.user', 'u')
+        .innerJoinAndSelect('p.category', 'c')
+        .where('t.id = :typeId')
+        .andWhere('s.id = :statusId')
+        .andWhere('p.user_id = :userId')
+        .andWhere('p.postings_date between :dateStart and :dateEnd')
+        .setParameters({typeId, userId, statusId,
+            dateStart: this.dateStartDefault, dateEnd: this.dateEndDefault})
+        .getMany()
+    }
+
+    filterByTypeAndDate = async (typeId: number, dateStart: string, dateEnd: string,userId: number ) =>{
+        return await this.createQueryBuilder()
+        .select('p')
+        .from(Postings, 'p')
+        .innerJoinAndSelect('p.status', 's')
+        .innerJoinAndSelect('p.type', 't')
+        .innerJoinAndSelect('p.user', 'u')
+        .innerJoinAndSelect('p.category', 'c')
+        .where('t.id = :typeId')
+        .andWhere('p.user_id = :userId')
+        .andWhere('p.postings_date between :dateStart and :dateEnd')
+        .setParameters({typeId, userId,
+            dateStart, dateEnd})
+        .getMany()
+    }
+
+    filterByTypeAndDateAndStatus = async (typeId: number, statusId: number, dateStart: string, dateEnd: string,userId: number ) =>{
+        return await this.createQueryBuilder()
+        .select('p')
+        .from(Postings, 'p')
+        .innerJoinAndSelect('p.status', 's')
+        .innerJoinAndSelect('p.type', 't')
+        .innerJoinAndSelect('p.user', 'u')
+        .innerJoinAndSelect('p.category', 'c')
+        .where('t.id = :typeId')
+        .andWhere('s.id = :statusId')
+        .andWhere('p.user_id = :userId')
+        .andWhere('p.postings_date between :dateStart and :dateEnd')
+        .setParameters({typeId, userId, statusId,
+            dateStart, dateEnd})
+        .getMany()
+    }
+
     filterDefault = async (userId: number ) =>{
         return await this.createQueryBuilder()
         .select('p')
