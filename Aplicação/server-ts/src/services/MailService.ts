@@ -1,3 +1,4 @@
+import { Postings } from './../models/Postings';
 import { transporter } from '../config/smtp'
 import ejs from 'ejs'
 import path from 'path'
@@ -41,6 +42,43 @@ export class MailService {
                 from: 'Despesa Facil <facildespesa@gmail.com>',
                 to: `${name} <${email}>`,
                 subject: "Codigo da senha",
+                html: template,
+            }).then(msg => {
+                console.log(`email send to ${email}`)
+                
+            }).catch(err => {
+                console.log(err)
+                console.log('erro ao mandar email')
+            })
+        })
+    }
+
+    async sendEmailReport(postings: Postings[], name: string, email: string){
+        const pathTemplate = path.join(__dirname,'..',
+        '..','templates','mailTemplateReport.ejs')
+        
+        let expenses = postings.filter(posting => posting.type.id = 1)
+        let revenues = postings.filter(posting => posting.type.id = 2)
+
+        let totalExpense = 0
+        let totalRevenue = 0
+        expenses.forEach(expense => {
+            return totalExpense += expense.value
+        })
+        revenues.forEach(revenue => {
+            return totalRevenue += revenue.value
+        })
+        ejs.renderFile(pathTemplate, {'postings': postings, 'name':name,
+    'today':new Date(), 'situation':(totalRevenue - totalExpense),
+    'situationPercent':(totalExpense / totalRevenue)*100},
+         async(err, template) => {
+
+            if(err) console.log('houve um erro no template ejs')
+            
+            await transporter.sendMail({
+                from: 'Despesa Facil <facildespesa@gmail.com>',
+                to: `${name} <${email}>`,
+                subject: "Relatório de lançamentos",
                 html: template,
             }).then(msg => {
                 console.log(`email send to ${email}`)

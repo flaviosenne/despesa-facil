@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório</title>
+</head>
+
+<body>
+    <header>
+        <span>Relatório de Lançamentos Financeiro</span>
+        <span>Data: <%today%></span>
+        <span>Usuário: <%=name%></span>
+        <span>Situação:  <%=situation%></span>
+        <span>Porcentagem de gastos:  <%=situationPercent%></span>
+    </header>
+    <hr/>
+    <div>
+        <table>
+            <tr>
+                <td>TIPO</td>
+                <td>DATA</td>
+                <td>STATUS</td>
+                <td>DESCRIÇÃO</td>
+                <td>CATEGORY</td>
+            </tr>
+            <% postings.forEach(posting => { %>
+            <tr>
+                <td><%=posting.type.name%></td>
+                <td><%=posting.postingsDate%></td>
+                <td><%=posting.status.name%></td>
+                <td><%=posting.description%></td>
+                <td><%=posting.category.name%></td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+</body>
+
+</html>
