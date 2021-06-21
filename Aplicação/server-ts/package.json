@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev ./src/server.ts",
     "test": "jest",
-    "start": "ts-node ./src/server.ts"
+    "start": "ts-node ./src/server.ts",
+    "build":"npx tsc && node ./dist/src/server.js"
   },
   "keywords": [],
   "author": "",
