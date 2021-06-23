@@ -1,8 +1,8 @@
 import { UserController } from './controllers/UserController';
 import { Request, Response, Router} from 'express'
-import { serverError } from './helpers/responses';
 import { logged } from './middlewares/auth';
 import { PostingsController } from './controllers/PostingsController';
+import { ServerError } from './exceptions/ServerError';
 
 const routes = Router()
 
@@ -13,7 +13,7 @@ routes.get('/',(req: Request, res: Response) => {
     try{
         return res.status(200).json()
     }catch(err) {
-        throw serverError("houve um erro no servidor") 
+        throw new ServerError("houve um erro no servidor") 
     }
 })
 

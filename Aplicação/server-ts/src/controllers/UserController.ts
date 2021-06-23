@@ -1,4 +1,3 @@
-import { badRequest } from './../helpers/responses';
 import { UserDto } from './../dtos/UserDto';
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
@@ -24,112 +23,74 @@ export class UserController {
     }
 
     async findById(req: Request, res: Response) {
-        try {
+        const { id } = req.params
 
-            const { id } = req.params
+        const userService = new UserService()
 
-            const userService = new UserService()
+        const users = await userService.findByIdAndIsActive(Number(id))
 
-            const users = await userService.findByIdAndIsActive(Number(id))
-
-            return res.status(200).json(users)
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        return res.status(200).json(users)
     }
 
     async save(req: Request, res: Response) {
-        try {
-            const userService = new UserService()
+        const userService = new UserService()
 
-            const user = req.body as UserDto
+        const user = req.body as UserDto
 
-            const { email, id, isActive, name, createdAt, updatedAt, lastLogin, urlImage }
-                = await userService.save(user)
+        const { email, id, isActive, name, createdAt, updatedAt, lastLogin, urlImage }
+            = await userService.save(user)
 
-
-            return res.status(201).json({
-                id, name, email, isActive, createdAt, updatedAt, urlImage, lastLogin
-            })
-        } catch (err) {
-            throw res.status(err['status']).json(err)
-        }
+        return res.status(201).json({
+            id, name, email, isActive, createdAt, updatedAt, urlImage, lastLogin
+        })
     }
 
     async disable(req: Request, res: Response) {
-        try {
+        const { id } = req.params
 
-            const { id } = req.params
+        const userService = new UserService()
 
-            const userService = new UserService()
+        await userService.disable(Number(id))
 
-            await userService.disable(Number(id))
-
-            return res.status(204).json(null)
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        return res.status(204).json(null)
     }
 
     async update(req: Request, res: Response) {
-        try {
+        const user = req.body as UserDto
 
-            const user = req.body as UserDto
+        const userService = new UserService()
 
-            const userService = new UserService()
+        await userService.update(user)
 
-            await userService.update(user)
-
-            return res.status(204).json(null)
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        return res.status(204).json(null)
     }
 
     async login(req: Request, res: Response) {
+        const { email, password } = req.body
 
-        try {
+        const userService = new UserService()
 
-            const { email, password } = req.body
+        const token = await userService.login(email, password)
 
-            const userService = new UserService()
-
-            const token = await userService.login(email, password)
-
-            return res.status(200).json({token})
-            
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        return res.status(200).json({token})
     }
 
     async retrievePassword(req: Request, res: Response){
         const { email } = req.query
-        try{
-            const userService = new UserService()
+        
+        const userService = new UserService()
 
-            if(!email) return res.status(400).json(badRequest('email não informado'))
+        userService.retrievePassword(String(email))
 
-            userService.retrievePassword(String(email))
-
-            return res.status(200).json()
-        }
-        catch(err){
-            return res.status(err['status']).json(err)
-        }
+        return res.status(200).json()    
     }
 
     async updatePassword(req: Request, res: Response){
-        try{
-            const { code, password } = req.body
-            const userService = new UserService()
+        const { code, password } = req.body
+        const userService = new UserService()
 
-            await userService.updatePassword(password, code)
+        await userService.updatePassword(password, code)
 
-            return res.status(200).json()
-        }
-        catch(err){
-            return res.status(err['status']).json(err)
-        }
+        return res.status(200).json()
     }
 }

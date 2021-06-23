@@ -14,76 +14,52 @@ export class PostingsController {
     }
 
     async listAllByFilter(req: Request, res: Response) {
-
-        try{
-
-            const postingsService = new PostingsService()
-            
-            const { datestart, dateend, status, category, type} = req.query
-            const { authorization} = req.headers
-            
-            const postings = await postingsService
-            .listAllByFilter(String(datestart), String(dateend), 
-            Number(category), Number(status), Number(type), String(authorization))
-            
-            return res.status(200).json(postings)
-        }catch(err){
-            return res.json(err)
-        }
+        const postingsService = new PostingsService()
+        
+        const { datestart, dateend, status, category, type} = req.query
+        const { authorization} = req.headers
+        
+        const postings = await postingsService
+        .listAllByFilter(String(datestart), String(dateend), 
+        Number(category), Number(status), Number(type), String(authorization))
+        
+        return res.status(200).json(postings)
+    
     }
 
     async findById(req: Request, res: Response) {
-        try {
+        const { id } = req.params
 
-            const { id } = req.params
+        const postingsService = new PostingsService()
 
-            const postingsService = new PostingsService()
+        const postings = await postingsService.findById(Number(id))
 
-            const postings = await postingsService.findById(Number(id))
-
-            return res.status(200).json(postings)
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        return res.status(200).json(postings)
     }
 
     async save(req: Request, res: Response) {
-        try {
-            const postingsService = new PostingsService()
+        const postingsService = new PostingsService()
 
-            const postings = req.body as PostingsDto
-            
-            const token = String(req.headers.authorization)
-            
-            const postingsSaved = await postingsService.save(postings, token)
+        const postings = req.body as PostingsDto
+        
+        const token = String(req.headers.authorization)
+        
+        const postingsSaved = await postingsService.save(postings, token)
 
-            return res.status(201).json(postingsSaved)
-        } catch (err) {
-            throw res.json(err)
-        }
+        return res.status(201).json(postingsSaved)
     }
 
     async delete(req: Request, res: Response) {
-        try {
+        const { id } = req.params
 
-            const { id } = req.params
+        const postingsService = new PostingsService()
 
-            const postingsService = new PostingsService()
+        await postingsService.delete(Number(id))
 
-            await postingsService.delete(Number(id))
-
-            return res.status(204).json(null)
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        return res.status(204).json(null)
     }
 
     async update(req: Request, res: Response) {
-        try {
-
-         
-        } catch (err) {
-            return res.status(err['status']).json(err)
-        }
+        
     }
 }

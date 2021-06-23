@@ -1,9 +1,8 @@
-import { Postings } from './../models/Postings';
+import { Postings } from '../models/Postings';
 import { transporter } from '../config/smtp'
 import ejs from 'ejs'
 import path from 'path'
 import htmlPdf from 'html-pdf'
-import fs from 'fs'
 
 export class MailService {
     async sendEmailCreatorAccount(name: string, email: string) {

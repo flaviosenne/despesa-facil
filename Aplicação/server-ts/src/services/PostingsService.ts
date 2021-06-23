@@ -1,7 +1,8 @@
-import { badRequest, serverError } from './../helpers/responses';
 import { getCustomRepository } from "typeorm"
 import { PostingsDto } from "../dtos/PostingsDto"
-import { notFound } from "../helpers/responses"
+import { BadRequest } from "../exceptions/BadRequest"
+import { NotFound } from "../exceptions/NotFound"
+import { ServerError } from "../exceptions/ServerError"
 import { decodeToken } from "../helpers/utils/jwt"
 import { Postings } from "../models/Postings"
 import { CategoryRepository } from "../repositories/CategoryRepository"
@@ -37,7 +38,7 @@ export class PostingsService {
             const token = authorization.substr(7)
             const user = decodeToken(token)
 
-            if (!user) throw badRequest('usuário não encontrado')
+            if (!user) throw new BadRequest('usuário não encontrado')
 
             if (dateStart == '' && dateStart == '' && status == 0 && category == 0 && type != 0) {
                 const result = await this.postingsRepository
@@ -100,7 +101,7 @@ export class PostingsService {
                 return result
             }
         } catch (err) {
-            throw serverError("erro no servidor")
+            throw new ServerError("erro no servidor")
         }
     }
 
@@ -108,7 +109,7 @@ export class PostingsService {
 
         const postings: Postings | undefined = await this.postingsRepository.findOne({ id })
 
-        if (!postings) throw notFound('usuário não encontrado')
+        if (!postings) throw new NotFound('usuário não encontrado')
 
         return postings
     }
@@ -117,7 +118,7 @@ export class PostingsService {
 
         const token = authorization.substr(7)
         const user = decodeToken(token)
-        if (!user) throw badRequest('usuário não encontrado')
+        if (!user) throw new BadRequest('usuário não encontrado')
 
         const categoryName = postings.category.name?.toUpperCase().trim()
         let category = await this.categoryRepository.findOne({ id: postings.category.id })
@@ -143,7 +144,7 @@ export class PostingsService {
             await this.postingsRepository.delete(id)
         }
         catch (err) {
-            throw err
+            throw new ServerError('erro na deleção do lançamento')
         }
     }
 
@@ -152,7 +153,7 @@ export class PostingsService {
 
         }
         catch (err) {
-            throw err
+            throw new ServerError('erro na atualização do lançamento')
         }
     }
 }

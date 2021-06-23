@@ -1,16 +1,16 @@
 import { tokenValid } from './../helpers/utils/jwt';
 import { NextFunction, Request, Response } from "express"
-import { forbidden } from '../helpers/responses';
+import { Forbbiden } from '../exceptions/Forbbiden';
 export const logged = async (req: Request, res: Response, next: NextFunction) => {
     const { authorization } = req.headers
 
     const existToken = retrieveToken(String(authorization))
     
-    if(!existToken) return res.status(403).json(forbidden("Usuário não autenticado"))
+    if(!existToken) throw new Forbbiden('Usuário não autenticado')
 
     const tokenIsValid = tokenValid(existToken)
     
-    if(!tokenIsValid) return res.status(403).json(forbidden("Usuário não autenticado"))
+    if(!tokenIsValid) throw new Forbbiden('Usuário não autenticado')
     
     next()
 }

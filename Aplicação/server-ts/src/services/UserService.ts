@@ -1,14 +1,15 @@
+import bcrypt from 'bcrypt'
 import { MailService } from './MailService';
-import { generateToken } from './../helpers/utils/jwt';
-import { notFound } from './../helpers/responses';
-import { UserDto } from './../dtos/UserDto';
+import { generateToken } from '../helpers/utils/jwt';
+import { UserDto } from '../dtos/UserDto';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../models/User';
-import { UserRepository } from './../repositories/UserRepository';
-import { badRequest, serverError } from '../helpers/responses';
+import { UserRepository } from '../repositories/UserRepository';
 import { passwordMatchers } from '../helpers/utils/bcrypt';
-import bcrypt from 'bcrypt'
 import { CodPasswordRepository } from '../repositories/CodPasswordRepository';
+import { BadRequest } from '../exceptions/BadRequest';
+import { NotFound } from '../exceptions/NotFound';
+import { ServerError } from '../exceptions/ServerError';
 
 export class UserService {
     private userRepository: UserRepository
@@ -37,7 +38,7 @@ export class UserService {
 
         const user: User | undefined = await this.userRepository.findOne({ id, isActive: true })
 
-        if (!user) throw notFound('usuário não encontrado')
+        if (!user) throw new NotFound('usuário não encontrado')
 
         return user
     }
@@ -53,13 +54,13 @@ export class UserService {
 
     async save(user: UserDto): Promise<User> {
 
-        if (!user.email) throw badRequest('email não informado')
-        if (!user.name) throw badRequest('nome não informado')
-        if (!user.password) throw badRequest('senha não informada')
+        if (!user.email) throw new BadRequest('email não informado')
+        if (!user.name) throw new BadRequest('nome não informado')
+        if (!user.password) throw new BadRequest('senha não informada')
 
         const existEmail = await this.userRepository.findByEmail(user.email)
 
-        if (existEmail) throw badRequest('email já existe na base de dados')
+        if (existEmail) throw new BadRequest('email já existe na base de dados')
 
         user.createdAt = new Date()
         user.isActive = true
@@ -83,7 +84,7 @@ export class UserService {
             await this.userRepository.update(id, { isActive: false })
         }
         catch (err) {
-            throw err
+            throw new ServerError('erro em desabilitar usuário')
         }
     }
 
@@ -97,29 +98,29 @@ export class UserService {
 
             if (existEmail) {
                 if (existEmail.id !== user.id)
-                    throw badRequest('email já existe na base de dados')
+                    throw new BadRequest('email já existe na base de dados')
             }
 
             await this.userRepository.update(Number(id),
                 { name, email, urlImage, updatedAt: new Date() })
         }
         catch (err) {
-            throw err
+            throw new ServerError('erro em atualizar usuário')
         }
     }
 
     async login(email: string, password: string) {
 
-        if (!email) throw badRequest("informe o email")
-        if (!password) throw badRequest("informe a senha")
+        if (!email) throw new BadRequest('informe o email')
+        if (!password) throw new BadRequest('informe a senha')
 
         const existUser = await this.existUser(email)
 
-        if (!existUser) throw badRequest("usuario ou senha inválidas")
+        if (!existUser) throw new BadRequest('usuario ou senha inválidas')
 
         const matchers = passwordMatchers(password, existUser.password)
 
-        if (!matchers) throw badRequest("usuario ou senha inválidas")
+        if (!matchers) throw new BadRequest('usuario ou senha inválidas')
 
         const payload = {
             id: existUser.id,
@@ -131,7 +132,7 @@ export class UserService {
         try {
             return generateToken(payload)
         } catch (err) {
-            throw serverError("Erro na geração do token")
+            throw new ServerError('Erro na geração do token')
         }
     }
 
@@ -140,11 +141,11 @@ export class UserService {
         const existCode = await this.codPasswordRepository
             .findOne({ isUsed: 0, name: cod },{ relations: ['user']})
 
-        if (!existCode) throw badRequest('código inválido')
+        if (!existCode) throw new BadRequest('código inválido')
 
         const user = await this.findByIdAndIsActive(existCode.user.id)
 
-        if (!user) throw notFound('usuário não encontrado')
+        if (!user) throw new NotFound('usuário não encontrado')
 
         const salt = bcrypt.genSaltSync(10)
 
@@ -160,9 +161,11 @@ export class UserService {
     async retrievePassword(email: string) {
         const mailService = new MailService()
 
+        if(!email) throw new BadRequest('email não informado')
+
         const user = await this.userRepository.findByEmail(email)
 
-        if (!user) throw notFound('esse email não consta na base de dados')
+        if (!user) throw new NotFound('esse email não consta na base de dados')
 
         const cod = Math.random().toString(36).substr(7)
 
