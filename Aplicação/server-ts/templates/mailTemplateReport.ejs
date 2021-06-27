@@ -21,16 +21,24 @@
 
     header {
         width: 100%;
-        display: flex;
+        display: block;
         background: rgb(13, 186, 230);
         margin: 20px auto;
         border-radius: 8px;
         padding: 10px;
-        justify-content: space-between;
     }
 
-    header div {
-        max-width: 50%;
+    .header-left {
+        display: inline-block;
+        width: 50%;
+        text-align: left;
+    }
+
+    .header-right {
+        display: inline-block;
+        padding: 5px;
+        width: 45%;
+        text-align: right;
     }
 
     .title {
@@ -61,21 +69,22 @@
 <body class="container">
     <p class="title">Relatório de Lançamentos Financeiro</p>
     <header>
-        <div>
+        <div class="header-left">
             <p><b>Periodo de Lançamentos:</b> 3 meses</p>
             <p><b>Total de Receita:</b>
                 <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL' }).format(totalRecep)%>
             </p>
             <p><b>Total de Despesa:</b>
-                <%=new Intl.NumberFormat( 'pt-BR', { style: 'currency' , currency: 'BRL'}).format(totalExpense)%>
+                <%=new Intl.NumberFormat( 'pt-BR' , { style: 'currency' , currency: 'BRL' }).format(totalExpense)%>
             </p>
             <p><b>Total:</b>
-                <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL'}).format(total)%>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL' }).format(total)%>
             </p>
         </div>
-        <div>
+        <div class="header-right">
             <p><b>Data:</b>
-                <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: 'long' , day: '2-digit' }).format(today)%> 
+                <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: '2-digit' , day: '2-digit'
+                    }).format(today)%>
             </p>
             <p><b>Usuário:</b>
                 <%=name%>
@@ -105,7 +114,8 @@
                         <%=posting.type.name%>
                     </td>
                     <td>
-                        <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: 'long' , day: '2-digit' }).format(posting.postingsDate)%>
+                        <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: 'long' , day: '2-digit'
+                            }).format(posting.postingsDate)%>
                     </td>
                     <td>
                         <%=posting.status.name%>
@@ -117,20 +127,14 @@
                         <%=posting.category.name%>
                     </td>
                     <td>
-                        <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL'}).format(posting.value)%>
+                        <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL'
+                            }).format(posting.value)%>
                     </td>
                 </tr>
-                <!-- <tr>
-                <td>DESPESA</td>
-                <td>20/06/2021</td>
-                <td>FINALIZADO</td>
-                <td>carne</td>
-                <td>MERCADO</td>
-            </tr> -->
                 <% }) %>
         </table>
 
-    </div>>
+    </div>
 </body>
 
 </html>

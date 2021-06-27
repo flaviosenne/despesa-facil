@@ -58,8 +58,8 @@ export class MailService {
         const pathTemplate = path.join(__dirname, '..',
             '..', 'templates', 'mailTemplateReport.ejs')
 
-        let expenses = postings.filter(posting => posting.type.id = 1)
-        let revenues = postings.filter(posting => posting.type.id = 2)
+        let expenses = postings.filter(posting => posting.type.id == 1)
+        let revenues = postings.filter(posting => posting.type.id == 2)
 
         let totalExpense = 0
         let totalRevenue = 0
@@ -73,7 +73,7 @@ export class MailService {
         ejs.renderFile(pathTemplate, {
             'postings': postings, 'name': name,
             'today': new Date(), 'situation': (totalRevenue - totalExpense)? 'POSITIVO': 'NEGATIVO',
-            'situationPercent': (totalExpense / totalRevenue) * 100,
+            'situationPercent': ((totalExpense / totalRevenue) * 100).toFixed(2) +'%',
             'totalRecep': totalRevenue,
             'totalExpense': totalExpense,
             'total': (totalRevenue - totalExpense)
