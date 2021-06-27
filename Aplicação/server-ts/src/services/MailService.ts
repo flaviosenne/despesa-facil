@@ -64,23 +64,26 @@ export class MailService {
         let totalExpense = 0
         let totalRevenue = 0
         expenses.forEach(expense => {
-            return totalExpense += expense.value
+            return totalExpense += Number(expense.value)
         })
         revenues.forEach(revenue => {
-            return totalRevenue += revenue.value
+            return totalRevenue += Number(revenue.value)
         })
 
         ejs.renderFile(pathTemplate, {
             'postings': postings, 'name': name,
-            'today': new Date(), 'situation': (totalRevenue - totalExpense),
-            'situationPercent': (totalExpense / totalRevenue) * 100
+            'today': new Date(), 'situation': (totalRevenue - totalExpense)? 'POSITIVO': 'NEGATIVO',
+            'situationPercent': (totalExpense / totalRevenue) * 100,
+            'totalRecep': totalRevenue,
+            'totalExpense': totalExpense,
+            'total': (totalRevenue - totalExpense)
         },
             async (err, template) => {
 
-                if (err) return console.error('houve um erro no template ejs')
+                if (err) return console.error('houve um erro no template relatorio mensal',err)
 
-                htmlPdf.create(template).toBuffer(async (err, pdf) => {
-                    if (err) console.log('houve um erro na geração do pdf')
+                htmlPdf.create(template, {format:'A3'}).toBuffer(async (err, pdf) => {
+                    if (err) console.log('houve um erro na geração do pdf do relatorio mensal')
 
                     await transporter.sendMail({
                         from: 'Despesa Facil <facildespesa@gmail.com>',

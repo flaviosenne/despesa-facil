@@ -5,38 +5,132 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Relatório</title>
 </head>
 
-<body>
+<style>
+    .container {
+        width: 80%;
+        margin: 10px auto;
+        font: sans-serif;
+
+    }
+
+    header {
+        width: 100%;
+        display: flex;
+        background: rgb(13, 186, 230);
+        margin: 20px auto;
+        border-radius: 8px;
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    header div {
+        max-width: 50%;
+    }
+
+    .title {
+        width: 100%;
+        margin: 0 auto;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20pt;
+        background: rgb(124, 143, 226);
+        text-align: center;
+        font-weight: 800;
+    }
+
+    .table {
+        font-size: 10pt;
+        margin: 0 auto;
+    }
+
+    .table td {
+        max-width: 100px;
+        text-align: center;
+        align-self: center;
+        align-content: center;
+        vertical-align: middle;
+    }
+</style>
+
+<body class="container">
+    <p class="title">Relatório de Lançamentos Financeiro</p>
     <header>
-        <span>Relatório de Lançamentos Financeiro</span>
-        <span>Data: <%today%></span>
-        <span>Usuário: <%=name%></span>
-        <span>Situação:  <%=situation%></span>
-        <span>Porcentagem de gastos:  <%=situationPercent%></span>
+        <div>
+            <p><b>Periodo de Lançamentos:</b> 3 meses</p>
+            <p><b>Total de Receita:</b>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL' }).format(totalRecep)%>
+            </p>
+            <p><b>Total de Despesa:</b>
+                <%=new Intl.NumberFormat( 'pt-BR', { style: 'currency' , currency: 'BRL'}).format(totalExpense)%>
+            </p>
+            <p><b>Total:</b>
+                <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL'}).format(total)%>
+            </p>
+        </div>
+        <div>
+            <p><b>Data:</b>
+                <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: 'long' , day: '2-digit' }).format(today)%> 
+            </p>
+            <p><b>Usuário:</b>
+                <%=name%>
+            </p>
+            <p><b>Situação:</b>
+                <%=situation%>
+            </p>
+            <p><b>Porcentagem de gastos:</b>
+                <%=situationPercent%>
+            </p>
+        </div>
     </header>
-    <hr/>
-    <div>
-        <table>
-            <tr>
+
+    <div class="container-table">
+        <table class="table table-bordered">
+            <thead class='thead-dark'>
                 <td>TIPO</td>
                 <td>DATA</td>
                 <td>STATUS</td>
                 <td>DESCRIÇÃO</td>
                 <td>CATEGORY</td>
-            </tr>
-            <% postings.forEach(posting => { %>
-            <tr>
-                <td><%=posting.type.name%></td>
-                <td><%=posting.postingDate%></td>
-                <td><%=posting.status.name%></td>
-                <td><%=posting.description%></td>
-                <td><%=posting.category.name%></td>
-            </tr>
-            <% }) %>
+                <td>VALOR</td>
+            </thead>
+            <% postings.forEach(posting=> { %>
+                <tr>
+                    <td>
+                        <%=posting.type.name%>
+                    </td>
+                    <td>
+                        <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: 'long' , day: '2-digit' }).format(posting.postingsDate)%>
+                    </td>
+                    <td>
+                        <%=posting.status.name%>
+                    </td>
+                    <td>
+                        <%=posting.description%>
+                    </td>
+                    <td>
+                        <%=posting.category.name%>
+                    </td>
+                    <td>
+                        <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL'}).format(posting.value)%>
+                    </td>
+                </tr>
+                <!-- <tr>
+                <td>DESPESA</td>
+                <td>20/06/2021</td>
+                <td>FINALIZADO</td>
+                <td>carne</td>
+                <td>MERCADO</td>
+            </tr> -->
+                <% }) %>
         </table>
-    </div>
+
+    </div>>
 </body>
 
 </html>
