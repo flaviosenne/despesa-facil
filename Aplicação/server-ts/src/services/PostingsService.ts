@@ -7,14 +7,17 @@ import { decodeToken } from "../helpers/utils/jwt"
 import { Postings } from "../models/Postings"
 import { CategoryRepository } from "../repositories/CategoryRepository"
 import { PostingsRepository } from "../repositories/PostingsRepository"
+import { StatusRepository } from "../repositories/StatusRepository"
 
 export class PostingsService {
     private postingsRepository: PostingsRepository
     private categoryRepository: CategoryRepository
+    private statusRepository: StatusRepository
 
     constructor() {
         this.postingsRepository = getCustomRepository(PostingsRepository)
         this.categoryRepository = getCustomRepository(CategoryRepository)
+        this.statusRepository = getCustomRepository(StatusRepository)
     }
 
     async listAll(): Promise<Postings[]> {
@@ -52,17 +55,17 @@ export class PostingsService {
             }
             if (dateStart != '' && dateStart != '' && status == 0 && category == 0 && type != 0) {
                 const result = await this.postingsRepository
-                    .filterByTypeAndDate(type, dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)
+                    .filterByTypeAndDate(type, dateStart + ' 00:00:00', dateEnd + ' 23:59:59', user.id)
                 return result
             }
             if (dateStart != '' && dateStart != '' && status != 0 && category == 0 && type != 0) {
                 const result = await this.postingsRepository
-                    .filterByTypeAndDateAndStatus(type, status, dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)
+                    .filterByTypeAndDateAndStatus(type, status, dateStart + ' 00:00:00', dateEnd + ' 23:59:59', user.id)
                 return result
             }
             if (dateStart != '' && dateStart != '' && status == 0 && category == 0) {
                 const result = await this.postingsRepository
-                    .filterByDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', user.id)
+                    .filterByDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', user.id)
                 return result
             }
             if (dateStart == '' && dateStart == '' && status == 0 && category == 0) {
@@ -82,22 +85,22 @@ export class PostingsService {
             }
             if (dateStart == '' && dateStart == '' && status != 0 && category != 0) {
                 const result = await this.postingsRepository
-                    .filterByStatusAndCategory(status,category, user.id)
+                    .filterByStatusAndCategory(status, category, user.id)
                 return result
             }
             if (dateStart != '' && dateStart != '' && status != 0 && category != 0) {
                 const result = await this.postingsRepository
-                    .filterByStatusAndCategoryAndDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', status,category, user.id)
+                    .filterByStatusAndCategoryAndDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', status, category, user.id)
                 return result
             }
             if (dateStart != '' && dateStart != '' && status != 0 && category == 0) {
                 const result = await this.postingsRepository
-                    .filterByStatusAndDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', status, user.id)
+                    .filterByStatusAndDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', status, user.id)
                 return result
             }
             if (dateStart != '' && dateStart != '' && status == 0 && category != 0) {
                 const result = await this.postingsRepository
-                    .filterByCategoryAndDate(dateStart+' 00:00:00', dateEnd+' 23:59:59', category, user.id)
+                    .filterByCategoryAndDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', category, user.id)
                 return result
             }
         } catch (err) {
@@ -137,20 +140,52 @@ export class PostingsService {
         return postingsSaved
     }
 
-    async delete(id: number) {
+    async delete(id: number): Promise<void> {
         try {
             await this.findById(id)
 
-            await this.postingsRepository.delete(id)
+            await this.postingsRepository.update(id, { isActive: false })
         }
         catch (err) {
             throw new ServerError('erro na deleção do lançamento')
         }
     }
 
-    async update(postings: PostingsDto) {
-        try {
+    async update(postings: PostingsDto, authorization: string) {
+        const token = authorization.substr(7)
+        const user = decodeToken(token)
+        if (!user) throw new BadRequest('usuário não encontrado')
 
+        if (postings.id == null) throw new BadRequest('id do lançamento não informado')
+        if (postings.category.id == null) throw new BadRequest('id da categoria não informado')
+        if (postings.status.id == null) throw new BadRequest('id do status não informado')
+
+        const posting = await this.postingsRepository.findOne(postings.id, { relations: ['category', 'status'] })
+
+        let category = await this.categoryRepository.findOne(postings.category.id)
+
+        if (posting.category.id != postings.category.id) {
+
+            const categoryName = postings.category.name?.toUpperCase().trim()
+            category = await this.categoryRepository.findOne({ id: postings.category.id })
+
+            if (!category) {
+                category = await this.categoryRepository.findOne({ name: categoryName })
+                if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
+            }
+        }
+
+        const status = await this.statusRepository.findOne(postings.status.id)
+        try {
+            await this.postingsRepository.update(postings.id, {
+                updatedAt: new Date(),
+                description: postings.description,
+                status,
+                category,
+                value: postings.value,
+                installments: postings.installments,
+                postingsDate: postings.postingsDate
+            })
         }
         catch (err) {
             throw new ServerError('erro na atualização do lançamento')

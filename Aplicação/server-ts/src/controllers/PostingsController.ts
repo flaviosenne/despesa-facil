@@ -60,6 +60,14 @@ export class PostingsController {
     }
 
     async update(req: Request, res: Response) {
+        const postingsService = new PostingsService()
+
+        const postings = req.body as PostingsDto
         
+        const token = String(req.headers.authorization)
+        
+        await postingsService.update(postings, token)
+
+        return res.status(204).json()
     }
 }
