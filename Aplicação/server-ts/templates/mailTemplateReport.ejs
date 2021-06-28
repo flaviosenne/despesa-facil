@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Relatório</title>
+
 </head>
 
 <style>
@@ -72,19 +72,18 @@
         <div class="header-left">
             <p><b>Periodo de Lançamentos:</b> 3 meses</p>
             <p><b>Total de Receita:</b>
-                <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL' }).format(totalRecep)%>
+                <%=formatValue.format(totalRecep)%>
             </p>
             <p><b>Total de Despesa:</b>
-                <%=new Intl.NumberFormat( 'pt-BR' , { style: 'currency' , currency: 'BRL' }).format(totalExpense)%>
+                <%=formatValue.format(totalExpense)%>
             </p>
             <p><b>Total:</b>
-                <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL' }).format(total)%>
+                <%=formatValue.format(total)%>
             </p>
         </div>
         <div class="header-right">
             <p><b>Data:</b>
-                <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: '2-digit' , day: '2-digit'
-                    }).format(today)%>
+                <%=formatDate.format(today)%>
             </p>
             <p><b>Usuário:</b>
                 <%=name%>
@@ -114,8 +113,7 @@
                         <%=posting.type.name%>
                     </td>
                     <td>
-                        <%=new Intl.DateTimeFormat( 'pt-BR' , { year: 'numeric' , month: 'long' , day: '2-digit'
-                            }).format(posting.postingsDate)%>
+                        <%=formatDate.format(posting.postingsDate)%>
                     </td>
                     <td>
                         <%=posting.status.name%>
@@ -127,14 +125,14 @@
                         <%=posting.category.name%>
                     </td>
                     <td>
-                        <%=new Intl.NumberFormat('pt-BR', { style: 'currency' , currency: 'BRL'
-                            }).format(posting.value)%>
+                        <%=formatValue.format(posting.value)%>
                     </td>
                 </tr>
                 <% }) %>
         </table>
 
     </div>
+
 </body>
 
 </html>

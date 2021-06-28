@@ -28,6 +28,9 @@ export class Postings{
     @Column()
     installments: number
 
+    @Column({name:'is_active'})
+    isActive: boolean
+
     @CreateDateColumn({name:'created_at', default: Date.now()})
     createdAt: Date
 

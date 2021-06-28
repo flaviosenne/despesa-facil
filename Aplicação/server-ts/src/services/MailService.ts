@@ -54,6 +54,7 @@ export class MailService {
             })
     }
 
+
     async sendEmailReport(postings: Postings[], name: string, email: string) {
         const pathTemplate = path.join(__dirname, '..',
             '..', 'templates', 'mailTemplateReport.ejs')
@@ -70,20 +71,26 @@ export class MailService {
             return totalRevenue += Number(revenue.value)
         })
 
+
+        const formatValue = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+        const formatDate = new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
         ejs.renderFile(pathTemplate, {
             'postings': postings, 'name': name,
-            'today': new Date(), 'situation': (totalRevenue - totalExpense)? 'POSITIVO': 'NEGATIVO',
-            'situationPercent': ((totalExpense / totalRevenue) * 100).toFixed(2) +'%',
+            'today': new Date(), 'situation': (totalRevenue - totalExpense) ? 'POSITIVO' : 'NEGATIVO',
+            'situationPercent': ((totalExpense / totalRevenue) * 100).toFixed(2) + '%',
             'totalRecep': totalRevenue,
             'totalExpense': totalExpense,
-            'total': (totalRevenue - totalExpense)
+            'total': (totalRevenue - totalExpense),
+            'formatValue': formatValue,
+            'formatDate': formatDate,
+
         },
             async (err, template) => {
 
-                if (err) return console.error('houve um erro no template relatorio mensal',err)
+                if (err) return console.error('houve um erro no template relatorio mensal', err)
 
-                htmlPdf.create(template, {format:'A3'}).toBuffer(async (err, pdf) => {
-                    if (err) console.log('houve um erro na geração do pdf do relatorio mensal')
+                htmlPdf.create(template, { format: 'A3' }).toBuffer(async (err, pdf) => {
+                    if (err) console.log('houve um erro na geração do pdf do relatorio mensal', err)
 
                     await transporter.sendMail({
                         from: 'Despesa Facil <facildespesa@gmail.com>',
