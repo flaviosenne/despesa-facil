@@ -22,7 +22,7 @@ routes.get('/users',logged, userController.listAll)
 routes.get('/users/active', logged, userController.listAllActive)
 routes.get('/users/:id', logged, userController.findById)
 routes.delete('/users/:id', logged, userController.disable)
-routes.put('/users', logged, userController.update)
+routes.patch('/users', logged, userController.update)
 
 // postings
 routes.get('/postings',logged, postingsController.listAllByFilter)
@@ -30,7 +30,7 @@ routes.get('/postings/all',logged, postingsController.listAll)
 routes.post('/postings',logged, postingsController.save)
 routes.get('/postings/:id', logged, postingsController.findById)
 routes.delete('/postings/:id', logged, postingsController.delete)
-routes.put('/postings', logged, postingsController.update)
+routes.patch('/postings', logged, postingsController.update)
 
 
 // resources public
