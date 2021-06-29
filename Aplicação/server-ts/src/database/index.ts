@@ -1,6 +1,7 @@
 import "reflect-metadata";
-import {  createConnection } from 'typeorm'
+import {  createConnection, ConnectionOptions } from 'typeorm'
+import { development } from "../../ormconfig";
 
-createConnection()
+createConnection(development as ConnectionOptions)
     .then(() => console.info('db sql connected'))
     .catch(err => console.error(err))

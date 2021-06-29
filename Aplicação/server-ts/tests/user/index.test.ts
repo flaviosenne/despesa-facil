@@ -1,47 +1,41 @@
-import { Connection, createConnection } from 'typeorm';
-import { UserService } from './../../src/services/UserService';
-import { UserDto } from '../../src/dtos/UserDto';
+import { ConnectionOptions } from 'typeorm';
+import request from 'supertest'
+import { app } from '../../src/app'
 
-import  mongoose from 'mongoose'
-let connection: Connection
-beforeAll(async () => {
-    // connection = await createConnection({
-    //     type: "sqlite",
-    //     database: "../db/despesa_facil_test.sqlite",
-    //     entities: ["../../src/models/*.ts"],
-    //     cli: {
-    //         "entitiesDir": "../../src/models"
-    //     },
-    //     synchronize: true,
-    // })
-  
+import "reflect-metadata";
+import {  createConnection } from 'typeorm'
+import { tests } from '../../ormconfig';
 
-    mongoose.connect("mongodb://localhost:27017/despesa_facil_test",
-        { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-            // console.log("mongo conectado com sucesso")
-        })
-})
 
-afterAll(async () => {
-    // await connection.dropDatabase()
-    // await connection.close()
-    mongoose.disconnect()
+let connection = null;
+describe('Users', () => {
+    beforeAll(async () => {
+        connection = 
+        await createConnection(tests as ConnectionOptions)
+    })
+    afterAll(async () => {
+        await connection.dropDatabase()
+        await connection.close()
+    })
 
-})
+    it('Should be able to create a new user', async () => {
+        const res = await request(app).post("/users")
+            .send({
+                email: "user@example.com",
+                name: "user example"
+            })
 
-const mockUser: UserDto = {
-    name: 'valid_name',
-    password: 'valid_password',
-    email: 'valid@email'
-}
+        expect(res.status).toBe(201)
 
-describe('Test user', () => {
-    it('should returns status 201 when create user', async () => {
-        
-        const userService = new UserService()
+    })
+    it('Should not be able to create a user with exist email', async () => {
+        const res = await request(app).post("/users")
+            .send({
+                email: "user@example.com",
+                name: "user example"
+            })
 
-        const user = userService.save(mockUser)
+        expect(res.status).toBe(400)
 
-        expect(user).toBeDefined()
     })
 })
