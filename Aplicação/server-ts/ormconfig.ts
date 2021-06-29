@@ -14,7 +14,7 @@ export const development = {
 }
 
 export const tests = {
-    type: "sqlite3",
+    type: "sqlite",
     database: "./tests/db/db.sqlite",
     logging: false,
     syncronize: true,
