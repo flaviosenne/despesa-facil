@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Relatório</title>
 
 </head>
@@ -132,6 +133,27 @@
         </table>
 
     </div>
+
+    <div id="bar" style="width: 480px; height: 400px;">
+    <div id="line" style="width: 480px; height: 400px;">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
+    <script type="text/javascript">
+
+        var data = [{
+            type: 'bar',
+            y: [100, 200, 150, 170, 190],
+            x: ['jan', 'fev', 'mar', 'abr', 'maio']
+        }];
+        Plotly.newPlot('bar', data);
+
+        var data = [{
+            type: 'line',
+            y: [100, 200, 150, 170, 190],
+            x: ['jan', 'fev', 'mar', 'abr', 'maio']
+        }];
+        Plotly.newPlot('line', data);
+    </script>
 
 </body>
 
