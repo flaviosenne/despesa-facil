@@ -6,12 +6,12 @@ export const generateToken = (payload: any): string => {
     return jwt.sign(payload, secret, { expiresIn: '1d' })
 }
 
-export const tokenValid = (token: string) => {
+export const tokenValid = (token: string): any | boolean => {
     try {
         return jwt.verify(token, secret, (err: any, user: any) => {
             if (err) return false
 
-            return true
+            return user
         })
     } catch (err) {
         return false

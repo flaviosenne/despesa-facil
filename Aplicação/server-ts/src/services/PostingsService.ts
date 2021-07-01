@@ -1,4 +1,5 @@
 import { getCustomRepository } from "typeorm"
+import { payload } from "../dtos/PayloadDto"
 import { PostingsDto } from "../dtos/PostingsDto"
 import { BadRequest } from "../exceptions/BadRequest"
 import { NotFound } from "../exceptions/NotFound"
@@ -34,14 +35,9 @@ export class PostingsService {
         category: number,
         status: number,
         type: number,
-        authorization: string) {
+        user: payload) {
 
         try {
-
-            const token = authorization.substr(7)
-            const user = decodeToken(token)
-
-            if (!user) throw new BadRequest('usuário não encontrado')
 
             if (dateStart == '' && dateStart == '' && status == 0 && category == 0 && type != 0) {
                 const result = await this.postingsRepository
@@ -160,7 +156,7 @@ export class PostingsService {
         if (postings.category.id == null) throw new BadRequest('id da categoria não informado')
         if (postings.status.id == null) throw new BadRequest('id do status não informado')
 
-        const posting = await this.postingsRepository.findOne(postings.id, { relations: ['category', 'status'] })
+        const posting = await this.postingsRepository.findOne(postings.id, { relations: ['category', 'status', 'user'] })
 
         let category = await this.categoryRepository.findOne(postings.category.id)
 
@@ -174,6 +170,7 @@ export class PostingsService {
                 if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
             }
         }
+
 
         const status = await this.statusRepository.findOne(postings.status.id)
         try {

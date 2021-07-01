@@ -1,3 +1,4 @@
+import { Unauthorized } from './../exceptions/Unauthorized';
 import bcrypt from 'bcrypt'
 import { MailService } from './MailService';
 import { generateToken } from '../helpers/utils/jwt';
@@ -100,7 +101,7 @@ export class UserService {
 
             if (existEmail) {
                 if (existEmail.id !== user.id)
-                    throw new BadRequest('email já existe na base de dados')
+                    throw new Unauthorized('não possui permissão  para alterar essa conta')
             }
 
             await this.userRepository.update(Number(id),
