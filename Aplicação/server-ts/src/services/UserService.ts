@@ -54,6 +54,8 @@ export class UserService {
 
     async save(user: UserDto): Promise<User> {
 
+        const decodeBase64 =Buffer.from(user.password, 'base64').toString('ascii')
+   
         if (!user.email) throw new BadRequest('email não informado')
         if (!user.name) throw new BadRequest('nome não informado')
         if (!user.password) throw new BadRequest('senha não informada')
@@ -66,7 +68,7 @@ export class UserService {
         user.isActive = true
 
         const salt = bcrypt.genSaltSync(10)
-        const hash = bcrypt.hashSync(user.password, salt)
+        const hash = bcrypt.hashSync(decodeBase64, salt)
 
         user.password = hash
         const userSaved: User = await this.userRepository.save(user)
@@ -118,7 +120,9 @@ export class UserService {
 
         if (!existUser) throw new BadRequest('usuario ou senha inválidas')
 
-        const matchers = passwordMatchers(password, existUser.password)
+        const decodeBase64 =Buffer.from(password, 'base64').toString('ascii')
+   
+        const matchers = passwordMatchers(decodeBase64, existUser.password)
 
         if (!matchers) throw new BadRequest('usuario ou senha inválidas')
 
