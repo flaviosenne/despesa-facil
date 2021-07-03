@@ -1,3 +1,4 @@
+import { UserService } from './UserService';
 import { getCustomRepository } from "typeorm"
 import { payload } from "../dtos/PayloadDto"
 import { PostingsDto } from "../dtos/PostingsDto"
@@ -104,9 +105,11 @@ export class PostingsService {
         }
     }
 
-    async findById(id: number): Promise<Postings | undefined> {
+    async findById(id: number, userId: payload): Promise<Postings | undefined> {
 
-        const postings: Postings | undefined = await this.postingsRepository.findOne({ id })
+        const user = await new UserService().findByIdAndIsActive(userId.id)
+        
+        const postings: Postings | undefined = await this.postingsRepository.findOne({ id, user })
 
         if (!postings) throw new NotFound('usuário não encontrado')
 
@@ -136,9 +139,9 @@ export class PostingsService {
         return postingsSaved
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: number, userId: payload): Promise<void> {
         try {
-            await this.findById(id)
+            await this.findById(id, userId)
 
             await this.postingsRepository.update(id, { isActive: false })
         }

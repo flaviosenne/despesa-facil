@@ -11,6 +11,7 @@ import { CodPasswordRepository } from '../repositories/CodPasswordRepository';
 import { BadRequest } from '../exceptions/BadRequest';
 import { NotFound } from '../exceptions/NotFound';
 import { ServerError } from '../exceptions/ServerError';
+import { payload } from '../dtos/PayloadDto';
 
 export class UserService {
     private userRepository: UserRepository
@@ -44,7 +45,7 @@ export class UserService {
         return user
     }
 
-    async existUser(email: string): Promise<User | null> {
+    private async existUserByEmail(email: string): Promise<User | null> {
 
         const user: User | undefined = await this.userRepository.findByEmail(email)
 
@@ -80,27 +81,27 @@ export class UserService {
         return userSaved
     }
 
-    async disable(id: number) {
+    async disable(userId: payload) {
         try {
-            await this.findByIdAndIsActive(id)
+            await this.findByIdAndIsActive(userId.id)
 
-            await this.userRepository.update(id, { isActive: false })
+            await this.userRepository.update({id: userId.id}, { isActive: false })
         }
         catch (err) {
             throw new ServerError('erro em desabilitar usuário')
         }
     }
 
-    async update(user: UserDto) {
+    async update(userId: payload, userToUpadate: UserDto) {
         try {
-            const { id, name, email, urlImage } = user
-            await this.findByIdAndIsActive(Number(id))
+            const { id, name, email, urlImage } = userToUpadate
+            const userLogged = await this.findByIdAndIsActive(userId.id)
 
             const existEmail = await this.userRepository
-                .findByEmail(user.email)
+                .findByEmail(userToUpadate.email)
 
             if (existEmail) {
-                if (existEmail.id !== user.id)
+                if (existEmail.id !== userLogged.id)
                     throw new Unauthorized('não possui permissão  para alterar essa conta')
             }
 
@@ -117,7 +118,7 @@ export class UserService {
         if (!email) throw new BadRequest('informe o email')
         if (!password) throw new BadRequest('informe a senha')
 
-        const existUser = await this.existUser(email)
+        const existUser = await this.existUserByEmail(email)
 
         if (!existUser) throw new BadRequest('usuario ou senha inválidas')
 

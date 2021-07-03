@@ -28,10 +28,11 @@ export class PostingsController {
 
     async findById(req: Request, res: Response) {
         const { id } = req.params
+        const { userId } = req
 
         const postingsService = new PostingsService()
 
-        const postings = await postingsService.findById(Number(id))
+        const postings = await postingsService.findById(Number(id), userId)
 
         return res.status(200).json(postings)
     }
@@ -50,10 +51,11 @@ export class PostingsController {
 
     async delete(req: Request, res: Response) {
         const { id } = req.params
+        const { userId } = req
 
         const postingsService = new PostingsService()
 
-        await postingsService.delete(Number(id))
+        await postingsService.delete(Number(id), userId)
 
         return res.status(204).json(null)
     }

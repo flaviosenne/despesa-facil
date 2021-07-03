@@ -23,11 +23,11 @@ export class UserController {
     }
 
     async findById(req: Request, res: Response) {
-        const { id } = req.params
+        const { userId } = req
 
         const userService = new UserService()
 
-        const users = await userService.findByIdAndIsActive(Number(id))
+        const users = await userService.findByIdAndIsActive(userId.id)
 
         return res.status(200).json(users)
     }
@@ -46,21 +46,22 @@ export class UserController {
     }
 
     async disable(req: Request, res: Response) {
-        const { id } = req.params
+        const { userId } = req
 
         const userService = new UserService()
 
-        await userService.disable(Number(id))
+        await userService.disable(userId)
 
         return res.status(204).json(null)
     }
 
     async update(req: Request, res: Response) {
+        const {userId} = req
         const user = req.body as UserDto
 
         const userService = new UserService()
 
-        await userService.update(user)
+        await userService.update(userId, user)
 
         return res.status(204).json(null)
     }
