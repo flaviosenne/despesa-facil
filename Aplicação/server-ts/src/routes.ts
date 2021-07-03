@@ -35,6 +35,8 @@ routes.patch('/postings', logged, postingsController.update)
 
 // resources public
 routes.post('/users', userController.save)
+routes.put('/users', logged, userController.update)
+routes.delete('/users', logged, userController.disable)
 routes.post('/login', userController.login)
 routes.post('/retrieve-password', userController.retrievePassword)
 routes.put('/update-password', userController.updatePassword)

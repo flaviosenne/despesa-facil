@@ -57,6 +57,7 @@ export class UserController {
 
     async update(req: Request, res: Response) {
         const {userId} = req
+        
         const user = req.body as UserDto
 
         const userService = new UserService()

@@ -82,9 +82,9 @@ export class UserService {
     }
 
     async disable(userId: payload) {
+        await this.findByIdAndIsActive(userId.id)
+        
         try {
-            await this.findByIdAndIsActive(userId.id)
-
             await this.userRepository.update({id: userId.id}, { isActive: false })
         }
         catch (err) {
@@ -93,19 +93,27 @@ export class UserService {
     }
 
     async update(userId: payload, userToUpadate: UserDto) {
-        try {
-            const { id, name, email, urlImage } = userToUpadate
-            const userLogged = await this.findByIdAndIsActive(userId.id)
+        const { id, name, email, urlImage } = userToUpadate
+ 
+        const userLogged = await this.findByIdAndIsActive(userId.id)
+        
+            const existUser = await this.userRepository
+            .findOne(id)
 
-            const existEmail = await this.userRepository
-                .findByEmail(userToUpadate.email)
+            const existEmail = await this.userRepository.findByEmail(email)
 
-            if (existEmail) {
-                if (existEmail.id !== userLogged.id)
-                    throw new Unauthorized('não possui permissão  para alterar essa conta')
+            if(existEmail) {
+                if(existEmail.email != userId.email) throw new BadRequest('emai já existe na base de dados')
             }
-
-            await this.userRepository.update(Number(id),
+            if(!existUser) throw new NotFound('usuário não existe na base de dados')
+            
+            if (existUser) {
+                if (existUser.id !== userLogged.id)
+                throw new Unauthorized('não possui permissão  para alterar essa conta')
+            }
+            
+        try {
+            await this.userRepository.update(Number(userLogged.id),
                 { name, email, urlImage, updatedAt: new Date() })
         }
         catch (err) {
