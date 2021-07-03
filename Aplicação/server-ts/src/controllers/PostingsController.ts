@@ -64,10 +64,10 @@ export class PostingsController {
         const postingsService = new PostingsService()
 
         const postings = req.body as PostingsDto
+
+        const { userId } = req
         
-        const token = String(req.headers.authorization)
-        
-        await postingsService.update(postings, token)
+        await postingsService.update(postings, userId)
 
         return res.status(204).json()
     }

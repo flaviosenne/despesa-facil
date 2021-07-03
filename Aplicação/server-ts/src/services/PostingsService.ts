@@ -10,6 +10,7 @@ import { Postings } from "../models/Postings"
 import { CategoryRepository } from "../repositories/CategoryRepository"
 import { PostingsRepository } from "../repositories/PostingsRepository"
 import { StatusRepository } from "../repositories/StatusRepository"
+import { Unauthorized } from '../exceptions/Unauthorized';
 
 export class PostingsService {
     private postingsRepository: PostingsRepository
@@ -150,17 +151,16 @@ export class PostingsService {
         }
     }
 
-    async update(postings: PostingsDto, authorization: string) {
-        const token = authorization.substr(7)
-        const user = decodeToken(token)
-        if (!user) throw new BadRequest('usuário não encontrado')
-
+    async update(postings: PostingsDto, userId: payload) {
+        
         if (postings.id == null) throw new BadRequest('id do lançamento não informado')
         if (postings.category.id == null) throw new BadRequest('id da categoria não informado')
         if (postings.status.id == null) throw new BadRequest('id do status não informado')
 
         const posting = await this.postingsRepository.findOne(postings.id, { relations: ['category', 'status', 'user'] })
 
+        if(posting.user.id != userId.id) throw new Unauthorized('não possui permissão para atualizar esse lançamento')
+        
         let category = await this.categoryRepository.findOne(postings.category.id)
 
         if (posting.category.id != postings.category.id) {
@@ -170,12 +170,12 @@ export class PostingsService {
 
             if (!category) {
                 category = await this.categoryRepository.findOne({ name: categoryName })
-                if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
+                if (!category) category = await this.categoryRepository.save({ name: categoryName, user: userId })
             }
         }
 
-
         const status = await this.statusRepository.findOne(postings.status.id)
+        
         try {
             await this.postingsRepository.update(postings.id, {
                 updatedAt: new Date(),
