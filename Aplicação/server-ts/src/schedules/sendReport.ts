@@ -4,7 +4,7 @@ import { PostingsRepository } from './../repositories/PostingsRepository';
 import schedule from 'node-schedule'
 import { MailService } from '../services/MailService'
 
-schedule.scheduleJob('0 35  * */1 * *', async () => {
+schedule.scheduleJob('30 17  * */1 * *', async () => {
 
     console.log('schedule send report in email all users')
     const email = new MailService()
@@ -17,9 +17,9 @@ schedule.scheduleJob('0 35  * */1 * *', async () => {
 
     users.forEach(async user => {
         const result = await postingsRepository
-            .filterDefault(user.id)
+            .getPostingsLastTreeMonth(user.id)
         
-        await email.sendEmailReport(result, user.name, user.email)
+        await email.sendEmailReport(result, user)
     })
 
 })

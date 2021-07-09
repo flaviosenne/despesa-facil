@@ -134,37 +134,63 @@
 
     </div>
 
-    <div id="bar" style="width: 480px; height: 400px;">
-    <div id="line" style="width: 480px; height: 400px;">
-    <div id="log" style="width: 480px; height: 400px;">
-        <!-- Plotly chart will be drawn inside this DIV -->
+    <h1>Categorias dos gastos</h1>
+    <div id="bar-category" style="width: 480px; height: 400px;"></div>
+    
+    <h1>Gastos no periodo de 3 mesess</h1>
+    <div id="bar-expenses" style="width: 480px; height: 400px;"></div>
+    
+    <h1>Ganhos no periodo de 3 mesess</h1>
+    <div id="bar-revenues" style="width: 480px; height: 400px;"></div>
+    <!-- <div id="line" style="width: 480px; height: 400px;"> -->
+    <div id="log" style="width: 480px; height: 400px;"></div>
+    <!-- Plotly chart will be drawn inside this DIV -->
     </div>
     <script type="text/javascript">
 
-        var data = [{
+        const category = JSON.parse( '<%-JSON.stringify(category)%>')
+        const frequency = JSON.parse('<%-JSON.stringify(frequency)%>')
+        
+        const periodExpense = JSON.parse( '<%-JSON.stringify(periodExpense)%>')
+        const frequencyExpense = JSON.parse('<%-JSON.stringify(frequencyExpense)%>')
+        
+        const periodRevenue = JSON.parse( '<%-JSON.stringify(periodRevenue)%>')
+        const frequencyRevenue = JSON.parse('<%-JSON.stringify(frequencyRevenue)%>')
+
+
+
+        var dataCategory = [{
             type: 'bar',
-            y: [100, 200, 150, 170, 190],
-            x: ['jan', 'fev', 'mar', 'abr', 'maio']
+            y: frequency,
+            x: category
         }];
-        Plotly.newPlot('bar', data);
+        Plotly.newPlot('bar-category', dataCategory);
+        
+        var dataExpenses = [{
+            type: 'bar',
+            y: frequencyExpense,
+            x: periodExpense
+        }];
+        Plotly.newPlot('bar-expenses', dataExpenses);
+        
+        var dataRevenue = [{
+            type: 'bar',
+            y: frequencyRevenue,
+            x: periodRevenue
+        }];
+        Plotly.newPlot('bar-revenues', dataRevenue);
+
 
         var data = [{
-            type: 'line',
-            y: [100, 200, 150, 170, 190],
-            x: ['jan', 'fev', 'mar', 'abr', 'maio']
-        }];
-
-        Plotly.newPlot('line', data);
-        var data = [{
             type: 'scatter',
-            name:'ganhos',
-            y:  [200, 200, 210, 200, 205],
-            x: ['jan', 'fev', 'mar', 'abr', 'maio']
-        },{
+            name: 'ganhos',
+            y: frequencyRevenue,
+            x: periodRevenue
+        }, {
             type: 'scatter',
-            name:'gastos',
-            y:[100, 125, 150, 170, 150],
-            x: ['jan', 'fev', 'mar', 'abr', 'maio']
+            name: 'gastos',
+            y: frequencyExpense,
+            x: periodExpense
         }];
         Plotly.newPlot('log', data);
     </script>
