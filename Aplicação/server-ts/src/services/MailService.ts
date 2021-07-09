@@ -58,7 +58,7 @@ export class MailService {
     }
 
 
-    async sendEmailReport(postings: Postings[], {name, email, id}:User) {
+    async sendEmailReport(postings: Postings[], { name, email, id }: User) {
         const postingsService = new PostingsService()
         const pathTemplate = path.join(__dirname, '..',
             '..', 'templates', 'mailTemplateReport.ejs')
@@ -81,23 +81,25 @@ export class MailService {
 
         const formatValue = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
         const formatDate = new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
-        
+
         ejs.renderFile(pathTemplate, {
-            'postings': postings, 'name': name,
-            'today': new Date(), 'situation': (totalRevenue - totalExpense) ? 'POSITIVO' : 'NEGATIVO',
+            'postings': postings, 
+            'name': name,
+            'today': new Date(), 
+            'situation': (totalRevenue - totalExpense) ? 'POSITIVO' : 'NEGATIVO',
             'situationPercent': ((totalExpense / totalRevenue) * 100).toFixed(2) + '%',
             'totalRecep': totalRevenue,
             'totalExpense': totalExpense,
             'total': (totalRevenue - totalExpense),
             'formatValue': formatValue,
             'formatDate': formatDate,
-            'category':category['categories'],
-            'frequency':category['frequency'],
-            'periodExpense':expensesPeriod['period'],
-            'frequencyExpense':expensesPeriod['frequency'],
-            'periodRevenue':revenuesPeriod['period'],
-            'frequencyRevenue':revenuesPeriod['frequency'],
-           
+            'category': category['categories'],
+            'frequency': category['frequency'],
+            'periodExpense': expensesPeriod['period'],
+            'frequencyExpense': expensesPeriod['frequency'],
+            'periodRevenue': revenuesPeriod['period'],
+            'frequencyRevenue': revenuesPeriod['frequency'],
+
         },
             async (err, template) => {
 

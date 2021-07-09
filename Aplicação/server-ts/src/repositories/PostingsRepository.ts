@@ -214,8 +214,8 @@ export class PostingsRepository extends Repository<Postings>{
         let dateStart = new Date(year,(month-3), 1),
         dateEnd = new Date(year,month, 0)
 
-        dateStart =  new Date(`${dateStart.getFullYear()}-${dateStart.getMonth()+1}-${dateStart.getDate()}`)
-        dateEnd =  new Date(`${dateEnd.getFullYear()}-${dateEnd.getMonth()}-${dateEnd.getDate()}`)
+        dateStart =  new Date(`${dateStart.getFullYear()}-${dateStart.getMonth()}-${dateStart.getDate()}`)
+        dateEnd =  new Date(`${dateEnd.getFullYear()}-${dateEnd.getMonth()+1}-${dateEnd.getDate()}`)
     
         return await this.createQueryBuilder()
         .select('p')

@@ -20,6 +20,10 @@
 
     }
 
+    .red {
+        color: red;
+    }
+
     header {
         width: 100%;
         display: block;
@@ -125,9 +129,15 @@
                     <td>
                         <%=posting.category.name%>
                     </td>
-                    <td>
-                        <%=formatValue.format(posting.value)%>
-                    </td>
+                    <% if(posting.type.id== 1) {%>
+                        <td class="red">
+                            <%=formatValue.format(posting.value)%>
+                        </td>
+                    <% } else { %>
+                        <td>
+                            <%=formatValue.format(posting.value)%>
+                        </td>
+                    <% } %>
                 </tr>
                 <% }) %>
         </table>
@@ -136,28 +146,25 @@
 
     <h1>Categorias dos gastos</h1>
     <div id="bar-category" style="width: 480px; height: 400px;"></div>
-    
+
     <h1>Gastos no periodo de 3 mesess</h1>
     <div id="bar-expenses" style="width: 480px; height: 400px;"></div>
-    
+
     <h1>Ganhos no periodo de 3 mesess</h1>
     <div id="bar-revenues" style="width: 480px; height: 400px;"></div>
-    <!-- <div id="line" style="width: 480px; height: 400px;"> -->
+
     <div id="log" style="width: 480px; height: 400px;"></div>
-    <!-- Plotly chart will be drawn inside this DIV -->
-    </div>
+
     <script type="text/javascript">
 
-        const category = JSON.parse( '<%-JSON.stringify(category)%>')
+        const category = JSON.parse('<%-JSON.stringify(category)%>')
         const frequency = JSON.parse('<%-JSON.stringify(frequency)%>')
-        
-        const periodExpense = JSON.parse( '<%-JSON.stringify(periodExpense)%>')
+
+        const periodExpense = JSON.parse('<%-JSON.stringify(periodExpense)%>')
         const frequencyExpense = JSON.parse('<%-JSON.stringify(frequencyExpense)%>')
-        
-        const periodRevenue = JSON.parse( '<%-JSON.stringify(periodRevenue)%>')
+
+        const periodRevenue = JSON.parse('<%-JSON.stringify(periodRevenue)%>')
         const frequencyRevenue = JSON.parse('<%-JSON.stringify(frequencyRevenue)%>')
-
-
 
         var dataCategory = [{
             type: 'bar',
@@ -165,14 +172,14 @@
             x: category
         }];
         Plotly.newPlot('bar-category', dataCategory);
-        
+
         var dataExpenses = [{
             type: 'bar',
             y: frequencyExpense,
             x: periodExpense
         }];
         Plotly.newPlot('bar-expenses', dataExpenses);
-        
+
         var dataRevenue = [{
             type: 'bar',
             y: frequencyRevenue,
