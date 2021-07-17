@@ -239,7 +239,6 @@ export class PostingsService {
             const colors = []
             postings.map(posting => {
                 if (posting.type.id == 1) {
-
                     period.push(
                         new Intl.DateTimeFormat('pt-BR', { month: 'long' })
                             .format(posting.postingsDate))
@@ -278,15 +277,12 @@ export class PostingsService {
             const colors = []
             postings.map(posting => {
                 if (posting.type.id == 2) {
-                    console.log('data',posting.postingsDate)
                     period.push(
                         new Intl.DateTimeFormat('pt-BR', { month: 'long' })
                             .format(posting.postingsDate))
                     values.push(posting.value)
                 }
             })
-            console.log(period)
-            console.log(values)
 
             var aux = 0
             for (let i = 0; i < period.length; i++) {

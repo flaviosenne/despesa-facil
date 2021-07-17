@@ -58,7 +58,7 @@ export class MailService {
     }
 
 
-    async sendEmailReport(postings: Postings[], { name, email, id }: User) {
+    async sendEmailReport(postings: Postings[],postingsTwelveMonth: Postings[], { name, email, id }: User) {
         const postingsService = new PostingsService()
         const pathTemplate = path.join(__dirname, '..',
             '..', 'templates', 'mailTemplateReport.ejs')
@@ -66,6 +66,8 @@ export class MailService {
         const category = await postingsService.frequencyCategory(postings)
         const expensesPeriod = await postingsService.frequencyExpenses(postings)
         const revenuesPeriod = await postingsService.frequencyRevenues(postings)
+        const expensesPeriodTwelveMonth = await postingsService.frequencyExpenses(postingsTwelveMonth)
+        const revenuesPeriodTwelveMonth = await postingsService.frequencyRevenues(postingsTwelveMonth)
 
         let expenses = postings.filter(posting => posting.type.id == 1)
         let revenues = postings.filter(posting => posting.type.id == 2)
@@ -99,6 +101,10 @@ export class MailService {
             'frequencyExpense': expensesPeriod['frequency'],
             'periodRevenue': revenuesPeriod['period'],
             'frequencyRevenue': revenuesPeriod['frequency'],
+            'periodExpenseTwelveMonth': expensesPeriodTwelveMonth['period'],
+            'frequencyExpenseTwelveMonth': expensesPeriodTwelveMonth['frequency'],
+            'periodRevenueTwelveMonth': revenuesPeriodTwelveMonth['period'],
+            'frequencyRevenueTwelveMonth': revenuesPeriodTwelveMonth['frequency'],
 
         },
             async (err, template) => {

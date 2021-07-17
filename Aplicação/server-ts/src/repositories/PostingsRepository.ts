@@ -230,4 +230,28 @@ export class PostingsRepository extends Repository<Postings>{
         .setParameters({userId, dateStart,  dateEnd})
         .getMany()
     }
+
+    
+    getPostingsLastTwelveMonth = async (userId: number) =>{
+        const month = new Date().getMonth() + 1
+        const year = new Date().getFullYear()
+        let dateStart = new Date(year,(month-12), 1),
+        dateEnd = new Date(year,month, 0)
+
+        dateStart =  new Date(`${dateStart.getFullYear()}-${dateStart.getMonth()}-${dateStart.getDate()}`)
+        dateEnd =  new Date(`${dateEnd.getFullYear()}-${dateEnd.getMonth()+1}-${dateEnd.getDate()}`)
+    
+        return await this.createQueryBuilder()
+        .select('p')
+        .from(Postings, 'p')
+        .innerJoinAndSelect('p.status', 's')
+        .innerJoinAndSelect('p.type', 't')
+        .innerJoinAndSelect('p.user', 'u')
+        .innerJoinAndSelect('p.category', 'c')
+        .where('p.user_id = :userId')
+        .andWhere(`p.postings_date between :dateStart and :dateEnd`)
+        .orderBy('p.postingsDate')
+        .setParameters({userId, dateStart,  dateEnd})
+        .getMany()
+    }
 }

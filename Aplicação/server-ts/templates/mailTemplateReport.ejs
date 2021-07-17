@@ -162,9 +162,13 @@
 
         const periodExpense = JSON.parse('<%-JSON.stringify(periodExpense)%>')
         const frequencyExpense = JSON.parse('<%-JSON.stringify(frequencyExpense)%>')
+        const periodExpenseTwelveMonth = JSON.parse('<%-JSON.stringify(periodExpenseTwelveMonth)%>')
+        const frequencyExpenseTwelveMonth = JSON.parse('<%-JSON.stringify(frequencyExpenseTwelveMonth)%>')
 
         const periodRevenue = JSON.parse('<%-JSON.stringify(periodRevenue)%>')
         const frequencyRevenue = JSON.parse('<%-JSON.stringify(frequencyRevenue)%>')
+        const periodRevenueTwelveMonth = JSON.parse('<%-JSON.stringify(periodRevenueTwelveMonth)%>')
+        const frequencyRevenueTwelveMonth = JSON.parse('<%-JSON.stringify(frequencyRevenueTwelveMonth)%>')
 
         var dataCategory = [{
             type: 'bar',
@@ -191,13 +195,13 @@
         var data = [{
             type: 'scatter',
             name: 'ganhos',
-            y: frequencyRevenue,
-            x: periodRevenue
+            y: frequencyRevenueTwelveMonth,
+            x: periodRevenueTwelveMonth
         }, {
             type: 'scatter',
             name: 'gastos',
-            y: frequencyExpense,
-            x: periodExpense
+            y: frequencyExpenseTwelveMonth,
+            x: periodExpenseTwelveMonth
         }];
         Plotly.newPlot('log', data);
     </script>
