@@ -19,11 +19,14 @@
         font: sans-serif;
 
     }
-
+    .chart{
+        page-break-inside: avoid;
+    }
+    
     .red {
         color: red;
     }
-
+    
     header {
         width: 100%;
         display: block;
@@ -32,20 +35,20 @@
         border-radius: 8px;
         padding: 10px;
     }
-
+    
     .header-left {
         display: inline-block;
         width: 50%;
         text-align: left;
     }
-
+    
     .header-right {
         display: inline-block;
         padding: 5px;
         width: 45%;
         text-align: right;
     }
-
+    
     .title {
         width: 100%;
         margin: 0 auto;
@@ -56,7 +59,7 @@
         text-align: center;
         font-weight: 800;
     }
-
+    
     .table {
         font-size: 10pt;
         margin: 0 auto;
@@ -144,16 +147,22 @@
 
     </div>
 
+
     <h1>Categorias dos gastos</h1>
     <div id="bar-category" style="width: 480px; height: 400px;"></div>
 
-    <h1>Gastos no periodo de 3 mesess</h1>
-    <div id="bar-expenses" style="width: 480px; height: 400px;"></div>
-
-    <h1>Ganhos no periodo de 3 mesess</h1>
-    <div id="bar-revenues" style="width: 480px; height: 400px;"></div>
-
-    <div id="log" style="width: 480px; height: 400px;"></div>
+        <div class="chart">
+            <h1>Gastos no periodo de 3 meses</h1>
+            <div id="bar-expenses" style="width: 480px; height: 400px;"></div>
+        </div>
+        <div class="chart">
+            <h1>Ganhos no periodo de 3 meses</h1>
+            <div id="bar-revenues" style="width: 480px; height: 400px;"></div>
+        </div>
+        <div class="chart">
+            <h1>Gastos no periodo de 12 meses</h1>
+            <div id="log" style="width: 480px; height: 400px;"></div>
+        </div>
 
     <script type="text/javascript">
 

@@ -4,7 +4,7 @@ import { PostingsRepository } from './../repositories/PostingsRepository';
 import schedule from 'node-schedule'
 import { MailService } from '../services/MailService'
 
-schedule.scheduleJob('0 53  * */1 * *', async () => {
+schedule.scheduleJob('0 44 * */1 * *', async () => {
 
     console.log('schedule send report in email all users')
     const email = new MailService()
