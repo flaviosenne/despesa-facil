@@ -24,11 +24,16 @@ export class PostingsService {
     }
 
     async listAll(): Promise<Postings[]> {
+        try {
 
-        const postings: Postings[] = await this.postingsRepository
-            .find({ relations: ['user', 'category', 'status', 'type'] })
+            const postings: Postings[] = await this.postingsRepository
+                .find({ relations: ['user', 'category', 'status', 'type'] })
 
-        return postings
+            return postings
+
+        } catch (err) {
+            throw new ServerError(err)
+        }
     }
 
     async listAllByFilter(
@@ -40,104 +45,89 @@ export class PostingsService {
         user: payload) {
 
         try {
+            let result = await this.postingsRepository.findByUserId(user.id)
 
-            if (dateStart == '' && dateStart == '' && status == 0 && category == 0 && type != 0) {
-                const result = await this.postingsRepository
-                    .filterByType(type, user.id)
-                return result
+            if (dateStart === 'undefined') dateStart = ''
+            if (dateEnd === 'undefined') dateEnd = ''
+            if (!status) status = 0
+            if (!category) category = 0
+            if (!type) type = 0
+
+            if (dateStart !== '') {
+                result = result.filter(res => res.postingsDate.getTime() >= new Date(dateStart).getTime())
             }
-            if (dateStart == '' && dateStart == '' && status != 0 && category == 0 && type != 0) {
-                const result = await this.postingsRepository
-                    .filterByTypeAndStatus(type, status, user.id)
-                return result
+            if (dateEnd !== '') {
+                result = result.filter(res => res.postingsDate.getTime() <= new Date(dateEnd).getTime())
             }
-            if (dateStart != '' && dateStart != '' && status == 0 && category == 0 && type != 0) {
-                const result = await this.postingsRepository
-                    .filterByTypeAndDate(type, dateStart + ' 00:00:00', dateEnd + ' 23:59:59', user.id)
-                return result
+            if (dateStart !== '' && dateEnd !== '') {
+                result = result.filter(res =>
+                    res.postingsDate.getTime() <= new Date(dateEnd).getTime() &&
+                    res.postingsDate.getTime() >= new Date(dateStart).getTime())
             }
-            if (dateStart != '' && dateStart != '' && status != 0 && category == 0 && type != 0) {
-                const result = await this.postingsRepository
-                    .filterByTypeAndDateAndStatus(type, status, dateStart + ' 00:00:00', dateEnd + ' 23:59:59', user.id)
-                return result
+            if (category !== 0) {
+                result = result.filter(res => res.category.id === category)
             }
-            if (dateStart != '' && dateStart != '' && status == 0 && category == 0) {
-                const result = await this.postingsRepository
-                    .filterByDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', user.id)
-                return result
+            if (status !== 0) {
+                result = result.filter(res => res.status.id === status)
             }
-            if (dateStart == '' && dateStart == '' && status == 0 && category == 0) {
-                const result = await this.postingsRepository
-                    .filterDefault(user.id)
-                return result
+            if (type !== 0) {
+                result = result.filter(res => res.type.id === type)
             }
-            if (dateStart == '' && dateStart == '' && status == 0 && category != 0) {
-                const result = await this.postingsRepository
-                    .filterByCategory(category, user.id)
-                return result
-            }
-            if (dateStart == '' && dateStart == '' && status != 0 && category == 0) {
-                const result = await this.postingsRepository
-                    .filterByStatus(status, user.id)
-                return result
-            }
-            if (dateStart == '' && dateStart == '' && status != 0 && category != 0) {
-                const result = await this.postingsRepository
-                    .filterByStatusAndCategory(status, category, user.id)
-                return result
-            }
-            if (dateStart != '' && dateStart != '' && status != 0 && category != 0) {
-                const result = await this.postingsRepository
-                    .filterByStatusAndCategoryAndDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', status, category, user.id)
-                return result
-            }
-            if (dateStart != '' && dateStart != '' && status != 0 && category == 0) {
-                const result = await this.postingsRepository
-                    .filterByStatusAndDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', status, user.id)
-                return result
-            }
-            if (dateStart != '' && dateStart != '' && status == 0 && category != 0) {
-                const result = await this.postingsRepository
-                    .filterByCategoryAndDate(dateStart + ' 00:00:00', dateEnd + ' 23:59:59', category, user.id)
-                return result
-            }
+
+            return result
         } catch (err) {
-            throw new ServerError("erro no servidor")
+            throw new ServerError(err)
         }
     }
 
     async findById(id: number, userId: payload): Promise<Postings | undefined> {
 
-        const user = await new UserService().findByIdAndIsActive(userId.id)
+        try {
 
-        const postings: Postings | undefined = await this.postingsRepository.findOne({ id, user })
+            const user = await new UserService().findByIdAndIsActive(userId.id)
 
-        if (!postings) throw new NotFound('usuário não encontrado')
+            const postings: Postings | undefined = await this.postingsRepository.findOne({ id, user })
 
-        return postings
+            if (!postings) throw new NotFound('usuário não encontrado')
+
+            return postings
+        } catch (err) {
+            throw new ServerError(err)
+        }
+
     }
 
     async save(postings: PostingsDto, authorization: string): Promise<Postings> {
+        try {
+            const token = authorization.substr(7)
+            const user = decodeToken(token)
+            if (!user) throw new BadRequest('usuário não encontrado')
 
-        const token = authorization.substr(7)
-        const user = decodeToken(token)
-        if (!user) throw new BadRequest('usuário não encontrado')
+            const categoryName = postings.category.name?.toUpperCase().trim()
+            let category
+            if (postings.category.id) {
+                category = await this.categoryRepository.findOne({ id: postings.category.id })
+                if (!category) {
+                    category = await this.categoryRepository.findOne({ name: categoryName })
+                    if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
+                }
+            } else {
+                category = await this.categoryRepository.findOne({ name: categoryName })
+                if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
+            }
 
-        const categoryName = postings.category.name?.toUpperCase().trim()
-        let category = await this.categoryRepository.findOne({ id: postings.category.id })
 
-        if (!category) {
-            category = await this.categoryRepository.findOne({ name: categoryName })
-            if (!category) category = await this.categoryRepository.save({ name: categoryName, user })
+            postings.postingsDate = postings.postingsDate ? postings.postingsDate : new Date()
+            postings.user = user
+            postings.category = category
+            postings.createdAt = new Date()
+            const postingsSaved = await this.postingsRepository.save(postings)
+            console.log('chegie')
+
+            return postingsSaved
+        } catch (err) {
+            throw new ServerError(err)
         }
-
-        postings.postingsDate = postings.postingsDate ? postings.postingsDate : new Date()
-        postings.user = user
-        postings.category = category
-        postings.createdAt = new Date()
-        const postingsSaved = await this.postingsRepository.save(postings)
-
-        return postingsSaved
     }
 
     async delete(id: number, userId: payload): Promise<void> {
@@ -147,7 +137,7 @@ export class PostingsService {
             await this.postingsRepository.update(id, { isActive: false })
         }
         catch (err) {
-            throw new ServerError('erro na deleção do lançamento')
+            throw new ServerError(err)
         }
     }
 
@@ -188,7 +178,7 @@ export class PostingsService {
             })
         }
         catch (err) {
-            throw new ServerError('erro na atualização do lançamento')
+            throw new ServerError(err)
         }
     }
 
