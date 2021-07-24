@@ -58,8 +58,70 @@ export class MailService {
             })
     }
 
-
     async sendEmailReport(postings: Postings[], postingsTwelveMonth: Postings[], { name, email, id }: User) {
+
+        const excel = await this.generateExcel(postings)
+
+        const template = await this.getTemplateReport(postings, postingsTwelveMonth, name)
+
+        htmlPdf.create(template, { format: 'A3' }).toBuffer(async (err, pdf) => {
+            if (err) console.log('houve um erro na geração do pdf do relatorio mensal', err)
+
+            await transporter.sendMail({
+                from: 'Despesa Facil <facildespesa@gmail.com>',
+                to: `${name} <${email}>`,
+                subject: "Relatório de lançamentos",
+                html: '<p>Segue o relatório do mês</p>',
+                attachments: [
+                    {
+                        filename: 'relatorio-mensal.pdf',
+                        content: pdf
+                    },
+                    {
+                        filename: 'relatorio-mensal.xlsx',
+                        content: excel
+                    }
+                ]
+            }).then(msg => {
+                console.log(`email send to ${email}`)
+
+            }).catch(err => {
+                console.log(err)
+                console.log('erro ao mandar email')
+            })
+        })
+    }
+
+    async generateExcel(postings: Postings[]) {
+        const pathExcel = path.join(__dirname, '..',
+            '..', 'excel', 'relatorio-mensal.xlsx')
+
+
+        const postingsFormatted = postings.map(posting => {
+            return {
+                'Tipo': posting.type.name,
+                'Data': new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .format(posting.postingsDate),
+                'Status': posting.status.name,
+                'Descrição': posting.description,
+                'Categoria': posting.category.name,
+                'Valor': new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+                    .format(posting.value)
+            }
+        })
+
+        const excel = json2xls(postingsFormatted)
+
+        fs.writeFileSync(pathExcel, excel, 'binary')
+
+        const contentExcel = fs.readFileSync(pathExcel)
+
+        fs.unlinkSync(pathExcel)
+
+        return contentExcel
+    }
+
+    async getTemplateReport(postings: Postings[], postingsTwelveMonth: Postings[], name: String) {
         const postingsService = new PostingsService()
         const pathTemplate = path.join(__dirname, '..',
             '..', 'templates', 'mailTemplateReport.ejs')
@@ -85,13 +147,11 @@ export class MailService {
         const formatValue = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
         const formatDate = new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
 
-        const excel = await this.generateExcel(postings)
-
-        ejs.renderFile(pathTemplate, {
+        return await ejs.renderFile(pathTemplate, {
             'postings': postings,
             'name': name,
             'today': new Date(),
-            'situation': (totalRevenue - totalExpense) ? 'POSITIVO' : 'NEGATIVO',
+            'situation': (totalRevenue - totalExpense) >= 0 ? 'POSITIVO' : 'NEGATIVO',
             'situationPercent': ((totalExpense / totalRevenue) * 100).toFixed(2) + '%',
             'totalRecep': totalRevenue,
             'totalExpense': totalExpense,
@@ -109,65 +169,6 @@ export class MailService {
             'periodRevenueTwelveMonth': revenuesPeriodTwelveMonth['period'],
             'frequencyRevenueTwelveMonth': revenuesPeriodTwelveMonth['frequency'],
 
-        },
-            async (err, template) => {
-
-                if (err) return console.error('houve um erro no template relatorio mensal', err)
-
-                htmlPdf.create(template, { format: 'A3' }).toBuffer(async (err, pdf) => {
-                    if (err) console.log('houve um erro na geração do pdf do relatorio mensal', err)
-
-                    await transporter.sendMail({
-                        from: 'Despesa Facil <facildespesa@gmail.com>',
-                        to: `${name} <${email}>`,
-                        subject: "Relatório de lançamentos",
-                        html: '<p>Segue o relatório do mês</p>',
-                        attachments: [
-                            {
-                                filename: 'relatorio-mensal.pdf',
-                                content: pdf
-                            },
-                            {
-                                filename: 'relatorio-mensal.xlsx',
-                                content: excel
-                            }
-                        ]
-                    }).then(msg => {
-                        console.log(`email send to ${email}`)
-
-                    }).catch(err => {
-                        console.log(err)
-                        console.log('erro ao mandar email')
-                    })
-                })
-            }
-        )
-    }
-
-    async generateExcel(postings: Postings[]) {
-        const pathExcel = path.join(__dirname, '..',
-            '..', 'excel', 'relatorio-mensal.xlsx')
-
-
-            const postingsFormatted = postings.map(posting => {
-                return {
-                    'Tipo': posting.type.name,
-                    'Data':new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                    .format(posting.postingsDate),
-                    'Status': posting.status.name,
-                    'Descrição': posting.description,
-                    'Categoria':posting.category.name,
-                    'Valor': new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
-                    .format(posting.value)
-                }
-            })
-
-        const excel = json2xls(postingsFormatted)
-            
-        fs.writeFileSync(pathExcel, excel, 'binary')
-        
-        const contentExcel = fs.readFileSync(pathExcel)
-        
-        return contentExcel
+        })
     }
 }
