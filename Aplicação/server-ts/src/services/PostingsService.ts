@@ -53,16 +53,17 @@ export class PostingsService {
             if (!category) category = 0
             if (!type) type = 0
 
-            if (dateStart !== '') {
-                result = result.filter(res => res.postingsDate.getTime() >= new Date(dateStart).getTime())
-            }
-            if (dateEnd !== '') {
-                result = result.filter(res => res.postingsDate.getTime() <= new Date(dateEnd).getTime())
-            }
             if (dateStart !== '' && dateEnd !== '') {
                 result = result.filter(res =>
                     res.postingsDate.getTime() <= new Date(dateEnd).getTime() &&
                     res.postingsDate.getTime() >= new Date(dateStart).getTime())
+            }else{
+                if (dateStart !== '') {
+                    result = result.filter(res => res.postingsDate.getTime() >= new Date(dateStart).getTime())
+                }
+                if (dateEnd !== '') {
+                    result = result.filter(res => res.postingsDate.getTime() <= new Date(dateEnd).getTime())
+                }
             }
             if (category !== 0) {
                 result = result.filter(res => res.category.id === category)

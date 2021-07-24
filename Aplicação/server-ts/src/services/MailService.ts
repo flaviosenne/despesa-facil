@@ -4,8 +4,9 @@ import ejs from 'ejs'
 import path from 'path'
 import htmlPdf from 'html-pdf'
 import { PostingsService } from './PostingsService';
-import { PostingsRepository } from '../repositories/PostingsRepository';
 import { User } from '../models/User';
+import json2xls from 'json2xls'
+import fs from 'fs'
 
 export class MailService {
     async sendEmailCreatorAccount(name: string, email: string) {
@@ -58,7 +59,7 @@ export class MailService {
     }
 
 
-    async sendEmailReport(postings: Postings[],postingsTwelveMonth: Postings[], { name, email, id }: User) {
+    async sendEmailReport(postings: Postings[], postingsTwelveMonth: Postings[], { name, email, id }: User) {
         const postingsService = new PostingsService()
         const pathTemplate = path.join(__dirname, '..',
             '..', 'templates', 'mailTemplateReport.ejs')
@@ -84,10 +85,12 @@ export class MailService {
         const formatValue = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
         const formatDate = new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
 
+        const excel = await this.generateExcel(postings)
+
         ejs.renderFile(pathTemplate, {
-            'postings': postings, 
+            'postings': postings,
             'name': name,
-            'today': new Date(), 
+            'today': new Date(),
             'situation': (totalRevenue - totalExpense) ? 'POSITIVO' : 'NEGATIVO',
             'situationPercent': ((totalExpense / totalRevenue) * 100).toFixed(2) + '%',
             'totalRecep': totalRevenue,
@@ -123,6 +126,10 @@ export class MailService {
                             {
                                 filename: 'relatorio-mensal.pdf',
                                 content: pdf
+                            },
+                            {
+                                filename: 'relatorio-mensal.xlsx',
+                                content: excel
                             }
                         ]
                     }).then(msg => {
@@ -135,5 +142,32 @@ export class MailService {
                 })
             }
         )
+    }
+
+    async generateExcel(postings: Postings[]) {
+        const pathExcel = path.join(__dirname, '..',
+            '..', 'excel', 'relatorio-mensal.xlsx')
+
+
+            const postingsFormatted = postings.map(posting => {
+                return {
+                    'Tipo': posting.type.name,
+                    'Data':new Intl.DateTimeFormat('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .format(posting.postingsDate),
+                    'Status': posting.status.name,
+                    'Descrição': posting.description,
+                    'Categoria':posting.category.name,
+                    'Valor': new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+                    .format(posting.value)
+                }
+            })
+
+        const excel = json2xls(postingsFormatted)
+            
+        fs.writeFileSync(pathExcel, excel, 'binary')
+        
+        const contentExcel = fs.readFileSync(pathExcel)
+        
+        return contentExcel
     }
 }
