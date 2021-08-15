@@ -123,7 +123,6 @@ export class PostingsService {
             postings.category = category
             postings.createdAt = new Date()
             const postingsSaved = await this.postingsRepository.save(postings)
-            console.log('chegie')
 
             return postingsSaved
         } catch (err) {
