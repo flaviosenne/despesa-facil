@@ -23,7 +23,7 @@ export class UserController {
     }
 
     async findById(req: Request, res: Response) {
-        const { userId } = req
+        const  userId  = req['userId']
 
         const userService = new UserService()
 
@@ -46,7 +46,7 @@ export class UserController {
     }
 
     async disable(req: Request, res: Response) {
-        const { userId } = req
+        const  userId = req['userId']
 
         const userService = new UserService()
 
@@ -56,7 +56,7 @@ export class UserController {
     }
 
     async update(req: Request, res: Response) {
-        const {userId} = req
+        const userId = req['userId']
         
         const user = req.body as UserDto
 

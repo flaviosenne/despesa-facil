@@ -20,7 +20,7 @@ export class PostingsController {
         
         const postings = await postingsService
         .listAllByFilter(String(datestart), String(dateend), 
-        Number(category), Number(status), Number(type), req.userId)
+        Number(category), Number(status), Number(type), req['userId'])
         
         return res.status(200).json(postings)
     
@@ -28,7 +28,7 @@ export class PostingsController {
 
     async findById(req: Request, res: Response) {
         const { id } = req.params
-        const { userId } = req
+        const  userId  = req['userId']
 
         const postingsService = new PostingsService()
 
@@ -51,7 +51,7 @@ export class PostingsController {
 
     async delete(req: Request, res: Response) {
         const { id } = req.params
-        const { userId } = req
+        const  userId  = req['userId']
 
         const postingsService = new PostingsService()
 
@@ -65,7 +65,7 @@ export class PostingsController {
 
         const postings = req.body as PostingsDto
 
-        const { userId } = req
+        const  userId  = req['userId']
         
         await postingsService.update(postings, userId)
 

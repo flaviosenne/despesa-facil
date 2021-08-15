@@ -14,7 +14,7 @@ export const logged = async (req: Request, res: Response, next: NextFunction) =>
     
     if(!tokenIsValid) throw new Forbbiden('Usuário não autenticado')
     
-    req.userId = tokenIsValid
+    req['userId'] = tokenIsValid
     next()
 }
 
