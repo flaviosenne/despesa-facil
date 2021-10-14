@@ -53,8 +53,7 @@ Saída: 200
 {
     "id":"id do usuário",
    "name":"nome do usuário",
-    "email":"email do usuário",
-    "password":"senha em hash"
+    "email":"email do usuário"
 }
 ```
 
