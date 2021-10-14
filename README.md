@@ -91,8 +91,7 @@ Saida: 201
 ```
 {
   "name":"nome do usuário",
-  "email":"email do usuário",
-  "password":"senha em hash"
+  "email":"email do usuário"
 }
 ```
 
